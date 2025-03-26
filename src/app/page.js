@@ -8,7 +8,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Träffa nya talanger på mingel-event</h1>
 
-        <Link href="/login" className={styles.a}>Skriv upp ditt företag</Link>
+        <Link href="/form/Signup/NameAndMailForm" className={styles.a}>Skriv upp ditt företag</Link>
         <Link href="/companies" className={styles.a}>Upptäck LIA-platser</Link>
 
       </main>

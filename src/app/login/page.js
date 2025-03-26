@@ -1,9 +1,9 @@
-import LoginForm from '../components/form/LoginForm'
+import NameAndMailForm from '../form/Signup/NameAndMailForm/page.js'
 
 export default function LoginPage() {
   return (
     <div>
-      <LoginForm />
+      <NameAndMailForm />
     </div>
   )
 }
