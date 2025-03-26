@@ -6,10 +6,10 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h1>Welcome to our site</h1>
+        <h1>Träffa nya talanger på mingel-event</h1>
 
-        <Link href="/login" className={styles.a}>Login</Link>
-        <Link href="/companies" className={styles.a}>Check out this company</Link>
+        <Link href="/login" className={styles.a}>Skriv upp ditt företag</Link>
+        <Link href="/companies" className={styles.a}>Upptäck LIA-platser</Link>
 
       </main>
     </div>

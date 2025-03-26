@@ -1,14 +1,12 @@
 import { login, signup } from './actions'
+import LoginForm from '../components/form/Form'
 
 export default function LoginPage() {
   return (
-    <form>
-      <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required />
-      <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required />
+    <div>
+      <LoginForm />
       <button formAction={login}>Log in</button>
-      <button formAction={signup}>Sign up</button>
-    </form>
+      {/* <button formAction={signup}>Sign up</button> */}
+    </div>
   )
 }
