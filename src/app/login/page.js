@@ -1,4 +1,4 @@
-import NameAndMailForm from '../form/Signup/NameAndMailForm/page.js'
+import NameAndMailForm from '../components/form/RegistrationPopup'
 
 export default function LoginPage() {
   return (

@@ -5,42 +5,26 @@ import { useContext, useState } from "react";
 import { FormContext } from "./FormContext";
 import { useRouter } from "next/navigation";
 
-export default function NameAndMailForm() {
+export function CustomNameAndMailForm({ goToNextStep }) {
   const { updateFormData } = useContext(FormContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const router = useRouter();
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData({ name, email });
-
-    // Navigate to password form
-    router.push("/PasswordForm"); // Update with your actual route
+    goToNextStep();
   };
-
+  
   return (
     <>
       <h2>Registrera ditt företag</h2>
-      <h3>Stäng</h3>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-        fill="none"
-      >
-        <path
-          d="M1.8 18L0 16.2L7.2 9L0 1.8L1.8 0L9 7.2L16.2 0L18 1.8L10.8 9L18 16.2L16.2 18L9 10.8L1.8 18Z"
-          fill="#1C1B1F"
-        />
-      </svg>
       <p>
         Skriv upp ditt företag för att gå på Yrgos mingelevent inför
         LIA-perioden i november. Skapa en företagsprofil för att bli upptäckt av
         eran framtida kollega!
       </p>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name">Namn</label>
         <input
           id="name"
@@ -61,9 +45,11 @@ export default function NameAndMailForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button formAction="">Jag har inget företag</button>
-        <button formAction="">Jag vill bara gå på mingelevent</button>
-        <button formAction="submit">Skapa Företagsprofil</button>
+        <div className="button-group">
+          <button type="button">Jag har inget företag</button>
+          <button type="button">Jag vill bara gå på mingelevent</button>
+          <button type="submit">Skapa Företagsprofil</button>
+        </div>
       </form>
     </>
   );
