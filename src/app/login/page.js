@@ -1,12 +1,9 @@
-import { login, signup } from './actions'
-import LoginForm from '../components/form/Form'
+import LoginForm from '../components/form/LoginForm'
 
 export default function LoginPage() {
   return (
     <div>
       <LoginForm />
-      <button formAction={login}>Log in</button>
-      {/* <button formAction={signup}>Sign up</button> */}
     </div>
   )
 }
