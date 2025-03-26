@@ -1,19 +1,9 @@
 "use client";
 
-import { useState, useContext, createContext } from 'react';
-import { signup } from '../../login/actions'; 
-import { CustomNameAndMailForm } from './NameAndMailForm';
-import { CustomPasswordForm } from './PasswordForm';
-import { FormProvider } from './FormContext';
+import LoginForm from './LoginForm';
 import './popup.css';
 
-export default function RegistrationPopup({ isOpen, onClose }) {
-  const [currentStep, setCurrentStep] = useState(1);
-  
-  const goToNextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-  
+export default function LoginPopup({ isOpen, onClose }) {  
   return (
     <div 
       className="popup-overlay" 
@@ -41,16 +31,8 @@ export default function RegistrationPopup({ isOpen, onClose }) {
           </svg>
         </button>
         
-        {/* Form content with context provider */}
-        <FormProvider>
-          <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
-            <CustomNameAndMailForm goToNextStep={goToNextStep} />
-          </div>
-          
-          <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
-            <CustomPasswordForm onSuccess={onClose} />
-          </div>
-        </FormProvider>
+        <LoginForm onSuccess={onClose} />
+        
       </div>
     </div>
   );

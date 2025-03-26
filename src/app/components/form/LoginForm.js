@@ -1,14 +1,43 @@
-import { login, signup } from '../../login/actions'
+"use client"
 
-export default function LoginForm() {
+import { login, signup } from '../../login/actions'
+import { useState } from 'react'
+
+
+export default function LoginForm({ onSuccess }) {
+  
+  const handleSubmit = async (formData) => {
+    try {
+      await login(formData);
+      if (onSuccess) onSuccess();
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+  
   return (
-    <form>
-      <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required />
-      <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required />
-      <button formAction={login}>Log in</button>
-      {/* <button formAction={signup}>Sign up</button> */}
-    </form>
-  )
+    <>
+      <h2>Logga in</h2>
+      <p>Ange din e-post och lösenord för att logga in</p>
+      <form action={handleSubmit}>
+        <label htmlFor="email">E-post</label>
+        <input 
+          id="email" 
+          name="email" 
+          type="email" 
+          required 
+          placeholder="Ange din e-post"
+        />
+        <label htmlFor="password">Lösenord</label>
+        <input 
+          id="password" 
+          name="password" 
+          type="password" 
+          required 
+          placeholder="Ange ditt lösenord"
+        />
+        <button formAction={login}>Logga in</button>
+      </form>
+    </>
+  );
 }
