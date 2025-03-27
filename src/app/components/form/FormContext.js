@@ -8,7 +8,12 @@ export function FormProvider({ children }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    companyName: '',
+    description: '',
+    location: '',
+    website: '',
+    contactEmail: '',
   });
 
   const updateFormData = (newData) => {

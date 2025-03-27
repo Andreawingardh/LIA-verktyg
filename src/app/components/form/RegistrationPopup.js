@@ -5,6 +5,7 @@ import { signup } from '../../login/actions';
 import { CustomNameAndMailForm } from './NameAndMailForm';
 import { CustomPasswordForm } from './PasswordForm';
 import { FormProvider } from './FormContext';
+import { CompanyForm } from './CompanyInformationForm';
 import './popup.css';
 
 export default function RegistrationPopup({ isOpen, onClose }) {
@@ -48,7 +49,11 @@ export default function RegistrationPopup({ isOpen, onClose }) {
           </div>
           
           <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
-            <CustomPasswordForm onSuccess={onClose} />
+            <CustomPasswordForm goToNextStep={goToNextStep} />
+          </div>
+
+          <div style={{ display: currentStep === 3 ? 'block' : 'none' }}>
+            <CompanyForm onSuccess={onClose} />
           </div>
         </FormProvider>
       </div>

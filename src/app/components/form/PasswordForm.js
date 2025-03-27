@@ -1,18 +1,21 @@
 "use client";
 
-import { useContext, useState, useRef, use } from "react";
+import { useContext, useState } from "react";
 import { FormContext } from "./FormContext";
-import { signup } from "../../login/actions";
+import { createAccount } from "../../login/actions";
 
-export function CustomPasswordForm({ onSuccess }) {
+export function CustomPasswordForm({ goToNextStep }) {
   const { formData } = useContext(FormContext);
+  const [error, setError] = useState("");
   
-  const handleSubmit = async (formData) => {
-    try {
-      await signup(formData);
-      if (onSuccess) onSuccess();
-    } catch (error) {
-      console.error("Signup error:", error);
+
+  const handleCreateAccount = async (formData) => {
+    const result = await createAccount(formData);
+    
+    if (result.success) {
+      goToNextStep();
+    } else {
+      setError(result.error || "An error occurred during account creation");
     }
   };
   
@@ -20,7 +23,9 @@ export function CustomPasswordForm({ onSuccess }) {
     <>
       <h2>Välj lösenord</h2>
       <p>Skriv ett starkt lösenord för att logga in</p>
-      <form action={handleSubmit}>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      
+      <form action={handleCreateAccount}>
         {/* Hidden email field that gets the email from context */}
         <input 
           type="hidden" 
@@ -41,7 +46,7 @@ export function CustomPasswordForm({ onSuccess }) {
           required 
           placeholder="Skriv ett starkt lösenord här"
         />
-        <button formAction={signup}>Skapa konto</button>
+        <button formAction={handleCreateAccount}>Skapa konto</button>
       </form>
     </>
   );
