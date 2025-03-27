@@ -1,5 +1,5 @@
+'use server'
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@/utils/supabase/server'
 
 export default async function AuthenticationCheck() {
@@ -9,5 +9,6 @@ export default async function AuthenticationCheck() {
   if (error || !data?.user) {
     redirect('/login')
   }
+
 
 }
