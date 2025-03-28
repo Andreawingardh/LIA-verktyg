@@ -3,7 +3,15 @@
 import LoginForm from './LoginForm';
 import './popup.css';
 
-export default function LoginPopup({ isOpen, onClose }) {  
+export default function LoginPopup({ isOpen, onClose, onShowRegistration }) {  
+  
+  
+  const handleRegisterClick = () => {
+    if (onShowRegistration) {
+      onShowRegistration();
+    }
+  };
+  
   return (
     <div 
       className="popup-overlay" 
@@ -16,7 +24,7 @@ export default function LoginPopup({ isOpen, onClose }) {
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         {/* Close button */}
         <button className="close-btn" onClick={onClose}>
-        <p>Stäng</p>
+          <p>Stäng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -31,7 +39,10 @@ export default function LoginPopup({ isOpen, onClose }) {
           </svg>
         </button>
         
-        <LoginForm onSuccess={onClose} />
+        <LoginForm 
+          onSuccess={onClose} 
+          onRegisterClick={handleRegisterClick} 
+        />
         
       </div>
     </div>

@@ -5,9 +5,21 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import { useState } from "react";
 import RegistrationPopup from "./components/form/RegistrationPopup";
+import LoginPopup from "./components/form/LoginPopup";
 
 export default function Home() {
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+  const handleShowLogin = () => {
+    setShowRegistrationPopup(false);
+    setShowLoginPopup(true);
+  };
+
+  const handleShowRegistration = () => {
+    setShowRegistrationPopup(true);
+    setShowLoginPopup(false);
+  };
 
   return (
     <div className={styles.page}>
@@ -25,18 +37,24 @@ export default function Home() {
           Upptäck LIA-platser
         </Link>
 
-
-
+        {/* Registration Popup */}
         {showRegistrationPopup && (
           <RegistrationPopup
             isOpen={showRegistrationPopup}
             onClose={() => setShowRegistrationPopup(false)}
+            onShowLogin={handleShowLogin}
           />
         )}
 
-       
+        {/* Login Popup */}
+        {showLoginPopup && (
+          <LoginPopup
+            isOpen={showLoginPopup}
+            onClose={() => setShowLoginPopup(false)}
+            onShowRegistration={handleShowRegistration}
+          />
+        )}
       </main>
-      
     </div>
   );
 }

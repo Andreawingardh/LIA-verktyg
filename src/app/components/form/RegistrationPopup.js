@@ -1,18 +1,26 @@
 "use client";
 
-import { useState, useContext, createContext } from 'react';
+import { useState, useContext } from 'react';
 import { signup } from '../../login/actions'; 
 import { CustomNameAndMailForm } from './NameAndMailForm';
-import { CustomPasswordForm } from './PasswordForm';
+// import { CustomPasswordForm } from './PasswordForm';
 import { FormProvider } from './FormContext';
-import { CompanyForm } from './CompanyInformationForm';
+// import { CompanyForm } from './CompanyInformationForm';
 import './popup.css';
 
-export default function RegistrationPopup({ isOpen, onClose }) {
+export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const [currentStep, setCurrentStep] = useState(1);
   
   const goToNextStep = () => {
     setCurrentStep(currentStep + 1);
+  };
+  
+  // Handle switching to login
+  const handleLoginClick = () => {
+    onClose(); // Close this popup first
+    if (onShowLogin) {
+      onShowLogin(); // Then show login popup
+    }
   };
   
   return (
@@ -27,7 +35,7 @@ export default function RegistrationPopup({ isOpen, onClose }) {
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         {/* Close button */}
         <button className="close-btn" onClick={onClose}>
-        <p>Stäng</p>
+          <p>Stäng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -45,16 +53,19 @@ export default function RegistrationPopup({ isOpen, onClose }) {
         {/* Form content with context provider */}
         <FormProvider>
           <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
-            <CustomNameAndMailForm goToNextStep={goToNextStep} />
+            <CustomNameAndMailForm 
+              goToNextStep={goToNextStep}
+              onLoginClick={handleLoginClick} 
+            />
           </div>
           
-          <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
+          {/* <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
             <CustomPasswordForm goToNextStep={goToNextStep} />
           </div>
 
           <div style={{ display: currentStep === 3 ? 'block' : 'none' }}>
             <CompanyForm onSuccess={onClose} />
-          </div>
+          </div> */}
         </FormProvider>
       </div>
     </div>
