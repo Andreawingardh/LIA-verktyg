@@ -1,18 +1,37 @@
 "use client"
 
-import { login, signup } from '../../login/actions'
 import { useState } from 'react'
+import { supabase } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
 export default function LoginForm({ onSuccess, onRegisterClick }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
   
-  const handleSubmit = async (formData) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
     try {
-      await login(formData);
-      if (onSuccess) onSuccess();
+      console.log("Attempting client-side login");
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      
+      if (error) throw error;
+      
+      console.log("Login successful:", data);
+      
+      // Force a refresh
+      router.refresh();
+      
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
-      setError("Login failed. Please check your credentials.");
+      setError("Login failed: " + (error.message || "Please check your credentials."));
       console.error("Login error:", error);
     }
   };
@@ -27,7 +46,7 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
   return (
     <>
       <h2>Logga in</h2> 
-      <form action={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="email">E-post</label>
         <input 
           id="email" 
@@ -35,6 +54,8 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
           type="email" 
           required 
           placeholder="Skriv din inloggningsmail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <label htmlFor="password">Lösenord</label>
         <a href=''>Glömt ditt lösenord?</a>
@@ -44,9 +65,11 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
           type="password" 
           required 
           placeholder="Skriv ditt lösenord"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <button formAction={login}>Logga in</button>
+        <button type="submit">Logga in</button>
         <div className="auth-buttons">
           <button
             type="button"

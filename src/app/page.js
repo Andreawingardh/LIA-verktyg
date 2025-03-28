@@ -6,10 +6,12 @@ import Link from "next/link";
 import { useState } from "react";
 import RegistrationPopup from "./components/form/RegistrationPopup";
 import LoginPopup from "./components/form/LoginPopup";
+import { useSupabaseAuth } from "../hook/useSupabaseAuth";
 
 export default function Home() {
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const { user } = useSupabaseAuth();
 
   const handleShowLogin = () => {
     setShowRegistrationPopup(false);
@@ -26,12 +28,18 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Träffa nya talanger på mingel-event</h1>
 
-        <button
-          className={styles.a}
-          onClick={() => setShowRegistrationPopup(true)}
-        >
-          Skriv upp ditt företag
-        </button>
+        {user ? (
+          <button className={styles.a}>
+            Hantera ditt företag
+          </button>
+        ) : (
+          <button
+            className={styles.a}
+            onClick={() => setShowRegistrationPopup(true)}
+          >
+            Skriv upp ditt företag
+          </button>
+        )}
 
         <Link href="/companies" className={styles.a}>
           Upptäck LIA-platser

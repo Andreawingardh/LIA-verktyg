@@ -2,9 +2,17 @@
 
 import LoginForm from './LoginForm';
 import './popup.css';
+import { useEffect } from 'react';
+import { useSupabaseAuth } from '../../../hook/useSupabaseAuth';
 
 export default function LoginPopup({ isOpen, onClose, onShowRegistration }) {  
+  const { user } = useSupabaseAuth();
   
+  useEffect(() => {
+    if (user && isOpen) {
+      onClose();
+    }
+  }, [user, isOpen, onClose]);
   
   const handleRegisterClick = () => {
     if (onShowRegistration) {

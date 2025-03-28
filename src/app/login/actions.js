@@ -14,12 +14,15 @@ export async function login(formData) {
     password: formData.get("password"),
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { data: authData, error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
     console.log("Login error details:", error.message);
     redirect("/?error=" + encodeURIComponent(error.message));
   }
+
+
+  console.log("Login successful for:", authData.user.email);
 
   revalidatePath("/", "layout");
   redirect("/");
@@ -104,6 +107,13 @@ export async function signup(formData) {
     redirect("/?error=" + encodeURIComponent(error.message));
   }
 
+  revalidatePath("/", "layout");
+  redirect("/");
+}
+
+export async function logout() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
   revalidatePath("/", "layout");
   redirect("/");
 }
