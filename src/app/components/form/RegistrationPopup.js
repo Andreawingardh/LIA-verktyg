@@ -1,25 +1,42 @@
 "use client";
 
-import { useState, useContext } from 'react';
-import { signup } from '../../login/actions'; 
-import { CustomNameAndMailForm } from './NameAndMailForm';
-// import { CustomPasswordForm } from './PasswordForm';
-import { FormProvider } from './FormContext';
-// import { CompanyForm } from './CompanyInformationForm';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '../../../utils/supabase/client';
 import './popup.css';
 
 export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
-  const [currentStep, setCurrentStep] = useState(1);
-  
-  const goToNextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-  
-  // Handle switching to login
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleLoginClick = () => {
-    onClose(); // Close this popup first
+    onClose();
     if (onShowLogin) {
-      onShowLogin(); // Then show login popup
+      onShowLogin();
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    
+    try {
+      localStorage.setItem('registrationEmail', email);
+      localStorage.setItem('registrationPassword', password);
+      localStorage.setItem('registrationStep', 'baseInfo');
+      
+      onClose();
+      
+      router.push('/company/baseInfo');
+    } catch (err) {
+      console.error('Registration error:', err);
+      setError("Ett fel uppstod vid registrering");
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -31,9 +48,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      {/* Popup content container */}
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-        {/* Close button */}
         <button className="close-btn" onClick={onClose}>
           <p>Stäng</p>
           <svg
@@ -50,23 +65,53 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
           </svg>
         </button>
         
-        {/* Form content with context provider */}
-        <FormProvider>
-          <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
-            <CustomNameAndMailForm 
-              goToNextStep={goToNextStep}
-              onLoginClick={handleLoginClick} 
-            />
-          </div>
-          
-          {/* <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
-            <CustomPasswordForm goToNextStep={goToNextStep} />
-          </div>
+        <h2>Skapa Företagskonto</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">E-post</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="Skriv din inloggningsmail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
+          />
 
-          <div style={{ display: currentStep === 3 ? 'block' : 'none' }}>
-            <CompanyForm onSuccess={onClose} />
-          </div> */}
-        </FormProvider>
+          <label htmlFor="password">Lösenord</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            placeholder="Skriv ett starkt lösenord"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+          />
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
+          <input id="checkbox" name="checkbox" type="checkbox" required />
+          <label htmlFor="checkbox">Jag godkänner</label>
+          <a href="">sekretesspolicy</a>
+
+          <div className="button-group">
+            <button type="submit" disabled={loading}>
+              {loading ? "Skapar konto..." : "Skapa Företagsprofil"}
+            </button>
+          </div>
+          <div className="auth-buttons">
+            <button
+              type="button"
+              className="login-btn"
+              onClick={handleLoginClick}
+              disabled={loading}
+            >
+              Logga in
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

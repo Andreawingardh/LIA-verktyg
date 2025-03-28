@@ -1,27 +1,59 @@
 "use client";
 
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from "react";
+import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 
 export const FormContext = createContext();
 
 export function FormProvider({ children }) {
+  const { user, loading: authLoading } = useSupabaseAuth();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    companyName: '',
-    description: '',
-    location: '',
-    website: '',
-    contactEmail: '',
+    userId: "",
+    email: "",
+    companyName: "",
+    description: "",
+    location: "",
+    website: "",
+    contactEmail: "",
+    logoUrl: "",
+    displayImageUrl: "",
   });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!authLoading) {
+      if (user) {
+        setFormData((prev) => ({
+          ...prev,
+          userId: user.id,
+          email: user.email,
+        }));
+      } else {
+        const email = localStorage.getItem("registrationEmail");
+        if (email) {
+          setFormData((prev) => ({
+            ...prev,
+            email,
+          }));
+        }
+      }
+      setLoading(false);
+    }
+  }, [user, authLoading]);
 
   const updateFormData = (newData) => {
-    setFormData(prev => ({ ...prev, ...newData }));
+    setFormData((prev) => ({ ...prev, ...newData }));
   };
 
   return (
-    <FormContext.Provider value={{ formData, updateFormData }}>
+    <FormContext.Provider
+      value={{
+        formData,
+        updateFormData,
+        user,
+        loading: loading || authLoading,
+      }}
+    >
       {children}
     </FormContext.Provider>
   );
