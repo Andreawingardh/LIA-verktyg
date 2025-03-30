@@ -24,8 +24,8 @@ export async function login(formData) {
 
   console.log("Login successful for:", authData.user.email);
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  revalidatePath("/dashboard", "layout");
+  redirect("/dashboard");
 }
 
 export async function createAccount(formData) {
