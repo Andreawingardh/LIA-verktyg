@@ -4,7 +4,7 @@ import { useState } from 'react';
 import EditProfileOverlay from './EditProfileOverlay';
 import '../form/popup.css'
 
-export default function EditProfileButton({ companyId }) {
+export default function EditProfileButton({ companyId, onProfileUpdate }) {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   const openOverlay = () => {
@@ -43,7 +43,8 @@ export default function EditProfileButton({ companyId }) {
       <EditProfileOverlay 
         isOpen={isOverlayOpen} 
         onClose={closeOverlay} 
-        companyId={companyId} 
+        companyId={companyId}
+        onProfileUpdate={onProfileUpdate}
       />
     </>
   );

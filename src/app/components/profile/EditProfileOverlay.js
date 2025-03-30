@@ -5,7 +5,10 @@ import { supabase } from '../../../utils/supabase/client';
 import { useSupabaseAuth } from '../../../hook/useSupabaseAuth';
 import '../form/popup.css';
 
-export default function EditProfileOverlay({ isOpen, onClose, companyId }) {
+
+const FORM_STORAGE_KEY = 'company_edit_form_data';
+
+export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfileUpdate }) {
   const { user } = useSupabaseAuth();
   const [companyData, setCompanyData] = useState({
     name: '',
@@ -22,6 +25,71 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [formId, setFormId] = useState('');
+
+  // Generate a unique form ID when the overlay opens
+  useEffect(() => {
+    if (isOpen) {
+      setFormId(`form_${Date.now()}`);
+    }
+  }, [isOpen]);
+
+  // We've moved the restoration logic to the fetchCompanyData function
+  // to ensure we always show either the fetched data or saved draft data
+  useEffect(() => {
+    if (formId && isOpen && (companyId || user)) {
+      // When formId is set, trigger data fetch again to ensure proper loading
+      fetchCompanyData();
+    }
+  }, [formId]);
+
+  // Save form data to localStorage whenever it changes
+  useEffect(() => {
+    if (formId && companyData && isOpen) {
+      const dataToSave = {
+        formData: companyData,
+        logoPreview,
+        displayImagePreview,
+        timestamp: Date.now()
+      };
+      
+      localStorage.setItem(`${FORM_STORAGE_KEY}_${formId}`, JSON.stringify(dataToSave));
+    }
+  }, [companyData, logoPreview, displayImagePreview, formId, isOpen]);
+
+  // Add event listeners for tab visibility changes
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && formId) {
+        // When tab becomes visible again, check for saved data
+        const savedData = localStorage.getItem(`${FORM_STORAGE_KEY}_${formId}`);
+        if (savedData) {
+          try {
+            const parsedData = JSON.parse(savedData);
+            setCompanyData(parsedData.formData);
+            
+            if (parsedData.logoPreview) {
+              setLogoPreview(parsedData.logoPreview);
+            }
+            
+            if (parsedData.displayImagePreview) {
+              setDisplayImagePreview(parsedData.displayImagePreview);
+            }
+            
+            console.log('Restored form data after tab switch');
+          } catch (err) {
+            console.error('Error parsing saved form data', err);
+          }
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [formId]);
 
   // Fetch company data when overlay opens
   useEffect(() => {
@@ -58,29 +126,64 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId }) {
       if (fetchError) throw fetchError;
       if (!data) throw new Error('Ingen företagsprofil hittades');
       
-      // Set the company data
-      setCompanyData({
-        name: data.name || '',
-        description: data.description || '',
-        location: data.location || '',
-        website: data.website || '',
-        email: data.email || ''
-      });
       
-      // Set logo preview if exists
-      if (data.logo_url && data.logo_url !== 'pending') {
-        setLogoPreview(data.logo_url);
-      }
+      // Check if we have saved draft data from a previous edit
+      const savedData = localStorage.getItem(`${FORM_STORAGE_KEY}_${formId}`);
       
-      // Set display image preview if exists
-      if (data.display_image_url && data.display_image_url !== 'pending') {
-        setDisplayImagePreview(data.display_image_url);
+      if (savedData) {
+        // We have saved draft data, use it
+        try {
+          const parsedData = JSON.parse(savedData);
+          console.log('Found saved draft data', parsedData);
+          setCompanyData(parsedData.formData);
+          
+          if (parsedData.logoPreview) {
+            setLogoPreview(parsedData.logoPreview);
+          } else if (data.logo_url && data.logo_url !== 'pending') {
+            setLogoPreview(data.logo_url);
+          }
+          
+          if (parsedData.displayImagePreview) {
+            setDisplayImagePreview(parsedData.displayImagePreview);
+          } else if (data.display_image_url && data.display_image_url !== 'pending') {
+            setDisplayImagePreview(data.display_image_url);
+          }
+        } catch (err) {
+          console.error('Error parsing saved draft data', err);
+          // Fall back to the fetched data
+          populateFormWithFetchedData(data);
+        }
+      } else {
+        // No saved draft data, use the fetched data
+        populateFormWithFetchedData(data);
       }
     } catch (err) {
       console.error('Error fetching company data:', err);
       setError('Kunde inte hämta företagsinformation: ' + (err.message || 'Okänt fel'));
     } finally {
       setLoading(false);
+    }
+  };
+
+   // Helper function to populate the form with fetched data
+   const populateFormWithFetchedData = (data) => {
+    console.log('Populating form with fetched data', data);
+    setCompanyData({
+      name: data.name || '',
+      description: data.description || '',
+      location: data.location || '',
+      website: data.website || '',
+      email: data.email || ''
+    });
+     
+     // Set logo preview if exists
+    if (data.logo_url && data.logo_url !== 'pending') {
+      setLogoPreview(data.logo_url);
+    }
+    
+    // Set display image preview if exists
+    if (data.display_image_url && data.display_image_url !== 'pending') {
+      setDisplayImagePreview(data.display_image_url);
     }
   };
 
@@ -207,10 +310,21 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId }) {
       if (updateError) throw updateError;
       
       setSuccess('Företagsprofilen har uppdaterats!');
+
+      // Clear saved form data
+      if (formId) {
+        localStorage.removeItem(`${FORM_STORAGE_KEY}_${formId}`);
+      }
       
       // Reset file inputs
       setNewLogo(null);
       setNewDisplayImage(null);
+
+       // Call the callback function with the updated data
+       if (typeof onProfileUpdate === 'function') {
+        console.log('Calling onProfileUpdate with new data:', updateData);
+        onProfileUpdate(updateData);
+      }
       
       // Close overlay after a brief delay to show success message
       setTimeout(() => {
@@ -224,17 +338,25 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId }) {
     }
   };
 
+  const handleCancel = () => {
+    // Clear saved form data
+    if (formId) {
+      localStorage.removeItem(`${FORM_STORAGE_KEY}_${formId}`);
+    }
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
     <div 
       className="popup-overlay" 
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) handleCancel();
       }}
     >
       <div className="popup-content edit-profile-overlay" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose} aria-label="Stäng">
+        <button className="close-btn" onClick={handleCancel} aria-label="Stäng">
           <p>Stäng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -356,7 +478,7 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId }) {
             <div className="button-group">
               <button 
                 type="button" 
-                onClick={onClose} 
+                onClick={handleCancel} 
                 disabled={saving}
                 className="secondary-button"
               >

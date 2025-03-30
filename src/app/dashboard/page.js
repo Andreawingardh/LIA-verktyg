@@ -85,7 +85,9 @@ export default function DashboardPage() {
               <p><strong>E-post:</strong> <a href={`mailto:${companyProfile.email}`}>{companyProfile.email}</a></p>
             </div>
             
-            <EditProfileButton companyId={companyProfile.id} />
+              <EditProfileButton
+              companyId={companyProfile.id}
+              onProfileUpdate={fetchCompanyProfile} />
           </div>
         </div>
       ) : (
