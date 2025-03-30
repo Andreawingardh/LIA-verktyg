@@ -103,7 +103,7 @@ function ContactForm() {
       localStorage.removeItem("hasLogo");
       localStorage.removeItem("hasDisplayImage");
 
-      router.push("/signupSuccess");
+      router.push("/dashboard");
     } catch (err) {
       console.error("Error in Contact:", err);
       setError(err.message || "Ett fel uppstod när profilen skulle skapas");
