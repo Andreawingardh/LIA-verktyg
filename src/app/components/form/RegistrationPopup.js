@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '../../../utils/supabase/client';
-import './popup.css';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "../../../utils/supabase/client";
+import "./popup.css";
 
 export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const router = useRouter();
@@ -23,34 +23,33 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     e.preventDefault();
     setLoading(true);
     setError("");
-    
+
     try {
-      localStorage.setItem('registrationEmail', email);
-      localStorage.setItem('registrationPassword', password);
-      localStorage.setItem('registrationStep', 'baseInfo');
-      
+      localStorage.setItem("registrationEmail", email);
+      localStorage.setItem("registrationPassword", password);
+      localStorage.setItem("registrationStep", "baseInfo");
+
       onClose();
-      
-      router.push('/company/baseInfo');
+
+      router.push("/company/baseInfo");
     } catch (err) {
-      console.error('Registration error:', err);
+      console.error("Registration error:", err);
       setError("Ett fel uppstod vid registrering");
     } finally {
       setLoading(false);
     }
   };
-  
+
   return (
-    <div 
-      className="popup-overlay" 
-      style={{ display: isOpen ? 'flex' : 'none' }}
+    <div
+      className="popup-overlay"
+      style={{ display: isOpen ? "flex" : "none" }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>
-          <p>Stäng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -64,7 +63,8 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             />
           </svg>
         </button>
-        
+        <p>Stäng</p>
+
         <h2>Skapa Företagskonto</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">E-post</label>

@@ -45,8 +45,9 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
 
   return (
     <>
-      <h2>Logga in</h2> 
-      <form onSubmit={handleSubmit}>
+      <div className='formwrapper'>
+        <form onSubmit={handleSubmit}>
+          <section>
         <label htmlFor="email">E-post</label>
         <input 
           id="email" 
@@ -56,9 +57,10 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
           placeholder="Skriv din inloggningsmail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+            />
+            </section>
+          <section>
         <label htmlFor="password">Lösenord</label>
-        <a href=''>Glömt ditt lösenord?</a>
         <input 
           id="password" 
           name="password" 
@@ -68,18 +70,23 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit">Logga in</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            </section>
+        </form>
+        <a href=''>Glömt ditt lösenord?</a>
+    </div >
+         <footer>
+      <button type="submit">Logga in</button>
         <div className="auth-buttons">
           <button
-            type="button"
-            className="login-btn"
+              type="button"
+              className="register-btn"
             onClick={(e) => handleRegisterClick(e)}
           >
-            Inget konto? Skapa nu
-          </button>
+            Skapa konto istället
+            </button>
         </div>
-      </form>
+        </footer>
     </>
   );
 }
