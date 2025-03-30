@@ -482,7 +482,7 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
                 disabled={saving}
                 className="secondary-button"
               >
-                Avbryt
+                Avbryt Registrering
               </button>
               <button 
                 type="submit" 
