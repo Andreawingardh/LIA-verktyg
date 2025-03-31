@@ -1,0 +1,117 @@
+img {
+    width: 24.375rem;
+    height: 15.25rem;
+    flex-shrink: 0;
+    background: lightgray 50% / cover no-repeat;
+}
+
+.logo {
+    display: flex;
+    width: 7.4375rem;
+    height: 2.75rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background: #757575;
+}
+
+p {
+    /* Style */
+    color: var(--base-accent-foreground, #0F1314);
+    font-feature-settings: 'liga' off, 'clig' off;
+
+    /* body/leading-normal/medium */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-base-font-size, 1rem);
+    font-style: normal;
+    font-weight: var(--font-weight-medium, 500);
+    line-height: var(--typography-base-sizes-base-line-height, 1.5rem); /* 150% */
+    letter-spacing: 0.0125rem;
+    color: #0F1314;
+
+    /* Layout */
+    align-self: stretch;
+}
+
+a {
+    /* Layout */
+    align-self: stretch;
+
+    /* Typography */
+    color: var(--base-foreground, #0F1314);
+    font-feature-settings: 'liga' off, 'clig' off;
+
+    /* body/leading-normal/medium */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-base-font-size, 1rem);
+    font-style: normal;
+    font-weight: var(--font-weight-medium, 500);
+    line-height: var(--typography-base-sizes-base-line-height, 1.5rem); /* 150% */
+    letter-spacing: 0.0125rem;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+}
+
+h3 {
+    /* Layout */
+    align-self: stretch;
+
+    /* Typography */
+    color: var(--base-foreground, #0F1314);
+    font-feature-settings: 'liga' off, 'clig' off;
+
+    /* heading-3/leading-normal/regular */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-3x-large-font-size, 30px);
+    font-style: normal;
+    font-weight: var(--font-weight-normal, 400);
+    line-height: var(--typography-base-sizes-3x-large-line-height, 36px); /* 120% */
+    letter-spacing: -0.8px;
+}
+
+h5 {
+    /* Layout */
+    align-self: stretch;
+
+    /* Typography */
+    color: var(--base-foreground, #0F1314);
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 1.5rem */
+}
+
+button {
+    /* Layout */
+    display: flex;
+    height: var(--height-h-11, 2.75rem);
+    padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-2, 0.5rem);
+    border-radius: var(--border-radius-full, 9999px);
+    border: 1px solid var(--base-secondary, #001A52);
+    background: var(--base-secondary, #001A52);
+    display: flex;
+    height: var(--height-h-11, 44px);
+    padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+}
+
+.lia-positions-block {
+    /* Layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+
+}
