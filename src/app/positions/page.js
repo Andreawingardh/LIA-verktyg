@@ -4,15 +4,15 @@ import styles from "../page.module.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Companies() {
-  const [companiesData, setCompaniesData] = useState([]);
+export default function Positions() {
+  const [positionData, setPositionData] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const { data, error } = await supabase
-          .from('companies')
+          .from('positions')
           .select();
 
         if (error) {
@@ -20,7 +20,7 @@ export default function Companies() {
           return;
         }
 
-        setCompaniesData(data || []);
+        setPositionData(data || []);
       } catch (e) {
         setError(e);
         console.error(e);
@@ -36,12 +36,12 @@ export default function Companies() {
     return (
       <div className={styles.page}>
         <main className={styles.main}>
-          <h1>Welcome to company</h1>
+          <h1>Welcome to Positions</h1>
           {/* <p>Post: {router.query.id}</p> */}
-          {companiesData.map((company) => (
-            <p key={company.id}>
-              <Link href={`/companies/${company.id}`}>
-                {company.name}
+          {positionData.map((position) => (
+            <p key={position.id}>
+              <Link href={`/positions/${position.id}`}>
+                {position.title}
               </Link>
             </p>
           ))}
