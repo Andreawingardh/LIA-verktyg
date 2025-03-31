@@ -71,12 +71,10 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
           onChange={(e) => setPassword(e.target.value)}
         />
             {error && <p style={{ color: "red" }}>{error}</p>}
-            </section>
-        </form>
-        <a href=''>Glömt ditt lösenord?</a>
-    </div >
-         <footer>
-      <button type="submit">Logga in</button>
+          </section>
+          <a href=''>Glömt ditt lösenord?</a>
+          <footer>
+         <button type="submit">Logga in</button>
         <div className="auth-buttons">
           <button
               type="button"
@@ -87,6 +85,11 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
             </button>
         </div>
         </footer>
+  
+        </form>
+        
+    </div >
+         
     </>
   );
 }
