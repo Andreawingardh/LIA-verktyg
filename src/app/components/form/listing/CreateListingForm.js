@@ -31,10 +31,10 @@ export default function CreateListingForm({user}) {
             try {
                 setLoading(true);
                 const { data: toolsData, error: toolsError } = await supabase
-                    .from("tags_tools")
+                    .from("skills_webbutvecklare")
                     .select('*');
                 const { data: skillsData, error: skillsError } = await supabase
-                    .from("tags_skills")
+                    .from("skills_digitaldesigner")
                     .select('*');
 
                 if (toolsError || skillsError) throw error;
