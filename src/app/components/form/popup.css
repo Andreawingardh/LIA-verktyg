@@ -61,20 +61,22 @@
 }
 
 .popup-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 1000;
   color: black;
   opacity: 1;
   transition: opacity 0.2s ease-in-out;
   gap: var(--spacing-8, 2rem);
+  padding-top: 5vh; /* Add some padding at the top */
+  padding-bottom: 5vh;
 }
 
 .popup-content {
@@ -113,28 +115,24 @@
 }
 
 .close-btn {
-  background-color: transparent;
   display: flex;
-  height: var(--height-h-11, 2.75rem);
-  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
+  height: var(--height-h-11, 44px);
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-2, 0.5rem);
-  color: black;
-  cursor: pointer;
-  z-index: 1002;
-  position: relative;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 9999px);
   color: var(--base-foreground, #0f1314);
-  border: 0px;
   font-feature-settings: "liga" off, "clig" off;
 
   /* body/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
-  line-height: var(--typography-base-sizes-base-line-height, 1.5rem); /* 150% */
-  letter-spacing: 0.0125rem;
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  background-color: transparent;
+  border: none;
 }
 
 .button-group {
@@ -175,7 +173,6 @@ section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
 }
 
@@ -278,14 +275,6 @@ button {
   letter-spacing: 0.0125rem;
 }
 
-button:focus {
-  border: 2px solid var(--base-primary, #e51236);
-}
-
-button:hover {
-  background: transparent;
-  color: black;
-}
 footer {
   display: flex;
   flex-direction: column;
@@ -333,7 +322,6 @@ footer {
   background: rgb(216, 216, 216);
 }
 
-
 .email-error-container {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -341,7 +329,7 @@ footer {
 
 .email-error-container .error-message {
   margin-bottom: 0.25rem;
-}/* Add these styles to your popup.css or create a new CSS file */
+} /* Add these styles to your popup.css or create a new CSS file */
 
 .form-group {
   margin-bottom: 1rem;
@@ -413,3 +401,375 @@ footer {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
+
+.tabs,
+.tabGroup {
+  display: flex;
+  /* height: var(--height-h-11, 44px); */
+  padding: 4px;
+  flex-direction: row;
+  align-items: center;
+  align-self: stretch;
+  border-radius: var(--border-radius-lg, 10px);
+  background: var(--base-muted, #e4e9eb);
+  border: none;
+  color: var(--base-muted-foreground, #495b62);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.button {
+  display: flex;
+  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.positionButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3, 12px);
+  align-self: stretch;
+}
+
+.role-text,
+.formLabel {
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-none/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 100%; /* 16px */
+  letter-spacing: 0.2px;
+}
+
+.button,
+.tab {
+  display: flex;
+  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+  border: 0px;
+  border-radius: var(--border-radius-md, 6px);
+  background-color: transparent;
+  color: var(--base-muted-foreground, #495b62);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.activeButton,
+.activeTab {
+  display: flex;
+  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: var(--border-radius-md, 6px);
+  background: var(--base-background, #fff);
+  border: none;
+
+  color: var(--base-foreground, #0f1314);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.skillsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  flex-direction: row;
+}
+
+.skillsPicked {
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-none/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 100%; /* 16px */
+  letter-spacing: 0.2px;
+}
+.skillsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3, 12px);
+  align-self: stretch;
+}
+
+.skillsGrid {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.skills-title {
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-none/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 100%; /* 16px */
+  letter-spacing: 0.2px;
+}
+
+.skillButton {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: 0px var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-border, #b3c1c7);
+  background: var(--base-background, #fff);
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.selectedSkillButton {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: 0px var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  border: none;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 9999px);
+  background: var(--base-card, #f0f2f4);
+  color: var(--base-card-foreground, #283236);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3, 12px);
+  align-self: stretch;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-8, 32px);
+  align-self: stretch;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 0px;
+  font-weight: 500;
+}
+
+/* .tabGroup {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-1, 4px);
+  align-items: center;
+  align-self: stretch;
+  border-radius: var(--border-radius-lg, 10px);
+  background: var(--base-muted, #e4e9eb);
+} */
+
+/* .tab,
+.activeTab {
+  padding: 8px 16px;
+  border: none;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 40px;
+  text-align: center;
+  color: black;
+} */
+
+/* .activeTab {
+  background-color: #c8ccd1;
+} */
+
+.tab:hover,
+.button:hover,
+.skillButton:hover {
+  background-color: #c8ccd1;
+}
+
+.submitButton {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-secondary, #001a52);
+
+  color: var(--base-secondary-foreground, #fff);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.submitButton:hover {
+  background: #004bec;
+  color: var(--base-secondary-foreground, #fff);
+}
+
+.footer-positions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+}
+
+.popup-title {
+  flex: 1 0 0;
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* heading-4/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-xlarge-font-size, 20.25px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 140%; /* 28.35px */
+  letter-spacing: -0.1px;
+}
+
+.skills-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  max-height: 130px; /* Show approximately 2 rows of buttons */
+}
+
+.skills-container.expanded {
+  max-height: none;
+}
+
+/* Fade effect for collapsed skills */
+.skills-fade {
+  width: 310px;
+  height: var(--width-w-6, 24px);
+  position: absolute;
+  bottom: 0px;
+  background: linear-gradient(
+    0deg,
+    var(--base-background, #fff) 0%,
+    var(--alpha-10, rgba(255, 255, 255, 0.1)) 100%
+  );
+  z-index: 10;
+}
+
+/* Show more/less button */
+.show-more-btn {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  background-color: transparent;
+  border: none;
+  align-self: stretch;
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.show-more-btn:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.show-more-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.show-more-btn.expanded svg {
+  transform: rotate(180deg);
+}
+
+
+
+
+
