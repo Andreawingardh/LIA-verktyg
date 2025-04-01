@@ -2,8 +2,9 @@
 import { supabase } from "@/utils/supabase/client";
 import { useState } from "react";
 import React from "react";
+import styles from './position.module.css';
 
-export default function CreateListingForm({ user }) {
+export default function CreatePositionForm({ user }) {
   const [formData, setFormData] = useState({
     user_id: user.id,
   });
@@ -153,6 +154,7 @@ export default function CreateListingForm({ user }) {
         name="webbutvecklare"
         value="Webbutvecklare"
         onClick={handleTitleChange}
+        className={styles.tabButton}
       >
         Webbutvecklare
       </button>

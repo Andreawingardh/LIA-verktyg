@@ -2,7 +2,7 @@
 
 import { redirect } from "next/dist/server/api-utils";
 import AuthenticationCheck from "../../auth/AuthenticationCheck";
-import CreateListingForm from "../../components/form/listing/CreateListingForm-inserts";
+import CreatePositionForm from "../../components/form/position/CreatePositionForm";
 import styles from "../../page.module.css";
 import { useSupabaseAuth } from "@/hook/useSupabaseAuth";
 
@@ -14,5 +14,5 @@ export default function Listings() {
     return <p>You must be logged in to create a listing.</p>;
   }
 
-  return <CreateListingForm user={user} />;
+  return <CreatePositionForm user={user} />;
 }
