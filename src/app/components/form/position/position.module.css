@@ -1,0 +1,15 @@
+.tabButton {
+  /* Layout */
+  display: flex;
+  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+  background-color: #E4E9EB;
+
+  /*Style */
+  border-radius: var(--border-radius-md, 6px);
+
+}

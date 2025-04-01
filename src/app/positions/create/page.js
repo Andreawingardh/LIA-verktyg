@@ -1,20 +1,18 @@
+"use client";
+
 import { redirect } from "next/dist/server/api-utils";
 import AuthenticationCheck from "../../auth/AuthenticationCheck";
-import CreateListingForm from "../../components/form/listing/CreateListingForm";
+import CreatePositionForm from "../../components/form/position/CreatePositionForm";
 import styles from "../../page.module.css";
-import { createClient } from "@/utils/supabase/server";
+import { useSupabaseAuth } from "@/hook/useSupabaseAuth";
 
-export default async function Listings() {
+export default function Listings() {
+  const { user, loading: authLoading } = useSupabaseAuth();
+  console.log(user);
 
-  const supabase = await createClient()
-  const { data: { user }, error } = await supabase.auth.getUser()
-
-  if (error || !user) {
-    return <p>You must be logged in to create a listing.</p>
+  if (!user) {
+    return <p>You must be logged in to create a listing.</p>;
   }
 
-  return <CreateListingForm user={user} />
-
+  return <CreatePositionForm user={user} />;
 }
-  
-  
