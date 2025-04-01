@@ -1,15 +1,141 @@
-.tabButton {
-  /* Layout */
+:root{
+--base-foreground: #0f1314;
+  --base-background: #fff;
+  --base-muted-foreground: #495b62;
+  --base-input: #bfbfbf;
+  --base-link: #00287e;
+  --base-secondary: #001a52;
+  --base-secondary-foreground: #fff;
+  --colors-base-transparent: #fff0;
+  --typography-font-family-font-sans: Inter, sans-serif;
+  --typography-base-sizes-base-font-size: 1rem;
+  --typography-base-sizes-base-line-height: 1.5rem;
+  --typography-base-sizes-xlarge-font-size: 1.25rem;
+  --typography-base-sizes-large-line-height: 1.75rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --spacing-1: .25rem;
+  --spacing-2: .5rem;
+  --spacing-3: .75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --height-h-11: 2.75rem;
+  --width-w-80: 20rem;
+  --border-radius-lg: .625rem;
+  --border-radius-xl: .75rem;
+  --border-radius-full: 1rem;
+}
+
+.positionButtons {
   display: flex;
-  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2, 8px);
-  flex: 1 0 0;
-  align-self: stretch;
-  background-color: #E4E9EB;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-  /*Style */
-  border-radius: var(--border-radius-md, 6px);
+.button,
+.activeButton,
+.skillButton,
+.selectedSkillButton,
+.submitButton {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #ddd;
+}
 
+.button {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.activeButton {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.skillsSection {
+  margin: 20px 0;
+}
+
+.skillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.skillButton {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.selectedSkillButton {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.skillButton:hover, 
+.button:hover {
+  background-color: #edf2f7;
+}
+
+.selectedSkillButton:hover {
+  background-color: #2563eb;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.tabGroup {
+  display: flex;
+  overflow: hidden;
+  width: fit-content;
+  border-radius: var(--border-radius-lg, 10px);
+}
+
+.tab, 
+.activeTab {
+  padding: 8px 16px;
+  border: none;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 40px;
+  text-align: center;
+  color: black;
+}
+
+
+.activeTab {
+  background-color: #c8ccd1;
+}
+
+.tab:hover {
+  background-color: #c8ccd1;
+}
+
+.submitButton {
+  background-color: #10b981;
+  border-color: #10b981;
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.submitButton:hover {
+  background-color: #059669;
 }
