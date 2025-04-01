@@ -1,22 +1,15 @@
 "use client";
 import { supabase } from "@/utils/supabase/client";
 import { useState } from "react";
-import { useEffect } from "react";
 import React from "react";
-import { useRouter } from "next/navigation";
-import { useStyleRegistry } from "styled-jsx";
-import { useSupabaseAuth } from "@/hook/useSupabaseAuth";
 
 export default function CreateListingForm({ user }) {
-    const router = useRouter();
+  const [formData, setFormData] = useState({
+    user_id: user.id,
+  });
+  console.log(formData);
 
-    const [formData, setFormData] = useState({
-        user_id: user.id,
-        // other initial form fields
-    });
-    console.log(formData);
-    
-    const [selectedTable, setSelectedTable] = useState([])
+  const [selectedTable, setSelectedTable] = useState([]);
 
   const [skillsOptions, setSkillsOptions] = useState([]);
   const [softwareOptions, setSoftwareOptions] = useState([]);
@@ -69,8 +62,8 @@ export default function CreateListingForm({ user }) {
       console.log("Position inserted successfully", insertData);
 
       // Assuming insertData is an array with the inserted row
-        const positionId = insertData[0].id;
-        console.log(positionId)
+      const positionId = insertData[0].id;
+      console.log(positionId);
 
       // Prepare skills data for insertion
       const skillsToInsert = selectedSkills.map((skill) => ({
@@ -103,11 +96,11 @@ export default function CreateListingForm({ user }) {
 
   async function handleTitleChange(e) {
     e.preventDefault();
-      setFormData((prevState) => ({
-        ...prevState,
+    setFormData((prevState) => ({
+      ...prevState,
       title: e.target.value,
-      }));
-      setSelectedTable(e.target.name)
+    }));
+    setSelectedTable(e.target.name);
     try {
       setLoading(true);
 
@@ -156,10 +149,18 @@ export default function CreateListingForm({ user }) {
         Welcome, {user.email} with id {user.id}
       </h2>
       <h2>Lägg in LIA-position</h2>
-      <button name="webbutvecklare" value="Webbutvecklare" onClick={handleTitleChange}>
+      <button
+        name="webbutvecklare"
+        value="Webbutvecklare"
+        onClick={handleTitleChange}
+      >
         Webbutvecklare
       </button>
-      <button name="digitaldesigner" value="Digital designer" onClick={handleTitleChange}>
+      <button
+        name="digitaldesigner"
+        value="Digital designer"
+        onClick={handleTitleChange}
+      >
         Digital designer
       </button>
       <label htmlFor="spots">Antal platser</label>
@@ -187,7 +188,6 @@ export default function CreateListingForm({ user }) {
               value={skill.skills_name}
               data-skill-id={skill.id} // Add the skill ID as a data attribute
               onChange={setSkillsChange}
-
             />
             <label htmlFor={`skill-${skill.id}`}>{skill.skills_name}</label>
           </li>
