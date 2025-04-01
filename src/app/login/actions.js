@@ -4,23 +4,62 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
+// Validation helper functions
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isStrongPassword(password) {
+  // Check minimum length
+  if (password.length < 8) return false;
+  
+  // Check for uppercase, lowercase, number, and special character
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  
+  return hasUppercase && hasLowercase && hasNumber && hasSpecial;
+}
+
 export async function login(formData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email"),
-    password: formData.get("password"),
-  };
+  const email = formData.get("email");
+  const password = formData.get("password");
+  
+  // Basic validation
+  if (!email || !password) {
+    redirect("/?error=" + encodeURIComponent("E-post och lösenord krävs"));
+  }
+  
+  if (!isValidEmail(email)) {
+    redirect("/?error=" + encodeURIComponent("Ogiltig e-postadress"));
+  }
 
-  const { data: authData, error } = await supabase.auth.signInWithPassword(data);
+  const { data: authData, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
     console.log("Login error details:", error.message);
-    redirect("/?error=" + encodeURIComponent(error.message));
+    
+    // Map Supabase error messages to user-friendly errors
+    let errorMessage;
+    if (error.message.includes("Invalid login credentials")) {
+      errorMessage = "Fel e-post eller lösenord";
+    } else if (error.message.includes("Email not confirmed")) {
+      errorMessage = "Din e-post har inte bekräftats. Kolla din inbox";
+    } else if (error.message.includes("Too many requests")) {
+      errorMessage = "För många inloggningsförsök. Vänligen försök igen senare";
+    } else {
+      errorMessage = error.message;
+    }
+    
+    redirect("/?error=" + encodeURIComponent(errorMessage));
   }
-
 
   console.log("Login successful for:", authData.user.email);
 
@@ -31,44 +70,67 @@ export async function login(formData) {
 export async function createAccount(formData) {
   const supabase = await createClient();
 
-  // Make sure we have email and password
+  // Extract form data
   const email = formData.get("email");
   const password = formData.get("password");
   const name = formData.get("name");
 
+  // Validation
   if (!email || !password) {
-    console.log("Email and password are required");
-    return { error: "Email and password are required" };
+    return { error: "E-post och lösenord krävs" };
+  }
+  
+  if (!isValidEmail(email)) {
+    return { error: "Ogiltig e-postadress" };
+  }
+  
+  if (!isStrongPassword(password)) {
+    return { 
+      error: "Lösenordet uppfyller inte säkerhetskraven" 
+    };
   }
 
-  // The signUp method expects this specific structure
-  const { data: authData, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        display_name: name,
+  // Try to create the account
+  try {
+    // The signUp method expects this specific structure
+    const { data: authData, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          display_name: name,
+        },
       },
-    },
-  });
+    });
 
-  if (error) {
-    console.log("Signup error details:", error.message);
-    return { error: error.message };
+    if (error) {
+      console.log("Signup error details:", error.message);
+      
+      // Map error messages to user-friendly errors
+      if (error.message.includes("already registered")) {
+        return { error: "E-postadressen är redan registrerad" };
+      }
+      
+      return { error: error.message };
+    }
+
+    return { success: true, user: authData?.user };
+  } catch (err) {
+    console.error("Unexpected error during account creation:", err);
+    return { error: "Ett oväntat fel uppstod" };
   }
-
-  return { success: true, user: authData?.user };
 }
 
 export async function signup(formData) {
   const supabase = await createClient();
   const {
     data: { user },
-    error,
+    error: userError,
   } = await supabase.auth.getUser();
 
-  if (error || !user) {
-    console.log("User not found:", error?.message);
+  if (userError || !user) {
+    console.log("User not found:", userError?.message);
+    redirect("/?error=" + encodeURIComponent("Du måste vara inloggad för att skapa en företagsprofil"));
   }
 
   const companyName = formData.get("companyName");
@@ -76,6 +138,21 @@ export async function signup(formData) {
   const location = formData.get("location");
   const website = formData.get("website");
   const contactEmail = formData.get("contactEmail");
+
+  // Validation
+  if (!companyName || !contactEmail) {
+    redirect("/?error=" + encodeURIComponent("Företagsnamn och e-post krävs"));
+  }
+  
+  if (contactEmail && !isValidEmail(contactEmail)) {
+    redirect("/?error=" + encodeURIComponent("Ogiltig e-postadress"));
+  }
+  
+  if (website && !website.startsWith("http")) {
+    // Simple website validation
+    const websiteValue = website.startsWith("www.") ? `https://${website}` : `https://www.${website}`;
+    formData.set("website", websiteValue);
+  }
 
   console.log(companyName, user);
 
@@ -92,19 +169,17 @@ export async function signup(formData) {
         user_id: user.id,
       });
     
-    if (error) throw error;
+    if (insertError) {
+      console.error("Error inserting data:", insertError);
+      redirect("/?error=" + encodeURIComponent(insertError.message));
+    }
 
     console.log("Data inserted successfully", formData);
 
     // Reset form or show success message
   } catch (error) {
     console.error("Error inserting data:", error);
-    console.error("Full response:", { data, error });
-  }
-
-  if (error) {
-    console.log("Company profile update error:", error.message);
-    redirect("/?error=" + encodeURIComponent(error.message));
+    redirect("/?error=" + encodeURIComponent("Ett fel uppstod när företaget skulle skapas"));
   }
 
   revalidatePath("/", "layout");
