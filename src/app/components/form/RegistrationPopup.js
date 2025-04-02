@@ -171,29 +171,34 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
         <div className="popup-header">
           <h2>Skapa Företagskonto</h2>
           <button className="close-btn" onClick={onClose}>
-            <svg
+          <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
               fill="none"
             >
               <path
-                d="M1.8 18L0 16.2L7.2 9L0 1.8L1.8 0L9 7.2L16.2 0L18 1.8L10.8 9L18 16.2L16.2 18L9 10.8L1.8 18Z"
-                fill="#1C1B1F"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M3.64645 3.64645C3.84171 3.45118 4.15829 3.45118 4.35355 3.64645L8 7.29289L11.6464 3.64645C11.8417 3.45118 12.1583 3.45118 12.3536 3.64645C12.5488 3.84171 12.5488 4.15829 12.3536 4.35355L8.70711 8L12.3536 11.6464C12.5488 11.8417 12.5488 12.1583 12.3536 12.3536C12.1583 12.5488 11.8417 12.5488 11.6464 12.3536L8 8.70711L4.35355 12.3536C4.15829 12.5488 3.84171 12.5488 3.64645 12.3536C3.45118 12.1583 3.45118 11.8417 3.64645 11.6464L7.29289 8L3.64645 4.35355C3.45118 4.15829 3.45118 3.84171 3.64645 3.64645Z"
+                fill="#0F1314"
               />
             </svg>
-            <p>Stäng</p>
+            <p className="close-btn-text">Stäng</p>
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">E-post</label>
+        <form className="formwrapper" onSubmit={handleSubmit}>
+        <div className='inputSingle'>
+        <article className='inputHeader'>
+              <label className="popupTitle" htmlFor="email">E-post</label>
+              </article>
             <input
               id="email"
               name="email"
-              type="email"
+                type="email"
+                className="inputs"
               required
               placeholder="Skriv din inloggningsmail"
               value={email}
@@ -206,8 +211,8 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
                 }
               }}
               disabled={loading}
-              className={errors.email ? "input-error" : ""}
             />
+            
             {errors.email && (
               <div className="email-error-container">
                 <p className="error-message">{errors.email}</p>
@@ -218,12 +223,15 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             )}
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Lösenord</label>
+          <div className='inputSingle'>
+            <article className='inputHeader'>
+              <label className="popupTitle" htmlFor="password">Lösenord</label>
+              </article>
             <input
               id="password"
               name="password"
-              type="password"
+                type="password"
+                className="inputs"
               required
               placeholder="Skriv ett starkt lösenord"
               value={password}
@@ -236,62 +244,64 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
                 }
               }}
               disabled={loading}
-              className={errors.password ? "input-error" : ""}
+              
             />
-           
+            
+            </div>
             {/* Fixed-height container for password requirements to prevent layout shifting */}
           <div className="password-requirements-container">
+           
             {errors.password && errors.passwordRequirements && (
               <>
-                <p className="password-requirements-heading" style={{ color: "#B40509" }}>Lösenordet behöver innehålla:</p>
+                <p className="password-requirements-heading">Lösenordet behöver innehålla:</p>
                 <ul className="password-requirements">
                   {errors.passwordRequirements.includes('minLength') && (
-                    <li className="requirement-error">Minst {passwordRequirements.minLength} tecken</li>
+                    <li className="requirement-error">Minst {passwordRequirements.minLength} karaktärer</li>
                   )}
                   {errors.passwordRequirements.includes('uppercase') && (
-                    <li className="requirement-error">Minst en stor bokstav</li>
-                  )}
-                  {errors.passwordRequirements.includes('lowercase') && (
-                    <li className="requirement-error">Minst en liten bokstav</li>
+                    <li className="requirement-error">Minst 1 stor bokstav (A, B, C)</li>
                   )}
                   {errors.passwordRequirements.includes('number') && (
-                    <li className="requirement-error">Minst en siffra</li>
+                    <li className="requirement-error">Minst 1 nummer (1, 2, 3)</li>
                   )}
                   {errors.passwordRequirements.includes('special') && (
-                    <li className="requirement-error">Minst ett specialtecken</li>
+                    <li className="requirement-error">Minst 1 symbol (!, *, #)</li>
                   )}
                 </ul>
               </>
+
             )}
+           <div className="checkbox-group">
+            <input id="checkbox" name="checkbox" type="checkbox" required />
+            <label className="gdpr-text "htmlFor="checkbox">Jag godkänner <a className="gdpr" href="">sekretesspolicy</a></label>
+            
           </div>
             
           </div>
 
-          <div className="checkbox-group">
-            <input id="checkbox" name="checkbox" type="checkbox" required />
-            <label htmlFor="checkbox">Jag godkänner</label>
-            <a href="">sekretesspolicy</a>
-          </div>
+          
 
-          <div className="button-group">
+          <footer className="button-group">
             <button 
               type="submit" 
+              id="createButton"
               disabled={loading || !isFormValid}
               className={!isFormValid ? "button-disabled" : ""}
             >
-              {loading ? "Skapar konto..." : "Skapa Företagsprofil"}
+              {loading ? "Skapar konto..." : "Skapa Företagskonto"}
             </button>
-          </div>
+         
           <div className="auth-buttons">
             <button
               type="button"
-              className="login-btn"
+              className="register-btn"
               onClick={handleLoginClick}
               disabled={loading}
             >
-              Logga in
+              Logga in istället
             </button>
-          </div>
+            </div>
+            </footer>
         </form>
       </div>
     </div>

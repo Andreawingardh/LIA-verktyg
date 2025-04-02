@@ -388,125 +388,179 @@ export default function EditProfileOverlay({
                 fill="#0F1314"
               />
             </svg>
-            <p className="close-btn">Stäng</p>
+            <p className="close-btn-text">Stäng</p>
           </button>
         </div>
 
         {loading ? (
           <div className="loading">Laddar företagsinformation...</div>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <section className="formwrapper">
-              <article className="inputHeader">
-                <label className="company_name" htmlFor="company_name">
-                  Företagsnamn<p>*</p>
+          <form  className="formwrapper" onSubmit={handleSubmit}>
+              <div className="inputSingle">
+                <article className="inputHeader">
+                  <label className="popupTitle" htmlFor="company_name">
+                    Företagsnamn
                   </label>
-                  </article>
+                  <span className="asterix">*</span>
+                </article>
                 <input
                   id="company_name"
                   name="name"
                   type="text"
+                  className="inputs"
                   required
                   value={companyData.name}
                   onChange={handleInputChange}
                   disabled={saving}
                   placeholder="Ditt företagsnamn"
                 />
-              
-
-              <label htmlFor="location">Kontorsort</label>
-              <input
-                id="location"
-                name="location"
-                type="text"
-                required
-                value={companyData.location}
-                onChange={handleInputChange}
-                disabled={saving}
-                placeholder="Var finns ert kontor?"
-              />
-
-              <label htmlFor="description">Företagsbeskrivning</label>
-              <textarea
-                id="description"
-                name="description"
-                required
-                value={companyData.description}
-                onChange={handleInputChange}
-                disabled={saving}
-                placeholder="Berätta om ert företag, er verksamhet och vad ni erbjuder"
-                rows={5}
-              />
-
-              <label htmlFor="website">Hemsida</label>
-              <input
-                id="website"
-                name="website"
-                type="url"
-                required
-                value={companyData.website}
-                onChange={handleInputChange}
-                disabled={saving}
-                placeholder="https://www.dittforetag.se"
-              />
-
-              <label htmlFor="contact_email">Kontaktmail</label>
-              <input
-                id="contact_email"
-                name="email"
-                type="email"
-                required
-                value={companyData.email}
-                onChange={handleInputChange}
-                disabled={saving}
-                placeholder="kontakt@dittforetag.se"
-              />
-
-              <label htmlFor="logo">Företagslogotyp</label>
-              <div className="file-input-container">
-                <input
-                  id="logo"
-                  name="logo"
-                  type="file"
-                  onChange={handleLogoChange}
-                  disabled={saving}
-                  accept="image/*"
-                />
-                {logoPreview && (
-                  <div className="image-preview">
-                    <img
-                      src={logoPreview}
-                      alt="Företagslogotyp förhandsvisning"
-                    />
-                  </div>
-                )}
               </div>
 
-              <label htmlFor="displayImage">Omslagsbild</label>
-              <div className="file-input-container">
+              <div className="inputSingle">
+                <article className="inputHeader">
+                  <label className="popupTitle" htmlFor="location">
+                    Kontorsort
+                  </label>
+                </article>
                 <input
-                  id="displayImage"
-                  name="displayImage"
-                  type="file"
-                  onChange={handleDisplayImageChange}
+                  id="location"
+                  name="location"
+                  type="text"
+                  className="inputs"
+                  required
+                  value={companyData.location}
+                  onChange={handleInputChange}
                   disabled={saving}
-                  accept="image/*"
+                  placeholder="Var finns ert kontor?"
                 />
-                {displayImagePreview && (
-                  <div className="image-preview">
-                    <img
-                      src={displayImagePreview}
-                      alt="Omslagsbild förhandsvisning"
-                    />
-                  </div>
-                )}
+              </div>
+
+              <div className="inputSingle">
+                <article className="inputHeader">
+                  <label className="popupTitle" htmlFor="website">
+                    Hemsida
+                  </label>
+                </article>
+                <input
+                  id="website"
+                  name="website"
+                  type="url"
+                  className="inputs"
+                  required
+                  value={companyData.website}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                  placeholder="https://www.dittforetag.se"
+                />
+              </div>
+
+              <div className="inputSingle">
+                <article className="inputHeader">
+                  <label className="popupTitle" htmlFor="contact_email">
+                    Kontaktmail
+                  </label>
+                </article>
+                <input
+                  id="contact_email"
+                  name="email"
+                  type="email"
+                  className="inputs"
+                  required
+                  value={companyData.email}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                  placeholder="kontakt@dittforetag.se"
+                />
+              </div>
+
+              <div className="inputSingle">
+                <article className="inputHeader">
+                  <label className="popupTitle" htmlFor="description">
+                    Företagsbeskrivning
+                  </label>
+                </article>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="descriptionInput"
+                  required
+                  value={companyData.description}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                  placeholder="Berätta om ert företag, er verksamhet och vad ni erbjuder"
+                  rows={5}
+                />
+              </div>
+
+              <div className="inputSingle">
+                <article className="inputHeader">
+                  <label className="popupTitle" htmlFor="logo">
+                    Företagslogotyp
+                  </label>
+                </article>
+                <div className="file-input-container">
+                  <input
+                    id="logo"
+                    name="logo"
+                    type="file"
+                   
+                    onChange={handleLogoChange}
+                    disabled={saving}
+                    accept="image/*"
+                  />
+                  {logoPreview && (
+                    <div className="image-preview">
+                      <img
+                        src={logoPreview}
+                        alt="Företagslogotyp förhandsvisning"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="inputSingle">
+                <article className="inputHeader">
+                  <label className="popupTitle" htmlFor="displayImage">
+                    Omslagsbild
+                  </label>
+                </article>
+                <div className="file-input-container">
+                
+                  <input
+                    id="displayImage"
+                    name="displayImage"
+                    type="file"
+                   
+                    onChange={handleDisplayImageChange}
+                    disabled={saving}
+                    accept="image/*"
+                  />
+                  
+                  {displayImagePreview && (
+                    <div className="image-preview">
+                      <img
+                        src={displayImagePreview}
+                        alt="Omslagsbild förhandsvisning"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               {error && <p className="error-message">{error}</p>}
               {success && <p className="success-message">{success}</p>}
-            </section>
+         
 
             <div className="button-group">
+              <button
+                type="submit"
+                disabled={saving}
+                className="primary-button"
+              >
+                {saving ? "Sparar..." : "Spara Ändringar"}
+              </button>
+
               <button
                 type="button"
                 onClick={handleCancel}
@@ -514,13 +568,6 @@ export default function EditProfileOverlay({
                 className="secondary-button"
               >
                 Avbryt Registrering
-              </button>
-              <button
-                type="submit"
-                disabled={saving}
-                className="primary-button"
-              >
-                {saving ? "Sparar..." : "Spara Ändringar"}
               </button>
             </div>
           </form>

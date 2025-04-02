@@ -104,7 +104,7 @@ export default function EditPositionOverlay({
                 fill="#0F1314"
               />
             </svg>
-            <p className="close-btn">Avbryt</p>
+            <p className="close-btn-text">Avbryt</p>
           </button>
         </div>
 

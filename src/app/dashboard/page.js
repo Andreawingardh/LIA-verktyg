@@ -22,7 +22,7 @@ export default function DashboardPage() {
       fetchPositions();
     } else if (!authLoading && !user) {
       // Redirect to login if not authenticated
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   }, [user, authLoading]);
 

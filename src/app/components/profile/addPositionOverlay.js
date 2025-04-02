@@ -42,7 +42,7 @@ export default function AddPositionOverlay({
                 fill="#0F1314"
               />
             </svg>
-            <p className="close-btn">Stäng</p>
+            <p className="close-btn-text">Stäng</p>
           </button>
         </div>
 
