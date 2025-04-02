@@ -1,21 +1,25 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { supabase } from '../../../utils/supabase/client';
-import { useSupabaseAuth } from '../../../hook/useSupabaseAuth';
-import '../form/popup.css';
+import { useState, useEffect } from "react";
+import { supabase } from "../../../utils/supabase/client";
+import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
+import "../form/popup.css";
 
+const FORM_STORAGE_KEY = "company_edit_form_data";
 
-const FORM_STORAGE_KEY = 'company_edit_form_data';
-
-export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfileUpdate }) {
+export default function EditProfileOverlay({
+  isOpen,
+  onClose,
+  companyId,
+  onProfileUpdate,
+}) {
   const { user } = useSupabaseAuth();
   const [companyData, setCompanyData] = useState({
-    name: '',
-    description: '',
-    location: '',
-    website: '',
-    email: ''
+    name: "",
+    description: "",
+    location: "",
+    website: "",
+    email: "",
   });
   const [logoPreview, setLogoPreview] = useState(null);
   const [displayImagePreview, setDisplayImagePreview] = useState(null);
@@ -23,9 +27,9 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
   const [newDisplayImage, setNewDisplayImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [formId, setFormId] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [formId, setFormId] = useState("");
 
   // Generate a unique form ID when the overlay opens
   useEffect(() => {
@@ -50,44 +54,47 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
         formData: companyData,
         logoPreview,
         displayImagePreview,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
-      
-      localStorage.setItem(`${FORM_STORAGE_KEY}_${formId}`, JSON.stringify(dataToSave));
+
+      localStorage.setItem(
+        `${FORM_STORAGE_KEY}_${formId}`,
+        JSON.stringify(dataToSave)
+      );
     }
   }, [companyData, logoPreview, displayImagePreview, formId, isOpen]);
 
   // Add event listeners for tab visibility changes
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && formId) {
+      if (document.visibilityState === "visible" && formId) {
         // When tab becomes visible again, check for saved data
         const savedData = localStorage.getItem(`${FORM_STORAGE_KEY}_${formId}`);
         if (savedData) {
           try {
             const parsedData = JSON.parse(savedData);
             setCompanyData(parsedData.formData);
-            
+
             if (parsedData.logoPreview) {
               setLogoPreview(parsedData.logoPreview);
             }
-            
+
             if (parsedData.displayImagePreview) {
               setDisplayImagePreview(parsedData.displayImagePreview);
             }
-            
-            console.log('Restored form data after tab switch');
+
+            console.log("Restored form data after tab switch");
           } catch (err) {
-            console.error('Error parsing saved form data', err);
+            console.error("Error parsing saved form data", err);
           }
         }
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [formId]);
 
@@ -101,55 +108,54 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
   useEffect(() => {
     console.log("Company data updated:", companyData);
   }, [companyData]);
-  
 
   const fetchCompanyData = async () => {
     setLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
       // Query based on companyId if provided, otherwise use the logged-in user
-      const query = supabase
-        .from('companies')
-        .select('*');
-        
+      const query = supabase.from("companies").select("*");
+
       if (companyId) {
-        query.eq('id', companyId);
+        query.eq("id", companyId);
       } else if (user) {
-        query.eq('user_id', user.id);
+        query.eq("user_id", user.id);
       } else {
-        throw new Error('Ingen företagsprofil hittades');
+        throw new Error("Ingen företagsprofil hittades");
       }
-      
+
       const { data, error: fetchError } = await query.single();
-      
+
       if (fetchError) throw fetchError;
-      if (!data) throw new Error('Ingen företagsprofil hittades');
-      
-      
+      if (!data) throw new Error("Ingen företagsprofil hittades");
+
       // Check if we have saved draft data from a previous edit
       const savedData = localStorage.getItem(`${FORM_STORAGE_KEY}_${formId}`);
-      
+
       if (savedData) {
         // We have saved draft data, use it
         try {
           const parsedData = JSON.parse(savedData);
-          console.log('Found saved draft data', parsedData);
+          console.log("Found saved draft data", parsedData);
           setCompanyData(parsedData.formData);
-          
+
           if (parsedData.logoPreview) {
             setLogoPreview(parsedData.logoPreview);
-          } else if (data.logo_url && data.logo_url !== 'pending') {
+          } else if (data.logo_url && data.logo_url !== "pending") {
             setLogoPreview(data.logo_url);
           }
-          
+
           if (parsedData.displayImagePreview) {
             setDisplayImagePreview(parsedData.displayImagePreview);
-          } else if (data.display_image_url && data.display_image_url !== 'pending') {
+          } else if (
+            data.display_image_url &&
+            data.display_image_url !== "pending"
+          ) {
             setDisplayImagePreview(data.display_image_url);
           }
         } catch (err) {
-          console.error('Error parsing saved draft data', err);
+          console.error("Error parsing saved draft data", err);
           // Fall back to the fetched data
           populateFormWithFetchedData(data);
         }
@@ -158,40 +164,42 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
         populateFormWithFetchedData(data);
       }
     } catch (err) {
-      console.error('Error fetching company data:', err);
-      setError('Kunde inte hämta företagsinformation: ' + (err.message || 'Okänt fel'));
+      console.error("Error fetching company data:", err);
+      setError(
+        "Kunde inte hämta företagsinformation: " + (err.message || "Okänt fel")
+      );
     } finally {
       setLoading(false);
     }
   };
 
-   // Helper function to populate the form with fetched data
-   const populateFormWithFetchedData = (data) => {
-    console.log('Populating form with fetched data', data);
+  // Helper function to populate the form with fetched data
+  const populateFormWithFetchedData = (data) => {
+    console.log("Populating form with fetched data", data);
     setCompanyData({
-      name: data.name || '',
-      description: data.description || '',
-      location: data.location || '',
-      website: data.website || '',
-      email: data.email || ''
+      name: data.name || "",
+      description: data.description || "",
+      location: data.location || "",
+      website: data.website || "",
+      email: data.email || "",
     });
-     
-     // Set logo preview if exists
-    if (data.logo_url && data.logo_url !== 'pending') {
+
+    // Set logo preview if exists
+    if (data.logo_url && data.logo_url !== "pending") {
       setLogoPreview(data.logo_url);
     }
-    
+
     // Set display image preview if exists
-    if (data.display_image_url && data.display_image_url !== 'pending') {
+    if (data.display_image_url && data.display_image_url !== "pending") {
       setDisplayImagePreview(data.display_image_url);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCompanyData(prev => ({
+    setCompanyData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -199,7 +207,7 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setNewLogo(file);
-      
+
       // Create preview
       const reader = new FileReader();
       reader.onload = () => {
@@ -213,7 +221,7 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setNewDisplayImage(file);
-      
+
       // Create preview
       const reader = new FileReader();
       reader.onload = () => {
@@ -226,113 +234,117 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    setError('');
-    setSuccess('');
-    
+    setError("");
+    setSuccess("");
+
     try {
       let logoUrl = null;
       let displayImageUrl = null;
-      
+
       // Upload new logo if changed
       if (newLogo) {
-        const fileExt = newLogo.name.split('.').pop();
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+        const fileExt = newLogo.name.split(".").pop();
+        const fileName = `${Date.now()}-${Math.random()
+          .toString(36)
+          .substring(2, 15)}.${fileExt}`;
         const filePath = `company-logos/${fileName}`;
-        
+
         const { error: uploadError } = await supabase.storage
-          .from('companies')
+          .from("companies")
           .upload(filePath, newLogo);
-          
+
         if (uploadError) throw uploadError;
-        
+
         // Get public URL
         const { data } = supabase.storage
-          .from('companies')
+          .from("companies")
           .getPublicUrl(filePath);
-          
+
         logoUrl = data.publicUrl;
       }
-      
+
       // Upload new display image if changed
       if (newDisplayImage) {
-        const fileExt = newDisplayImage.name.split('.').pop();
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+        const fileExt = newDisplayImage.name.split(".").pop();
+        const fileName = `${Date.now()}-${Math.random()
+          .toString(36)
+          .substring(2, 15)}.${fileExt}`;
         const filePath = `company-displays/${fileName}`;
-        
+
         const { error: uploadError } = await supabase.storage
-          .from('companies')
+          .from("companies")
           .upload(filePath, newDisplayImage);
-          
+
         if (uploadError) throw uploadError;
-        
+
         // Get public URL
         const { data } = supabase.storage
-          .from('companies')
+          .from("companies")
           .getPublicUrl(filePath);
-          
+
         displayImageUrl = data.publicUrl;
       }
-      
+
       // Prepare update data
       const updateData = {
         name: companyData.name,
         description: companyData.description,
         location: companyData.location,
         website: companyData.website,
-        email: companyData.email
+        email: companyData.email,
       };
-      
+
       // Add logo url if uploaded
       if (logoUrl) {
         updateData.logo_url = logoUrl;
       }
-      
+
       // Add display image url if uploaded
       if (displayImageUrl) {
         updateData.display_image_url = displayImageUrl;
       }
-      
+
       // Update company profile
-      const query = supabase
-        .from('companies')
-        .update(updateData);
-        
+      const query = supabase.from("companies").update(updateData);
+
       if (companyId) {
-        query.eq('id', companyId);
+        query.eq("id", companyId);
       } else if (user) {
-        query.eq('user_id', user.id);
+        query.eq("user_id", user.id);
       } else {
-        throw new Error('Ingen företagsprofil hittades för uppdatering');
+        throw new Error("Ingen företagsprofil hittades för uppdatering");
       }
-      
+
       const { error: updateError } = await query;
-      
+
       if (updateError) throw updateError;
-      
-      setSuccess('Företagsprofilen har uppdaterats!');
+
+      setSuccess("Företagsprofilen har uppdaterats!");
 
       // Clear saved form data
       if (formId) {
         localStorage.removeItem(`${FORM_STORAGE_KEY}_${formId}`);
       }
-      
+
       // Reset file inputs
       setNewLogo(null);
       setNewDisplayImage(null);
 
-       // Call the callback function with the updated data
-       if (typeof onProfileUpdate === 'function') {
-        console.log('Calling onProfileUpdate with new data:', updateData);
+      // Call the callback function with the updated data
+      if (typeof onProfileUpdate === "function") {
+        console.log("Calling onProfileUpdate with new data:", updateData);
         onProfileUpdate(updateData);
       }
-      
+
       // Close overlay after a brief delay to show success message
       setTimeout(() => {
         onClose();
       }, 1500);
     } catch (err) {
-      console.error('Error updating company profile:', err);
-      setError('Kunde inte uppdatera företagsprofilen: ' + (err.message || 'Okänt fel'));
+      console.error("Error updating company profile:", err);
+      setError(
+        "Kunde inte uppdatera företagsprofilen: " + (err.message || "Okänt fel")
+      );
     } finally {
       setSaving(false);
     }
@@ -349,14 +361,17 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
   if (!isOpen) return null;
 
   return (
-    <div 
-      className="popup-overlay" 
+    <div
+      className="popup-overlay"
       onClick={(e) => {
         if (e.target === e.currentTarget) handleCancel();
       }}
     >
-      <div className="popup-content edit-profile-overlay" onClick={(e) => e.stopPropagation()}>
-      <div className="popup-header">
+      <div
+        className="popup-content edit-profile-overlay"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="popup-header">
           <h2 className="popup-title">Redigera profil</h2>
           <button className="close-btn" onClick={handleCancel}>
             <svg
@@ -376,121 +391,132 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
             <p className="close-btn">Stäng</p>
           </button>
         </div>
-        
+
         {loading ? (
           <div className="loading">Laddar företagsinformation...</div>
         ) : (
-            <form onSubmit={handleSubmit}>
-              <section className='formwrapper'>
-            <label htmlFor="company_name">Företagsnamn</label>
-            <input 
-              id="company_name" 
-              name="name" 
-              type="text" 
-              required 
-              value={companyData.name}
-              onChange={handleInputChange}
-              disabled={saving}
-              placeholder="Ditt företagsnamn"
-            />
+          <form onSubmit={handleSubmit}>
+            <section className="formwrapper">
+              <article className="inputHeader">
+                <label className="company_name" htmlFor="company_name">
+                  Företagsnamn<p>*</p>
+                  </label>
+                  </article>
+                <input
+                  id="company_name"
+                  name="name"
+                  type="text"
+                  required
+                  value={companyData.name}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                  placeholder="Ditt företagsnamn"
+                />
+              
 
-            <label htmlFor="location">Kontorsort</label>
-            <input 
-              id="location" 
-              name="location" 
-              type="text" 
-              required 
-              value={companyData.location}
-              onChange={handleInputChange}
-              disabled={saving}
-              placeholder="Var finns ert kontor?"
-            />
-
-            <label htmlFor="description">Företagsbeskrivning</label>
-            <textarea 
-              id="description" 
-              name="description" 
-              required 
-              value={companyData.description}
-              onChange={handleInputChange}
-              disabled={saving}
-              placeholder="Berätta om ert företag, er verksamhet och vad ni erbjuder"
-              rows={5}
-            />
-
-            <label htmlFor="website">Hemsida</label>
-            <input 
-              id="website" 
-              name="website" 
-              type="url" 
-              required 
-              value={companyData.website}
-              onChange={handleInputChange}
-              disabled={saving}
-              placeholder="https://www.dittforetag.se"
-            />
-
-            <label htmlFor="contact_email">Kontaktmail</label>
-            <input 
-              id="contact_email" 
-              name="email" 
-              type="email" 
-              required 
-              value={companyData.email}
-              onChange={handleInputChange}
-              disabled={saving}
-              placeholder="kontakt@dittforetag.se"
-            />
-
-            <label htmlFor="logo">Företagslogotyp</label>
-            <div className="file-input-container">
-              <input 
-                id="logo" 
-                name="logo" 
-                type="file" 
-                onChange={handleLogoChange}
+              <label htmlFor="location">Kontorsort</label>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                required
+                value={companyData.location}
+                onChange={handleInputChange}
                 disabled={saving}
-                accept="image/*"
+                placeholder="Var finns ert kontor?"
               />
-              {logoPreview && (
-                <div className="image-preview">
-                  <img src={logoPreview} alt="Företagslogotyp förhandsvisning" />
-                </div>
-              )}
-            </div>
 
-            <label htmlFor="displayImage">Omslagsbild</label>
-            <div className="file-input-container">
-              <input 
-                id="displayImage" 
-                name="displayImage" 
-                type="file"
-                onChange={handleDisplayImageChange}
+              <label htmlFor="description">Företagsbeskrivning</label>
+              <textarea
+                id="description"
+                name="description"
+                required
+                value={companyData.description}
+                onChange={handleInputChange}
                 disabled={saving}
-                accept="image/*"
+                placeholder="Berätta om ert företag, er verksamhet och vad ni erbjuder"
+                rows={5}
               />
-              {displayImagePreview && (
-                <div className="image-preview">
-                  <img src={displayImagePreview} alt="Omslagsbild förhandsvisning" />
-                </div>
-              )}
-            </div>
 
-            {error && <p className="error-message">{error}</p>}
-                {success && <p className="success-message">{success}</p>}
-                </section>
-            
+              <label htmlFor="website">Hemsida</label>
+              <input
+                id="website"
+                name="website"
+                type="url"
+                required
+                value={companyData.website}
+                onChange={handleInputChange}
+                disabled={saving}
+                placeholder="https://www.dittforetag.se"
+              />
+
+              <label htmlFor="contact_email">Kontaktmail</label>
+              <input
+                id="contact_email"
+                name="email"
+                type="email"
+                required
+                value={companyData.email}
+                onChange={handleInputChange}
+                disabled={saving}
+                placeholder="kontakt@dittforetag.se"
+              />
+
+              <label htmlFor="logo">Företagslogotyp</label>
+              <div className="file-input-container">
+                <input
+                  id="logo"
+                  name="logo"
+                  type="file"
+                  onChange={handleLogoChange}
+                  disabled={saving}
+                  accept="image/*"
+                />
+                {logoPreview && (
+                  <div className="image-preview">
+                    <img
+                      src={logoPreview}
+                      alt="Företagslogotyp förhandsvisning"
+                    />
+                  </div>
+                )}
+              </div>
+
+              <label htmlFor="displayImage">Omslagsbild</label>
+              <div className="file-input-container">
+                <input
+                  id="displayImage"
+                  name="displayImage"
+                  type="file"
+                  onChange={handleDisplayImageChange}
+                  disabled={saving}
+                  accept="image/*"
+                />
+                {displayImagePreview && (
+                  <div className="image-preview">
+                    <img
+                      src={displayImagePreview}
+                      alt="Omslagsbild förhandsvisning"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {error && <p className="error-message">{error}</p>}
+              {success && <p className="success-message">{success}</p>}
+            </section>
+
             <div className="button-group">
-              <button 
-                type="button" 
-                onClick={handleCancel} 
+              <button
+                type="button"
+                onClick={handleCancel}
                 disabled={saving}
                 className="secondary-button"
               >
                 Avbryt Registrering
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={saving}
                 className="primary-button"
               >

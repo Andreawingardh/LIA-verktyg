@@ -223,4 +223,56 @@
   }
 }
 
+/* Add these styles to your dashboard.css file */
+
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.positions-section {
+  margin-top: 32px;
+  border-top: 1px solid #eaeaea;
+  padding-top: 24px;
+}
+
+.positions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.position-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+
+.position-actions {
+  margin-top: auto;
+}
+
+.no-positions {
+  color: #666;
+  font-style: italic;
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .positions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-actions {
+    flex-direction: column;
+  }
+}
+
 

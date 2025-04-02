@@ -120,6 +120,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--spacing-2, 8px);
+  margin: 0;
   border-radius: var(--border-radius-full, 9999px);
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
@@ -769,7 +770,98 @@ footer {
   transform: rotate(180deg);
 }
 
+.inputHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+}
 
+.edit-position-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
+.edit-position-button:hover {
+  background-color: #e9e9e9;
+}
 
+.edit-buttons-container {
+  display: flex;
+  gap: 12px;
+}
 
+.deleteButton {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-destructive-foreground, #b40509);
+  background: var(--base-destructive, #ffeeef);
+
+  color: var(--base-destructive-foreground, #B40509);
+font-feature-settings: 'liga' off, 'clig' off;
+
+/* body/leading-normal/medium */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 16px);
+font-style: normal;
+font-weight: var(--font-weight-medium, 500);
+line-height: 150%; /* 24px */
+letter-spacing: 0.2px;
+}
+
+.deleteButton:hover {
+  background-color: #fff8f8;
+}
+
+/* When in confirm delete state */
+.deleteButton.confirm {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.deleteButton.confirm:hover {
+  background-color: #b71c1c;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  font-size: 16px;
+  color: #666;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .edit-buttons-container {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .submitButton,
+  .deleteButton,
+  .close-btn {
+    width: 100%;
+  }
+
+  .footer-positions {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

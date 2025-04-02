@@ -159,15 +159,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     }
   };
 
-  // Password strength indicator - REMOVED
-  const getPasswordStrength = () => {
-    return 0; // Not used anymore
-  };
-  
-  const renderPasswordStrengthIndicator = () => {
-    return null; // Not rendering password strength indicator
-  };
-
   return (
     <div
       className="popup-overlay"
@@ -247,7 +238,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               disabled={loading}
               className={errors.password ? "input-error" : ""}
             />
-            {renderPasswordStrengthIndicator()}
+           
             {/* Fixed-height container for password requirements to prevent layout shifting */}
           <div className="password-requirements-container">
             {errors.password && errors.passwordRequirements && (
@@ -273,28 +264,8 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               </>
             )}
           </div>
-            {password && !errors.password && (
-              <ul className="password-requirements" style={{ fontSize: "0.75rem", marginTop: "5px", paddingLeft: "1.5rem" }}>
-                <li style={{ color: "#B40509" }}>
-                  Minst {passwordRequirements.minLength} tecken
-                </li>
-                <li style={{ color: "#B40509" }}>
-                  Minst en stor bokstav
-                </li>
-                <li style={{ color: "#B40509" }}>
-                  Minst en liten bokstav
-                </li>
-                <li style={{ color: "#B40509" }}>
-                  Minst en siffra
-                </li>
-                <li style={{ color: "#B40509" }}>
-                  Minst ett specialtecken
-                </li>
-              </ul>
-            )}
+            
           </div>
-
-          {errors.general && <p className="error-message" style={{ color: "red" }}>{errors.general}</p>}
 
           <div className="checkbox-group">
             <input id="checkbox" name="checkbox" type="checkbox" required />

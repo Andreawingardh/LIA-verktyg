@@ -7,16 +7,19 @@ import { supabase } from "../../utils/supabase/client";
 import EditProfileButton from "../components/profile/EditProfileButton";
 import "./dashboard.css";
 import AddPositionButton from "../components/profile/addPositionButton";
+import EditPositionButton from '../components/profile/EditPositionButton';
 
 export default function DashboardPage() {
   const { user, loading: authLoading } = useSupabaseAuth();
   const [companyProfile, setCompanyProfile] = useState(null);
+  const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (user && !authLoading) {
       fetchCompanyProfile();
+      fetchPositions();
     } else if (!authLoading && !user) {
       // Redirect to login if not authenticated
       window.location.href = "/login";
@@ -39,6 +42,25 @@ export default function DashboardPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchPositions = async () => {
+    try {
+      const { data, error: fetchError } = await supabase
+        .from("positions")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (fetchError) throw fetchError;
+      setPositions(data || []);
+    } catch (err) {
+      console.error("Error fetching positions:", err);
+      setError("Kunde inte hämta positioner");
+    }
+  };
+
+  const refreshPositions = () => {
+    fetchPositions();
   };
 
   if (authLoading || loading) {
@@ -108,15 +130,42 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <EditProfileButton
-              companyId={companyProfile.id}
-              onProfileUpdate={fetchCompanyProfile}
-            />
+            <div className="profile-actions">
+              <EditProfileButton
+                companyId={companyProfile.id}
+                onProfileUpdate={fetchCompanyProfile}
+              />
 
-            <AddPositionButton
-              companyId={companyProfile.id}
-              onProfileUpdate={fetchCompanyProfile}
-            />
+              <AddPositionButton
+                companyId={companyProfile.id}
+                onProfileUpdate={refreshPositions}
+              />
+            </div>
+
+            <div className="positions-section">
+              <h3>LIA-Positioner</h3>
+              
+              {positions.length > 0 ? (
+                <div className="positions-grid">
+                  {positions.map((position) => (
+                    <div key={position.id} className="position-card">
+                      <h4>{position.title}</h4>
+                      <p>Antal platser: {position.spots}</p>
+                      <div className="position-actions">
+                        <EditPositionButton 
+                          position={position} 
+                          onPositionUpdate={refreshPositions} 
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="no-positions">
+                  Du har inte lagt till några positioner ännu. Använd "Lägg till position" för att skapa din första position.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       ) : (
