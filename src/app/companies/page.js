@@ -4,8 +4,13 @@ import styling from "../page.module.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "../components/form/position/position.module.css";
+import { CardCompany } from "../components/cards/CompanyCard";
+import "./companies.css";
+import { useRouter } from "next/navigation";
 
 export default function Companies() {
+  const router = useRouter()
+
   const [companiesData, setCompaniesData] = useState([]);
   const [error, setError] = useState(null);
   const [skillsData, setSkillsData] = useState([]);
@@ -13,6 +18,9 @@ export default function Companies() {
   const [selectedSkills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredCompanies, setFilteredCompanies] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
+
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -40,6 +48,7 @@ export default function Companies() {
     fetchData();
   }, []); // Empty dependency array means this runs once on component mount
 
+  /*These functions handle search and filtering */
   async function handleSearch(e) {
     e.preventDefault();
     const searchValues = e.target.elements[0].value;
@@ -53,7 +62,7 @@ export default function Companies() {
 
   async function handleTitleChange(e) {
     e.preventDefault();
-    setSkills([])
+    setSkills([]);
 
     setSelectedTable(e.target.name);
     try {
@@ -139,26 +148,54 @@ export default function Companies() {
         //   );
       }
       setFilteredCompanies(matchingCompanies);
-      console.log(filteredCompanies)
-
-   
+      console.log(filteredCompanies);
     }
+  }
+
+  /* The functions handle scripts on the page */
+
+  const openFilter = () => {
+    setIsVisible(true);
+  };
+
+  const closeFilter = () => {
+    setIsVisible(false);
+  };
+
+  const handleRefresh = () => {
+    router.refresh() // Only works in App Router (app/)
+  }
+
+  const cancelFilter = () => {
+    setSkills([])
+    setIsVisible(false);
+    handleRefresh()
   }
 
   if (error) {
     return <div>Error loading companies: {error.message}</div>;
   }
 
-  console.log(selectedSkills);
-  console.log(filteredCompanies);
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <section className="content-wrapper">
+      <section className="">
         <h1>Hitta din nya LIA-plats</h1>
         <p>Filtrera och hitta matchande LIA-platser från anslutna företag.</p>
         <form onSubmit={handleSearch}>
           <input placeholder="Sök efter företag" name="input-search" />
           <button type="submit">Sök</button>
+        </form>
+      </section>
+      <div className="content-header">
+        <button className="heading" onClick={openFilter}>
+          Filtrera positioner
+        </button>
+      </div>
+      {isVisible && (
+        <section className="filter-settings-wrapper">
+          <button className="button" onClick={closeFilter}>
+            <img className="img" src="img/x.svg" /> Stäng
+          </button>
           <button
             name="webbutvecklare"
             value="Webbutvecklare"
@@ -174,9 +211,9 @@ export default function Companies() {
           >
             Digital designer
           </button>
-
           {skillsData.length > 0 && (
-            <div className={styles.skillsSection}>
+            /* @TODO: Set toggle to show all tags and less tags */
+            <div className={styles.skillsSection + "tags-container"}>
               <h3>Huvudkunskaper</h3>
               <div className={styles.skillsGrid}>
                 {skillsData
@@ -196,11 +233,12 @@ export default function Companies() {
                     </button>
                   ))}
               </div>
+              <div>Visa flera</div>
             </div>
           )}
 
           {skillsData.length > 0 && (
-            <div className={styles.skillsSection}>
+            <div className={styles.skillsSection + "tags-container"}>
               <h3>Verktyg</h3>
               <div className={styles.skillsGrid}>
                 {skillsData
@@ -220,42 +258,64 @@ export default function Companies() {
                     </button>
                   ))}
               </div>
+              <div>Visa flera</div>
             </div>
           )}
-
-          {/* <ul>
-            {skillsData &&
-              skillsData
-                .filter((item) => item.type === "Skills") // Only include items with type "skills"
-                .map((skill) => <li key={skill.id}>{skill.skills_name}</li>)}
-          </ul>
-          <label>Verktyg</label>
-          <ul>
-            {skillsData &&
-              skillsData
-                .filter((item) => item.type === "Software") // Only include items with type "skills"
-                .map((skill) => <li key={skill.id}>{skill.skills_name}</li>)}
-          </ul> */}
-        </form>
+          <button onClick={cancelFilter}>Avbryt</button>
+        </section>
+      )}
+      <section className="companies-list">
         <h1>Matchande företag</h1>
         {filteredCompanies.map((company) => (
-          <div key={company.id}>
-            <Link href={`/companies/${company.id}`}>{company.name}:</Link>
-            <p>Currently
-            {company.position_count ? company.position_count : 0} positions</p>
-            <p>Matches with you</p>
+          <div key={company.id} className="card-company matching">
+            <CardCompany
+              applyNowClassName="card-company-2"
+              className="card-company-instance"
+              company={company.name}
+              headerClassName="design-component-instance-node"
+              location={company.location}
+              property1="positions-open"
+              id={company.id}
+              status2={
+                company.position_count
+                  ? company.position_count + " lediga positioner"
+                  : ""
+              }
+              showApply={company.position_count > 0 ? true : false}
+            />
+
+            {/* <Link href={`/companies/${company.id}`}>
+              {company.name}: Currently
+              {company.position_count ? company.position_count : 0} positions
+            </Link> */}
           </div>
         ))}
         <h2>Alla företag</h2>
         {companiesData.map((company) => (
-          <p key={company.id}>
-            <Link href={`/companies/${company.id}`}>
+          <div key={company.id}>
+            <CardCompany
+              applyNowClassName="card-company-2"
+              className="card-company-instance"
+              company={company.name}
+              headerClassName="design-component-instance-node"
+              location={company.location}
+              property1="positions-open"
+              id={company.id}
+              status2={
+                company.position_count
+                  ? company.position_count + " lediga positioner"
+                  : ""
+              }
+              showApply={company.position_count > 0 ? true : false}
+            />
+
+            {/* <Link href={`/companies/${company.id}`}>
               {company.name}: Currently
               {company.position_count ? company.position_count : 0} positions
-            </Link>
-          </p>
+            </Link> */}
+          </div>
         ))}
-      </main>
-    </div>
+      </section>
+    </section>
   );
 }
