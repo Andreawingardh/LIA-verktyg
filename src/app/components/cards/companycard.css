@@ -1,0 +1,179 @@
+.card-company {
+  align-items: flex-start;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  padding: 12px;
+  position: relative;
+  width: 358px;
+}
+
+.card-company .content {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 13px;
+  position: relative;
+  width: 100%;
+}
+
+.card-company .logotype {
+  background-color: #495b62;
+  height: 32px;
+  position: relative;
+  width: 32px;
+}
+
+.card-company .text {
+  align-items: flex-start;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+  position: relative;
+}
+
+.card-company .header {
+  align-items: flex-start;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  width: 273px;
+}
+
+.card-company .acme-agency {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  align-self: stretch;
+  color: #0f1314;
+  display: -webkit-box;
+  font-family: var(--large-leading-normal-medium-font-family);
+  font-size: var(--large-leading-normal-medium-font-size);
+  font-style: var(--large-leading-normal-medium-font-style);
+  font-weight: var(--large-leading-normal-medium-font-weight);
+  letter-spacing: var(--large-leading-normal-medium-letter-spacing);
+  line-height: var(--large-leading-normal-medium-line-height);
+  margin-top: -1.00px;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+}
+
+.card-company .g-teborg {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  align-self: stretch;
+  color: #283236;
+  display: -webkit-box;
+  font-family: var(--body-leading-normal-medium-font-family);
+  font-size: var(--body-leading-normal-medium-font-size);
+  font-style: var(--body-leading-normal-medium-font-style);
+  font-weight: var(--body-leading-normal-medium-font-weight);
+  letter-spacing: var(--body-leading-normal-medium-letter-spacing);
+  line-height: var(--body-leading-normal-medium-line-height);
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+}
+
+.card-company .frame {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.card-company .div-wrapper {
+  align-items: flex-start;
+  display: flex;
+  gap: 12px;
+  position: relative;
+  width: 289px;
+}
+
+.card-company .div {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #283236;
+  display: -webkit-box;
+  font-family: var(--small-leading-normal-medium-font-family);
+  font-size: var(--small-leading-normal-medium-font-size);
+  font-style: var(--small-leading-normal-medium-font-style);
+  font-weight: var(--small-leading-normal-medium-font-weight);
+  letter-spacing: var(--small-leading-normal-medium-letter-spacing);
+  line-height: var(--small-leading-normal-medium-line-height);
+  margin-top: -1.00px;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  width: 289px;
+}
+
+.card-company .apply-now {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  justify-content: center;
+  margin-left: -80px;
+  position: relative;
+}
+
+.card-company .rectangle {
+  background-color: #3c6213;
+  height: 8px;
+  position: relative;
+  width: 8px;
+}
+
+.card-company .text-wrapper-2 {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #283236;
+  display: -webkit-box;
+  font-family: var(--small-leading-normal-medium-font-family);
+  font-size: var(--small-leading-normal-medium-font-size);
+  font-style: var(--small-leading-normal-medium-font-style);
+  font-weight: var(--small-leading-normal-medium-font-weight);
+  letter-spacing: var(--small-leading-normal-medium-letter-spacing);
+  line-height: var(--small-leading-normal-medium-line-height);
+  margin-top: -1.00px;
+  overflow: hidden;
+  position: relative;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.card-company.internship-matching {
+  background-color: #dbe6ff;
+  border: 1px solid;
+  border-color: #001a52;
+}
+
+.card-company.positions-open {
+  background-color: #f0f2f4;
+}
+
+.card-company.application-closed {
+  background-color: #f0f2f4;
+}
+
+.card-company.internship-matching .content {
+  border-radius: 12px;
+}
+
+.card-company.matching {
+  border: 1px solid var(--base-secondary, #001A52);
+  background: var(--base-card-highlight, #DBE6FF);
+}
