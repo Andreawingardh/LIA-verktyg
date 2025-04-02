@@ -6,7 +6,6 @@ import { FormProvider } from "../../components/form/FormContext";
 import { supabase } from "../../../utils/supabase/client";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 
-
 export default function RegisterPage() {
   return (
     <FormProvider>
@@ -24,6 +23,51 @@ function BaseInfoForm() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState();
+  const [uploadStatus, setUploadStatus] = useState({ logo: "", display: "" });
+  const [uploading, setUploading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [file, setFile] = useState();
+
+  const fileUpload = async (file) => {
+      setFile(file);
+  
+      if (!file) return;
+
+      setUploading(true);
+      setError(null);
+      setSuccess(null);
+
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Date.now()}-${Math.random()
+        .toString(36)
+        .substring(2, 15)}.${fileExt}`;
+      const filePath = `company-logos/${fileName}`; // Path in the storage bucket
+
+      const { error: uploadError } = await supabase.storage
+        .from("images") // Your storage bucket name
+        .upload(filePath, file);
+
+      if (uploadError) {
+        setError(uploadError.message);
+        setUploading(false);
+        return; // Exit early if there's an error
+      }
+
+      const { data, error: urlError } = supabase.storage
+        .from("images")
+        .getPublicUrl(filePath);
+
+      if (urlError) {
+        setError(urlError.message);
+      } else {
+        setImageUrl(data.publicUrl);
+        setSuccess("Image uploaded successfully!");
+        console.log("Uploaded file:", data, data.publicUrl);
+      }
+
+      setUploading(false);
+    };
 
   useEffect(() => {
     if (!authLoading) {
@@ -65,12 +109,27 @@ function BaseInfoForm() {
   const handleLogoChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setLogo(e.target.files[0]);
+      try {
+        fileUpload(logo);
+        console.log(imageUrl);
+        localStorage.setItem("logoUrl", imageUrl);
+      } catch (e) {
+        console.log(e)
+      }
+      
+    
     }
   };
 
   const handleDisplayImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setDisplayImage(e.target.files[0]);
+      try {
+      fileUpload(displayImage);
+        localStorage.setItem("displayImageUrl", imageUrl);
+      } catch (e) {
+        console.log(e)
+      }
     }
   };
 

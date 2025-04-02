@@ -240,14 +240,14 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
         const filePath = `company-logos/${fileName}`;
         
         const { error: uploadError } = await supabase.storage
-          .from('companies')
+          .from('images')
           .upload(filePath, newLogo);
           
         if (uploadError) throw uploadError;
         
         // Get public URL
         const { data } = supabase.storage
-          .from('companies')
+          .from('images')
           .getPublicUrl(filePath);
           
         logoUrl = data.publicUrl;
@@ -260,14 +260,14 @@ export default function EditProfileOverlay({ isOpen, onClose, companyId, onProfi
         const filePath = `company-displays/${fileName}`;
         
         const { error: uploadError } = await supabase.storage
-          .from('companies')
+          .from('images')
           .upload(filePath, newDisplayImage);
           
         if (uploadError) throw uploadError;
         
         // Get public URL
         const { data } = supabase.storage
-          .from('companies')
+          .from('images')
           .getPublicUrl(filePath);
           
         displayImageUrl = data.publicUrl;
