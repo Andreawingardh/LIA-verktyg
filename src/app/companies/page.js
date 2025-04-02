@@ -154,12 +154,8 @@ export default function Companies() {
 
   /* The functions handle scripts on the page */
 
-  const openFilter = () => {
-    setIsVisible(true);
-  };
-
-  const closeFilter = () => {
-    setIsVisible(false);
+  const toggleFilter = () => {
+    setIsVisible((prev) => !prev);
   };
 
   const handleRefresh = () => {
@@ -187,13 +183,13 @@ export default function Companies() {
         </form>
       </section>
       <div className="content-header">
-        <button className="heading" onClick={openFilter}>
-          Filtrera positioner
+        <button className="heading" onClick={toggleFilter}>
+        {isVisible ? 'Stäng filtrering' : 'Öppna filtrering'}
         </button>
       </div>
       {isVisible && (
         <section className="filter-settings-wrapper">
-          <button className="button" onClick={closeFilter}>
+          <button className="button" onClick={toggleFilter}>
             <img className="img" src="img/x.svg" /> Stäng
           </button>
           <button
@@ -261,7 +257,7 @@ export default function Companies() {
               <div>Visa flera</div>
             </div>
           )}
-          <button onClick={cancelFilter}>Avbryt</button>
+          <button onClick={cancelFilter}>Nollställ filtrering</button>
         </section>
       )}
       <section className="companies-list">
