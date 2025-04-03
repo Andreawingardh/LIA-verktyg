@@ -3,10 +3,10 @@ import { supabase } from "@/utils/supabase/client";
 import styling from "../page.module.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import styles from "../components/form/position/position.module.css";
 import { CardCompany } from "../components/cards/CompanyCard";
 import "./companies.css";
 import { useRouter } from "next/navigation";
+import '@/app/components/form/popup.css'
 
 export default function Companies() {
   const router = useRouter()
@@ -196,7 +196,7 @@ export default function Companies() {
             name="webbutvecklare"
             value="Webbutvecklare"
             onClick={handleTitleChange}
-            className={styles.tabButton}
+            className="tabButton"
           >
             Webbutvecklare
           </button>
@@ -209,9 +209,9 @@ export default function Companies() {
           </button>
           {skillsData.length > 0 && (
             /* @TODO: Set toggle to show all tags and less tags */
-            <div className={styles.skillsSection + "tags-container"}>
+            <div className="skillsSection tags-container">
               <h3>Huvudkunskaper</h3>
-              <div className={styles.skillsGrid}>
+              <div className="skillsGrid">
                 {skillsData
                   .filter((item) => item.type === "Skills")
                   .map((skill) => (
@@ -220,8 +220,8 @@ export default function Companies() {
                       type="button"
                       className={
                         isSkillSelected(skill.id)
-                          ? styles.selectedSkillButton
-                          : styles.skillButton
+                          ? "selectedSkillButton"
+                          : "skillButton"
                       }
                       onClick={() => handleSkillToggle(skill)}
                     >
@@ -234,9 +234,9 @@ export default function Companies() {
           )}
 
           {skillsData.length > 0 && (
-            <div className={styles.skillsSection + "tags-container"}>
+            <div className="skillsSection tags-container">
               <h3>Verktyg</h3>
-              <div className={styles.skillsGrid}>
+              <div className="skillsGrid">
                 {skillsData
                   .filter((item) => item.type === "Software") // Only include items with type "skills"
                   .map((software) => (
@@ -245,8 +245,8 @@ export default function Companies() {
                       type="button"
                       className={
                         isSkillSelected(software.id)
-                          ? styles.selectedSkillButton
-                          : styles.skillButton
+                          ? "selectedSkillButton"
+                          : "skillButton"
                       }
                       onClick={() => handleSkillToggle(software)}
                     >
