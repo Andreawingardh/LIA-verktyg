@@ -49,19 +49,8 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Träffa nya talanger på mingel-event</h1>
 
-        {user ? (
-          <button className={styles.a} onClick={() => setShowEditPopup(true)}>
-            Hantera ditt företag
-          </button>
-        ) : (
-          <button
-            className={styles.a}
-            onClick={() => setShowRegistrationPopup(true)}
-          >
-            Skriv upp ditt företag
-          </button>
-        )}
 
+  
         <Link href="/companies" className={styles.a}>
           Upptäck LIA-platser
         </Link>
@@ -74,14 +63,14 @@ export default function Home() {
           />
         )}
 
-        {/* Registration Popup */}
-        {showRegistrationPopup && (
-          <RegistrationPopup
-            isOpen={showRegistrationPopup}
-            onClose={() => setShowRegistrationPopup(false)}
-            onShowLogin={handleShowLogin}
-          />
-        )}
+         {/* Registration Popup */}
+      {showRegistrationPopup && (
+        <RegistrationPopup
+          isOpen={showRegistrationPopup}
+          onClose={() => setShowRegistrationPopup(false)}
+          onShowLogin={handleShowLogin}
+        />
+      )}
 
         {/* Login Popup */}
         {showLoginPopup && (
