@@ -96,8 +96,6 @@ function ContactForm() {
       const hasDisplayImage =
         localStorage.getItem("hasDisplayImage") === "true";
 
-      // Here you would handle the file uploads and update the company profile
-      // For now, we'll skip this part to simplify the implementation
 
       // Clear registration data from localStorage
       localStorage.removeItem("registrationStep");
@@ -108,6 +106,8 @@ function ContactForm() {
       localStorage.removeItem("companyLocation");
       localStorage.removeItem("hasLogo");
       localStorage.removeItem("hasDisplayImage");
+      localStorage.removeItem("logoUrl");
+      localStorage.removeItem("displayImageUrl");
 
       router.push("/dashboard");
     } catch (err) {
