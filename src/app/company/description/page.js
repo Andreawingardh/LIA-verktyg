@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FormProvider } from "../../components/form/FormContext";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
+import { ProgressIndicator } from "../../components/form/ProgressIndicator";
+import "../company.css"
 
 export default function DescriptionPage() {
   return (
@@ -61,36 +63,57 @@ function DescriptionForm() {
 
   return (
     <div className="container">
-      <h2>Skapa företagsprofil</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="location">Kontorsort</label>
-        <input
-          id="location"
-          name="location"
-          type="text"
-          required
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          disabled={isSubmitting}
-        />
+      <form className="contentWrapper" onSubmit={handleSubmit}>
+        <header className="contentHeader">
+          <h2 className="title">Skapa företagsprofil</h2>
+          
+          {/* Add the progress indicator component */}
+          <ProgressIndicator currentStep="description" />
+        </header>
+        
+        <article className="inputSingle">
+          <label className="popupTitle" htmlFor="location">Kontorsort</label>
+          <input
+            id="location"
+            name="location"
+            type="text"
+            className="profileInputs"
+            required
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            disabled={isSubmitting}
+          />
+        </article>
 
-        <label htmlFor="description">Företagsbeskrivning</label>
-        <textarea
-          id="description"
-          name="description"
-          required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          disabled={isSubmitting}
-        />
+        <article className="inputSingle">
+          <label className="popupTitle" htmlFor="description">Företagsbeskrivning</label>
+          <textarea
+            id="description"
+            name="description"
+            className="profileInputs"
+            required
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={isSubmitting}
+            style={{ height: '150px' }}
+          />
+        </article>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <div className="button-group">
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sparar..." : "Fortsätt"}
+        <footer className="buttonGroup">
+          <button
+            className="profileSubmitButton"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Sparar..." : "Fortsätt till nästa steg"}
           </button>
-        </div>
+
+          <button type="button" className="cancelButton">
+            Avbryt Registrering
+          </button>
+        </footer>
       </form>
     </div>
   );

@@ -54,15 +54,18 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
         password
       });
       
-      if (error) throw error;
-      
-      console.log("Login successful:", data);
-      
-      // Force a refresh
-      router.refresh();
-      
-      if (onSuccess) {
-        onSuccess();
+      if (data) {
+        console.log("Login successful:", data);
+        
+        // Force a refresh
+        router.refresh();
+        
+        // Add this line to redirect to dashboard
+        router.push('/dashboard');
+        
+        if (onSuccess) {
+          onSuccess();
+        }
       }
     } catch (error) {
       // Map Supabase error codes to user-friendly messages
@@ -112,14 +115,17 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
 
   return (
     <>
-      <div className='formwrapper'>
-        <form onSubmit={handleSubmit}>
-          <section>
-            <label htmlFor="email">E-post</label>
+      
+        <form className="formwrapper" onSubmit={handleSubmit}>
+          <div className='inputSingle'>
+            <article className='inputHeader'>
+            <label className="popupTitle" htmlFor="email">E-post</label>
+            </article>
             <input 
               id="email" 
               name="email" 
-              type="email" 
+                type="email" 
+                className='inputs'
               required 
               placeholder="Skriv din inloggningsmail"
               value={email}
@@ -127,14 +133,18 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
                 setEmail(e.target.value);
                 setErrors(prev => ({ ...prev, email: "", general: "" })); // Clear errors when user types
               }}
-            />
-          </section>
-          <section>
-            <label htmlFor="password">Lösenord</label>
+              />
+              
+          </div>
+          <div className='inputSingle'>
+            <article className='inputHeader'>
+            <label className="popupTitle" htmlFor="password">Lösenord</label>
+            </article>
             <input 
               id="password" 
               name="password" 
-              type="password" 
+                type="password" 
+                className='inputs'
               required 
               placeholder="Skriv ditt lösenord"
               value={password}
@@ -143,16 +153,18 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
                 setErrors(prev => ({ ...prev, password: "", general: "" })); // Clear errors when user types
               }}
             />
-            {errors.email && <p className="error-message" style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}>{errors.email}</p>}
-          </section>
+              {errors.email && <p className="error-message" style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}>{errors.email}</p>}
+              <a className="passwordReset"href=''>Glömt ditt lösenord?</a>
+          </div>
           {errors.password && <p className="error-message" style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}>{errors.password}</p>}
           {errors.general && <p className="error-message" style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}>{errors.general}</p>}
-          <a href=''>Glömt ditt lösenord?</a>
-          <footer>
-            <button type="submit" disabled={isLoading}>
+          
+          <footer className='button-group'>
+            <button type="submit" disabled={isLoading} className='submitButton'>
               {isLoading ? "Loggar in..." : "Logga in"}
             </button>
-            <div className="auth-buttons">
+           
+        
               <button
                 type="button"
                 className="register-btn"
@@ -160,11 +172,13 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
                 disabled={isLoading}
               >
                 Skapa konto istället
-              </button>
-            </div>
+          </button>
           </footer>
-        </form>
-      </div>
+            
+          
+      </form>
+      
+      
     </>
   );
 }

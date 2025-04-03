@@ -5,7 +5,7 @@ import CreatePositionForm from "../../components/form/position/CreatePositionFor
 import styles from "../../page.module.css";
 import { useSupabaseAuth } from "@/hook/useSupabaseAuth";
 
-export default function Listings() {
+export default function Listings({ onClose, companyId, onProfileUpdate }) {
   const { user, loading: authLoading } = useSupabaseAuth();
   console.log(user);
 
@@ -13,5 +13,12 @@ export default function Listings() {
     return <p>You must be logged in to create a listing.</p>;
   }
 
-  return <CreatePositionForm user={user} />;
+  return (
+    <CreatePositionForm
+      user={user}
+      onClose={onClose}
+      companyId={companyId}
+      onProfileUpdate={onProfileUpdate}
+    />
+  );
 }

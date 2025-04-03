@@ -63,7 +63,7 @@ export async function login(formData) {
 
   console.log("Login successful for:", authData.user.email);
 
-  revalidatePath("/dashboard", "layout");
+  revalidatePath("/dashboard", "page");
   redirect("/dashboard");
 }
 
