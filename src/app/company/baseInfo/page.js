@@ -160,7 +160,7 @@ function BaseInfoForm() {
     <div className="container">
 
       <h2>Skapa företagsprofil</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="contentWrapper" onSubmit={handleSubmit}>
         <label htmlFor="companyName">Företagsnamn</label>
         <input
           id="companyName"
@@ -191,7 +191,7 @@ function BaseInfoForm() {
           onChange={handleDisplayImageChange}
           disabled={isSubmitting}
         />
-      <form className="contentWrapper" onSubmit={handleSubmit}>
+     
         <header className="contentHeader">
           <h2 className="title">Skapa företagsprofil</h2>
           <ProgressIndicator currentStep="baseInfo" />
