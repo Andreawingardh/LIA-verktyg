@@ -34,15 +34,15 @@ background-color: transparent;
 /* Position card styling */
 .position-card {
   display: flex;
-width: 356.25px;
-padding: var(--spacing-4, 16px);
-flex-direction: column;
-align-items: flex-start;
-gap: var(--spacing-6, 24px);
+  max-width: 356.25px;
+  padding: var(--spacing-4, 16px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-6, 24px);
   position: relative;
   cursor: pointer;
   border-radius: var(--border-radius-xl, 12px);
-background: var(--base-card, #F0F2F4);
+  background: var(--base-card, #f0f2f4);
 }
 
 .subHeading {
@@ -84,15 +84,6 @@ background: var(--base-card, #F0F2F4);
   position: absolute;
   top: 10px;
   right: 10px;
-}
-
-.position-card {
-  display: flex;
-  padding: var(--spacing-4, 16px);
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-6, 24px);
-  align-self: stretch;
 }
 
 .tagsContainer {
@@ -238,8 +229,8 @@ background: var(--base-card, #F0F2F4);
   align-self: stretch;
 }
 
-.deleteButton{
-display: flex;
+.deleteButton {
+  display: flex;
   height: var(--height-h-11, 44px);
   padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
   justify-content: center;
@@ -278,24 +269,24 @@ display: flex;
 
 .selectedSkillsButton {
   display: flex;
-height: var(--width-w-9, 36px);
-padding: 0px var(--spacing-3, 12px) 0px var(--spacing-2, 8px);
-justify-content: center;
-align-items: center;
-gap: var(--spacing-2, 8px);
+  height: var(--width-w-9, 36px);
+  padding: 0px var(--spacing-3, 12px) 0px var(--spacing-2, 8px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
   border-radius: var(--border-radius-full, 9999px);
-background: var(--base-background, #FFF);
-border:none;
-color: var(--base-muted-foreground, #495B62);
-font-feature-settings: 'liga' off, 'clig' off;
+  background: var(--base-background, #fff);
+  border: none;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-normal/medium */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-medium, 500);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
 }
 
 .add-position-container {
@@ -305,26 +296,37 @@ letter-spacing: 0.2px;
   width: 100%;
 }
 
-.add-position-container button {
+.add-position-button {
   display: flex;
-height: var(--height-h-11, 44px);
-padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
-justify-content: center;
-align-items: center;
-gap: var(--spacing-2, 8px);
-border-radius: var(--border-radius-full, 22px);
-border: 1px solid var(--base-secondary, #001A52);
-background: var(--base-secondary, #001A52);
-color: var(--base-secondary-foreground, #FFF);
-font-feature-settings: 'liga' off, 'clig' off;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 22px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-secondary, #001a52);
+  color: var(--base-secondary-foreground, #fff);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-normal/medium */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-medium, 500);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  border: 1px solid var(--base-secondary, #001a52);
+}
+
+.add-position-button:hover path,
+.add-position-button:hover
+{
+  cursor: pointer;
+  color: var(--base-secondary, #001A52);
+  border: none;
+  fill: var(--base-secondary, #001A52);
+  background: var(--base-background, #fff);
 }
 
 

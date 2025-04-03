@@ -48,6 +48,7 @@
 .popup-header h2 {
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
+  text-wrap: nowrap;
 
   /* heading-5/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
@@ -81,9 +82,9 @@
 
 .popup-content {
   display: flex;
-  width: 22rem;
-  min-width: var(--width-w-80, 20rem);
-  max-width: 30rem;
+  width: 93vw;
+  min-width: var(--width-w-80, 93vw);
+  max-width: 480px;
   padding: var(--spacing-6, 1.5rem);
   flex-direction: column;
   justify-content: center;
@@ -257,15 +258,15 @@
   color: #000;
 }
 
-.register-btn,
-.secondary-button {
+.register-btn {
   display: flex;
   height: var(--height-h-11, 2.75rem);
   padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
   justify-content: center;
   align-items: center;
   gap: var(--spacing-2, 0.5rem);
-  background: transparent;
+  background: var(--base-background, #fff);
+  border: none;
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
 
@@ -279,14 +280,42 @@
   align-self: stretch;
   cursor: pointer;
   position: relative;
-  border: none;
-  border-radius: var(--border-radius-full, 9999px);
+}
+.secondary-button {
+  display: flex;
+  height: var(--height-h-11, 2.75rem);
+  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 0.5rem);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-background, #fff);
+
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  align-self: stretch;
+  cursor: pointer;
+  position: relative;
 }
 
 .register-btn:hover,
 .close-btn:hover,
+.close-btn:hover path,
 .secondary-button:hover {
-  background: rgb(216, 216, 216);
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-secondary, #001a52);
+  color: var(--base-secondary-foreground, #fff);
+  cursor: pointer;
+  fill: var(--base-secondary-foreground, #fff);
 }
 
 .email-error-container {
@@ -383,30 +412,30 @@
 }
 
 .requirement-error {
-  color: var(--base-destructive-foreground, #B40509);
-font-feature-settings: 'liga' off, 'clig' off;
+  color: var(--base-destructive-foreground, #b40509);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-normal/regular */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-normal, 400);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
 }
 
 .requirement-error::before {
   content: "•" !important;
-  color: var(--base-destructive-foreground, #B40509);
-font-feature-settings: 'liga' off, 'clig' off;
+  color: var(--base-destructive-foreground, #b40509);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-normal/regular */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-normal, 400);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
 }
 
 .button-disabled {
@@ -416,49 +445,49 @@ letter-spacing: 0.2px;
 
 .checkbox-group {
   display: flex;
-min-height: var(--width-w-11, 44px);
-padding: var(--spacing-3-5, 14px) 0px;
-align-items: flex-start;
-gap: var(--spacing-2, 8px);
-align-self: stretch;
+  min-height: var(--width-w-11, 44px);
+  padding: var(--spacing-3-5, 14px) 0px;
+  align-items: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
 }
 
 .gdpr {
-  color: var(--base-link, #00287E);
-font-feature-settings: 'liga' off, 'clig' off;
-font-family: Inter;
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: 100%;
-letter-spacing: 0.2px;
-text-decoration-line: underline;
-text-decoration-style: solid;
-text-decoration-skip-ink: none;
-text-decoration-thickness: auto;
-text-underline-offset: auto;
-text-underline-position: from-font;
+  color: var(--base-link, #00287e);
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: 0.2px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 }
 
-#checkbox{
+#checkbox {
   width: 16px;
-height: 16px;
+  height: 16px;
   border-radius: var(--border-radius-sm, 2px);
-border: 1px solid var(--base-link, #00287E);
-background: var(--base-background, #FFF);
+  border: 1px solid var(--base-link, #00287e);
+  background: var(--base-background, #fff);
 }
 
 .gdpr-text {
-  color: var(--base-foreground, #0F1314);
-font-feature-settings: 'liga' off, 'clig' off;
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-none/medium */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-medium, 500);
-line-height: 100%; /* 16px */
-letter-spacing: 0.2px;
+  /* body/leading-none/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 100%; /* 16px */
+  letter-spacing: 0.2px;
 }
 
 .tabs,
@@ -539,7 +568,6 @@ letter-spacing: 0.2px;
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
-  letter-spacing: 0.2px;
 }
 
 .activeButton,
@@ -748,8 +776,10 @@ letter-spacing: 0.2px;
 .primary-button:hover,
 #createButton:hover {
   cursor: pointer;
-  background: #004bec;
-  color: var(--base-secondary-foreground, #fff);
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-background, #fff);
+  color: var(--base-secondary, #001a52);
 }
 
 .footer-positions {
@@ -922,5 +952,3 @@ letter-spacing: 0.2px;
     gap: 12px;
   }
 }
-
-

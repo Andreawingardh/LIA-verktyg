@@ -86,7 +86,6 @@ export default function CreatePositionForm({ user, onClose }) {
     }));
     setSelectedTable(e.target.name);
     try {
-      setLoading(true);
 
       const { data: skillData, error: skillsError } = await supabase
         .from("skills_" + e.target.name)

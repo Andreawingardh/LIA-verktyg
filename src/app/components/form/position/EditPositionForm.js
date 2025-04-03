@@ -435,7 +435,6 @@ export default function EditPositionForm({
     setSelectedTable(newTableName);
 
     try {
-      setLoading(true);
 
       // Load skills options for the new role
       await loadSkillsOptions(newTableName);

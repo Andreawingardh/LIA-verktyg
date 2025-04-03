@@ -22,7 +22,7 @@ export default function AddPositionButton({ companyId, onProfileUpdate }) {
     <>
       <button
         onClick={openOverlay}
-        className="edit-profile-button primary-button"
+        className="add-position-button"
         aria-label="Redigera företagsprofil"
       >
         <svg
