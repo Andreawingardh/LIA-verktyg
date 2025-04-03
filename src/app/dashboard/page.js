@@ -145,26 +145,7 @@ export default function DashboardPage() {
             <div className="positions-section">
               <h3>LIA-Positioner</h3>
               
-              {positions.length > 0 ? (
-                <div className="positions-grid">
-                  {positions.map((position) => (
-                    <div key={position.id} className="position-card">
-                      <h4>{position.title}</h4>
-                      <p>Antal platser: {position.spots}</p>
-                      <div className="position-actions">
-                        <EditPositionButton 
-                          position={position} 
-                          onPositionUpdate={refreshPositions} 
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="no-positions">
-                  Du har inte lagt till några positioner ännu. Använd "Lägg till position" för att skapa din första position.
-                </p>
-              )}
+             
             </div>
           </div>
         </div>

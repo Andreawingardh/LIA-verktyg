@@ -3,6 +3,9 @@ import { supabase } from "@/utils/supabase/client";
 import styles from "../page.module.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { CardCompany } from "../components/cards/CompanyCard";
+import "./companies.css";
+import { useRouter } from "next/navigation";
 
 export default function Companies() {
   const [companiesData, setCompaniesData] = useState([]);
