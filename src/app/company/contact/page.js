@@ -54,6 +54,8 @@ function ContactForm() {
       const companyName = localStorage.getItem("companyName");
       const description = localStorage.getItem("companyDescription");
       const location = localStorage.getItem("companyLocation");
+      const logoUrl = localStorage.getItem("logoUrl");
+      const displayImageUrl = localStorage.getItem("displayImageUrl");
 
       if (!user) {
         const { data, error: signUpError } = await supabase.auth.signUp({
@@ -74,16 +76,20 @@ function ContactForm() {
         throw new Error("Kunde inte hämta användarinformation");
       }
 
-      const { error: insertError } = await supabase.from("companies").insert([
-        {
-          user_id: userId,
-          name: companyName,
-          description: description,
-          location: location,
-          website: website,
-          email: contactEmail,
-        },
-      ]);
+      const { data: insertData, error: insertError } = await supabase
+        .from("companies")
+        .insert([
+          {
+            user_id: userId,
+            name: companyName,
+            description: description,
+            location: location,
+            website: website,
+            email: contactEmail,
+            logo_url: logoUrl || null,
+            display_image_url: displayImageUrl || null,
+          },
+        ]);
 
       if (insertError) throw insertError;
 
@@ -92,8 +98,6 @@ function ContactForm() {
       const hasDisplayImage =
         localStorage.getItem("hasDisplayImage") === "true";
 
-      // Here you would handle the file uploads and update the company profile
-      // For now, we'll skip this part to simplify the implementation
 
       // Clear registration data from localStorage
       localStorage.removeItem("registrationStep");
@@ -104,6 +108,8 @@ function ContactForm() {
       localStorage.removeItem("companyLocation");
       localStorage.removeItem("hasLogo");
       localStorage.removeItem("hasDisplayImage");
+      localStorage.removeItem("logoUrl");
+      localStorage.removeItem("displayImageUrl");
 
       router.push("/dashboard");
     } catch (err) {
