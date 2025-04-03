@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { FormProvider } from "../../components/form/FormContext";
 import { supabase } from "../../../utils/supabase/client";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
-
+import "../company.css";
+import { ProgressIndicator } from "../../components/form/ProgressIndicator";
 
 export default function RegisterPage() {
   return (
@@ -80,44 +81,74 @@ function BaseInfoForm() {
 
   return (
     <div className="container">
-      <h2>Skapa företagsprofil</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="companyName">Företagsnamn</label>
-        <input
-          id="companyName"
-          name="companyName"
-          type="text"
-          required
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
-          disabled={isSubmitting}
-        />
+      <form className="contentWrapper" onSubmit={handleSubmit}>
+        <header className="contentHeader">
+          <h2 className="title">Skapa företagsprofil</h2>
+          <ProgressIndicator currentStep="baseInfo" />
+        </header>
+        <article className="inputSingle">
+          <label className="popupTitle" htmlFor="companyName">
+            Företagsnamn
+          </label>
+          <input
+            id="companyName"
+            name="companyName"
+            type="text"
+            className="profileInputs"
+            required
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            disabled={isSubmitting}
+          />
+        </article>
 
-        <label htmlFor="logo">Logga</label>
-        <input
-          id="logo"
-          name="logo"
-          type="file"
-          onChange={handleLogoChange}
-          disabled={isSubmitting}
-        />
+        <article className="inputSingle">
+          <label className="popupTitle" htmlFor="logo">
+            Logga
+          </label>
 
-        <label htmlFor="displayImage">Omslagsbild</label>
-        <input
-          id="displayImage"
-          name="displayImage"
-          type="file"
-          onChange={handleDisplayImageChange}
-          disabled={isSubmitting}
-        />
+          <div className="profileFileInputs">
+            <input
+              id="logo"
+              name="logo"
+              type="file"
+              onChange={handleLogoChange}
+              disabled={isSubmitting}
+            />
+          </div>
+        </article>
+
+        <article className="inputSingle">
+          <label className="popupTitle" htmlFor="displayImage">
+            Omslagsbild
+          </label>
+
+          <div className="profileFileInputs">
+            <input
+              id="displayImage"
+              name="displayImage"
+              type="file"
+              onChange={handleDisplayImageChange}
+              disabled={isSubmitting}
+            />
+          </div>
+        </article>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <div className="button-group">
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sparar..." : "Fortsätt"}
+        <footer className="buttonGroup">
+          <button
+            className="profileSubmitButton"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Sparar..." : "Fortsätt till nästa steg"}
           </button>
-        </div>
+
+          <button type="button" className="cancelButton">
+            Avbryt Registrering
+          </button>
+        </footer>
       </form>
     </div>
   );

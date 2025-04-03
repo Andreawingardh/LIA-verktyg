@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { FormProvider } from "../../components/form/FormContext";
 import { supabase } from "../../../utils/supabase/client";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
+import "../company.css"
+import { ProgressIndicator } from "../../components/form/ProgressIndicator";
 
 export default function ContactPage() {
   return (
@@ -118,41 +120,57 @@ function ContactForm() {
 
   return (
     <div className="container">
-      <h2>Skapa företagsprofil</h2>
-      <p>
-        Slutför din företagsprofil för att bli upptäckt av studenter. Lägg upp
-        era LIA-platser och bli upptäckt av sökande.
-      </p>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="website">Hemsida</label>
-        <input
-          id="website"
-          name="website"
-          type="url"
-          required
-          value={website}
-          onChange={(e) => setWebsite(e.target.value)}
-          disabled={isSubmitting}
-        />
+      <form className="contentWrapper" onSubmit={handleSubmit}>
+        <header className="contentHeader">
+          <h2 className="title">Skapa företagsprofil</h2>
+          
+          {/* Add the progress indicator component */}
+          <ProgressIndicator currentStep="contact" />
+        </header>
+        
+        <article className="inputSingle">
+          <label className="popupTitle" htmlFor="website">Hemsida</label>
+          <input
+            id="website"
+            name="website"
+            type="url"
+            className="profileInputs"
+            required
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            disabled={isSubmitting}
+          />
+        </article>
 
-        <label htmlFor="contactEmail">Kontaktmail</label>
-        <input
-          id="contactEmail"
-          name="contactEmail"
-          type="email"
-          required
-          value={contactEmail}
-          onChange={(e) => setContactEmail(e.target.value)}
-          disabled={isSubmitting}
-        />
+        <article className="inputSingle">
+          <label className="popupTitle" htmlFor="contactEmail">Kontaktmail</label>
+          <input
+            id="contactEmail"
+            name="contactEmail"
+            type="email"
+            className="profileInputs"
+            required
+            value={contactEmail}
+            onChange={(e) => setContactEmail(e.target.value)}
+            disabled={isSubmitting}
+          />
+        </article>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <div className="button-group">
-          <button type="submit" disabled={isSubmitting}>
+        <footer className="buttonGroup">
+          <button
+            className="profileSubmitButton"
+            type="submit"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Skapar profil..." : "Slutför Företagsprofil"}
           </button>
-        </div>
+
+          <button type="button" className="cancelButton">
+            Avbryt Registrering
+          </button>
+        </footer>
       </form>
     </div>
   );
