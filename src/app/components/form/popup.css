@@ -35,7 +35,7 @@
   /* Border radius */
   --border-radius-lg: 0.625rem;
   --border-radius-xl: 0.75rem;
-  --border-radius-full: 1rem;
+  --border-radius-full: 1.375rem;
 }
 
 .popup-header {
@@ -809,6 +809,7 @@ letter-spacing: 0.2px;
   gap: var(--spacing-2, 8px);
   background-color: transparent;
   border: none;
+  border-radius: var(--border-radius-full, 9999px);
   align-self: stretch;
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
@@ -882,6 +883,7 @@ letter-spacing: 0.2px;
 }
 
 .deleteButton:hover {
+  cursor: pointer;
   background-color: #fff8f8;
 }
 
@@ -920,3 +922,5 @@ letter-spacing: 0.2px;
     gap: 12px;
   }
 }
+
+

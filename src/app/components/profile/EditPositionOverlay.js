@@ -16,18 +16,17 @@ export default function EditPositionOverlay({
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [currentPosition, setCurrentPosition] = useState(position);
 
-  // Update current position when prop changes
   useEffect(() => {
     if (position) {
       console.log("Position prop updated in overlay:", position);
       setCurrentPosition(position);
     }
-  }, [position, refreshTrigger]);
+  }, [position, isOpen]);
 
   // Handle position updates from the form
   const handlePositionUpdate = async (updatedPosition) => {
     console.log("Position update received in overlay:", updatedPosition);
-    
+
     // If position was deleted (null), close the overlay
     if (updatedPosition === null) {
       if (onPositionUpdate) {
@@ -36,10 +35,10 @@ export default function EditPositionOverlay({
       }
       return;
     }
-    
+
     // Trigger a refresh of the position data
-    setRefreshTrigger(prev => prev + 1);
-    
+    setRefreshTrigger((prev) => prev + 1);
+
     // Either use the updated position data directly or trigger a refresh in parent
     if (onPositionUpdate) {
       console.log("Propagating position update to parent");
@@ -58,7 +57,7 @@ export default function EditPositionOverlay({
             .select("*")
             .eq("id", position.id)
             .single();
-            
+
           if (error) {
             console.error("Error reloading position:", error);
           } else if (data) {
@@ -69,17 +68,25 @@ export default function EditPositionOverlay({
           console.error("Error in loadPositionData:", err);
         }
       };
-      
+
       loadPositionData();
     }
   }, [refreshTrigger, position?.id]);
-  
+
+  useEffect(() => {
+    if (isOpen) {
+      console.log("Overlay remains open despite position update.");
+    } else {
+      console.log("Overlay closed unexpectedly!");
+    }
+  }, [position, isOpen]);
+
   return (
     <div
       className="popup-overlay"
       style={{ display: isOpen ? "flex" : "none" }}
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        e.stopPropagation();
       }}
       data-testid="edit-position-overlay"
     >
@@ -113,7 +120,6 @@ export default function EditPositionOverlay({
           onPositionUpdate={handlePositionUpdate}
           onClose={onClose}
         />
-       
       </div>
     </div>
   );

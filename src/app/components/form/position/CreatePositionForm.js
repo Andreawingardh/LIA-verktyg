@@ -2,7 +2,7 @@
 import { supabase } from "@/utils/supabase/client";
 import { useState } from "react";
 import React from "react";
-import styles from "../popup.css";
+import "../popup.css";
 
 export default function CreatePositionForm({ user, onClose }) {
   const [formData, setFormData] = useState({
