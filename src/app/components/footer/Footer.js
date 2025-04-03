@@ -64,7 +64,7 @@ const Footer = () => {
               className={styles.ctaButton}
               onClick={() => setShowRegistrationPopup(true)}
             >
-              Skriv upp ditt företag
+             Skapa företagsprofil
             </button>
           </div>
         </div>

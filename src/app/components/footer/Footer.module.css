@@ -63,15 +63,27 @@
 }
 
 .ctaButton {
-  background-color: white;
-  color: #1e2761;
-  border: none;
-  border-radius: 1.5625rem;
-  padding: 0.625rem 1.5625rem;
-  font-size: 0.875rem;
-  font-weight: 600;
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-background, #fff);
   cursor: pointer;
   transition: all 0.3s ease;
+  color: var(--base-secondary, #001a52);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
 }
 
 .ctaButton:hover {
