@@ -1,0 +1,185 @@
+:root {
+    --body-leading-none-medium-font-family: "Inter", Helvetica;
+    --body-leading-none-medium-font-size: 16px;
+    --body-leading-none-medium-font-style: normal;
+    --body-leading-none-medium-font-weight: 500;
+    --body-leading-none-medium-letter-spacing: 0.20000000298023224px;
+    --body-leading-none-medium-line-height: 100%;
+    --body-leading-none-regular-font-family: "Inter", Helvetica;
+    --body-leading-none-regular-font-size: 16px;
+    --body-leading-none-regular-font-style: normal;
+    --body-leading-none-regular-font-weight: 400;
+    --body-leading-none-regular-letter-spacing: 0.20000000298023224px;
+    --body-leading-none-regular-line-height: 100%;
+    --body-leading-normal-medium-font-family: "Inter", Helvetica;
+    --body-leading-normal-medium-font-size: 16px;
+    --body-leading-normal-medium-font-style: normal;
+    --body-leading-normal-medium-font-weight: 500;
+    --body-leading-normal-medium-letter-spacing: 0.20000000298023224px;
+    --body-leading-normal-medium-line-height: 150%;
+    --body-leading-normal-regular-font-family: "Inter", Helvetica;
+    --body-leading-normal-regular-font-size: 16px;
+    --body-leading-normal-regular-font-style: normal;
+    --body-leading-normal-regular-font-weight: 400;
+    --body-leading-normal-regular-letter-spacing: 0.20000000298023224px;
+    --body-leading-normal-regular-line-height: 150%;
+    --heading-1-leading-none-regular-font-family: "Inter", Helvetica;
+    --heading-1-leading-none-regular-font-size: 28.829999923706055px;
+    --heading-1-leading-none-regular-font-style: normal;
+    --heading-1-leading-none-regular-font-weight: 400;
+    --heading-1-leading-none-regular-letter-spacing: -1px;
+    --heading-1-leading-none-regular-line-height: 100%;
+    --heading-1-leading-normal-regular-font-family: "Inter", Helvetica;
+    --heading-1-leading-normal-regular-font-size: 28.829999923706055px;
+    --heading-1-leading-normal-regular-font-style: normal;
+    --heading-1-leading-normal-regular-font-weight: 400;
+    --heading-1-leading-normal-regular-letter-spacing: -1px;
+    --heading-1-leading-normal-regular-line-height: 110.00000238418579%;
+    --heading-2-leading-none-medium-font-family: "Inter", Helvetica;
+    --heading-2-leading-none-medium-font-size: 25.6299991607666px;
+    --heading-2-leading-none-medium-font-style: normal;
+    --heading-2-leading-none-medium-font-weight: 500;
+    --heading-2-leading-none-medium-letter-spacing: -0.4000000059604645px;
+    --heading-2-leading-none-medium-line-height: 100%;
+    --heading-2-leading-normal-medium-font-family: "Inter", Helvetica;
+    --heading-2-leading-normal-medium-font-size: 25.6299991607666px;
+    --heading-2-leading-normal-medium-font-style: normal;
+    --heading-2-leading-normal-medium-font-weight: 500;
+    --heading-2-leading-normal-medium-letter-spacing: -0.4000000059604645px;
+    --heading-2-leading-normal-medium-line-height: 120.00000476837158%;
+    --heading-3-leading-none-medium-font-family: "Inter", Helvetica;
+    --heading-3-leading-none-medium-font-size: 22.780000686645508px;
+    --heading-3-leading-none-medium-font-style: normal;
+    --heading-3-leading-none-medium-font-weight: 500;
+    --heading-3-leading-none-medium-letter-spacing: -0.20000000298023224px;
+    --heading-3-leading-none-medium-line-height: 100%;
+    --heading-3-leading-normal-medium-font-family: "Inter", Helvetica;
+    --heading-3-leading-normal-medium-font-size: 22.780000686645508px;
+    --heading-3-leading-normal-medium-font-style: normal;
+    --heading-3-leading-normal-medium-font-weight: 500;
+    --heading-3-leading-normal-medium-letter-spacing: -0.20000000298023224px;
+    --heading-3-leading-normal-medium-line-height: 129.99999523162842%;
+    --heading-4-leading-none-medium-font-family: "Inter", Helvetica;
+    --heading-4-leading-none-medium-font-size: 20.25px;
+    --heading-4-leading-none-medium-font-style: normal;
+    --heading-4-leading-none-medium-font-weight: 500;
+    --heading-4-leading-none-medium-letter-spacing: -0.10000000149011612px;
+    --heading-4-leading-none-medium-line-height: 100%;
+    --heading-4-leading-normal-medium-font-family: "Inter", Helvetica;
+    --heading-4-leading-normal-medium-font-size: 20.25px;
+    --heading-4-leading-normal-medium-font-style: normal;
+    --heading-4-leading-normal-medium-font-weight: 500;
+    --heading-4-leading-normal-medium-letter-spacing: -0.10000000149011612px;
+    --heading-4-leading-normal-medium-line-height: 139.9999976158142%;
+    --large-leading-none-medium-font-family: "Inter", Helvetica;
+    --large-leading-none-medium-font-size: 18px;
+    --large-leading-none-medium-font-style: normal;
+    --large-leading-none-medium-font-weight: 500;
+    --large-leading-none-medium-letter-spacing: 0.15000000596046448px;
+    --large-leading-none-medium-line-height: 100%;
+    --large-leading-none-regular-font-family: "Inter", Helvetica;
+    --large-leading-none-regular-font-size: 18px;
+    --large-leading-none-regular-font-style: normal;
+    --large-leading-none-regular-font-weight: 400;
+    --large-leading-none-regular-letter-spacing: 0.15000000596046448px;
+    --large-leading-none-regular-line-height: 100%;
+    --large-leading-normal-medium-font-family: "Inter", Helvetica;
+    --large-leading-normal-medium-font-size: 18px;
+    --large-leading-normal-medium-font-style: normal;
+    --large-leading-normal-medium-font-weight: 500;
+    --large-leading-normal-medium-letter-spacing: 0.15000000596046448px;
+    --large-leading-normal-medium-line-height: 150%;
+    --large-leading-normal-regular-font-family: "Inter", Helvetica;
+    --large-leading-normal-regular-font-size: 18px;
+    --large-leading-normal-regular-font-style: normal;
+    --large-leading-normal-regular-font-weight: 400;
+    --large-leading-normal-regular-letter-spacing: 0.15000000596046448px;
+    --large-leading-normal-regular-line-height: 150%;
+    --shadow-lg:
+      0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 5px 5px 0px rgba(0, 0, 0, 0.09), 0px 11px 7px 0px rgba(
+        0,
+        0,
+        0,
+        0.05
+      ), 0px 20px 8px 0px rgba(0, 0, 0, 0.01), 0px 32px 9px 0px rgba(0, 0, 0, 0);
+    --shadow-lg-yrgo-blue:
+      0px 1px 3px 0px rgba(0, 26, 82, 0.1), 0px 5px 5px 0px rgba(0, 26, 82, 0.09), 0px 11px 7px 0px rgba(
+        0,
+        26,
+        82,
+        0.05
+      ), 0px 20px 8px 0px rgba(0, 26, 82, 0.01), 0px 32px 9px 0px rgba(
+        0,
+        26,
+        82,
+        0
+      );
+    --shadow-lg-yrgo-red:
+      0px 1px 3px 0px rgba(229, 18, 54, 0.1), 0px 5px 5px 0px rgba(
+        229,
+        18,
+        54,
+        0.09
+      ), 0px 11px 7px 0px rgba(229, 18, 54, 0.05), 0px 20px 8px 0px rgba(
+        229,
+        18,
+        54,
+        0.01
+      ), 0px 32px 9px 0px rgba(229, 18, 54, 0);
+    --shadow-sm:
+      0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 4px 4px 0px rgba(0, 0, 0, 0.04), 0px 8px 5px 0px rgba(
+        0,
+        0,
+        0,
+        0.02
+      ), 0px 15px 6px 0px rgba(0, 0, 0, 0.01), 0px 23px 6px 0px rgba(0, 0, 0, 0);
+    --small-leading-none-medium-font-family: "Inter", Helvetica;
+    --small-leading-none-medium-font-size: 14px;
+    --small-leading-none-medium-font-style: normal;
+    --small-leading-none-medium-font-weight: 500;
+    --small-leading-none-medium-letter-spacing: 0.20000000298023224px;
+    --small-leading-none-medium-line-height: 100%;
+    --small-leading-none-regular-font-family: "Inter", Helvetica;
+    --small-leading-none-regular-font-size: 14px;
+    --small-leading-none-regular-font-style: normal;
+    --small-leading-none-regular-font-weight: 400;
+    --small-leading-none-regular-letter-spacing: 0.20000000298023224px;
+    --small-leading-none-regular-line-height: 100%;
+    --small-leading-normal-medium-font-family: "Inter", Helvetica;
+    --small-leading-normal-medium-font-size: 14px;
+    --small-leading-normal-medium-font-style: normal;
+    --small-leading-normal-medium-font-weight: 500;
+    --small-leading-normal-medium-letter-spacing: 0.20000000298023224px;
+    --small-leading-normal-medium-line-height: 150%;
+    --small-leading-normal-regular-font-family: "Inter", Helvetica;
+    --small-leading-normal-regular-font-size: 14px;
+    --small-leading-normal-regular-font-style: normal;
+    --small-leading-normal-regular-font-weight: 400;
+    --small-leading-normal-regular-letter-spacing: 0.20000000298023224px;
+    --small-leading-normal-regular-line-height: 150%;
+    --xsmall-leading-none-medium-font-family: "Inter", Helvetica;
+    --xsmall-leading-none-medium-font-size: 12px;
+    --xsmall-leading-none-medium-font-style: normal;
+    --xsmall-leading-none-medium-font-weight: 500;
+    --xsmall-leading-none-medium-letter-spacing: 0.4000000059604645px;
+    --xsmall-leading-none-medium-line-height: 100%;
+    --xsmall-leading-none-regular-font-family: "Inter", Helvetica;
+    --xsmall-leading-none-regular-font-size: 12px;
+    --xsmall-leading-none-regular-font-style: normal;
+    --xsmall-leading-none-regular-font-weight: 400;
+    --xsmall-leading-none-regular-letter-spacing: 0.4000000059604645px;
+    --xsmall-leading-none-regular-line-height: 100%;
+    --xsmall-leading-normal-medium-font-family: "Inter", Helvetica;
+    --xsmall-leading-normal-medium-font-size: 12px;
+    --xsmall-leading-normal-medium-font-style: normal;
+    --xsmall-leading-normal-medium-font-weight: 500;
+    --xsmall-leading-normal-medium-letter-spacing: 0.4000000059604645px;
+    --xsmall-leading-normal-medium-line-height: 150%;
+    --xsmall-leading-normal-regular-font-family: "Inter", Helvetica;
+    --xsmall-leading-normal-regular-font-size: 12px;
+    --xsmall-leading-normal-regular-font-style: normal;
+    --xsmall-leading-normal-regular-font-weight: 400;
+    --xsmall-leading-normal-regular-letter-spacing: 0.4000000059604645px;
+    --xsmall-leading-normal-regular-line-height: 150%;
+
+}
