@@ -1,7 +1,6 @@
 "use client";
 
 import { redirect } from "next/dist/server/api-utils";
-import AuthenticationCheck from "../../auth/AuthenticationCheck";
 import CreatePositionForm from "../../components/form/position/CreatePositionForm";
 import styles from "../../page.module.css";
 import { useSupabaseAuth } from "@/hook/useSupabaseAuth";
