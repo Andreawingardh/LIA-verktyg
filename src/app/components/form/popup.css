@@ -278,7 +278,6 @@
   letter-spacing: 0.2px;
   align-self: stretch;
   cursor: pointer;
-  z-index: 1000;
   position: relative;
   border: none;
   border-radius: var(--border-radius-full, 9999px);

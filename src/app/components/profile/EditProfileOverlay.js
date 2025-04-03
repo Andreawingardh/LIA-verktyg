@@ -558,7 +558,7 @@ export default function EditProfileOverlay({
                 disabled={saving}
                 className="primary-button"
               >
-                {saving ? "Sparar..." : "Spara Ändringar"}
+                {saving ? "Sparar..." : "Tillämpa ändringar"}
               </button>
 
               <button
@@ -567,7 +567,7 @@ export default function EditProfileOverlay({
                 disabled={saving}
                 className="secondary-button"
               >
-                Avbryt Registrering
+                Avbryt redigering
               </button>
             </div>
           </form>
