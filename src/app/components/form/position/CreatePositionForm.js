@@ -2,7 +2,7 @@
 import { supabase } from "@/utils/supabase/client";
 import { useState } from "react";
 import React from "react";
-import styles from "../popup.css";
+import "../popup.css";
 
 export default function CreatePositionForm({ user, onClose }) {
   const [formData, setFormData] = useState({
@@ -86,7 +86,6 @@ export default function CreatePositionForm({ user, onClose }) {
     }));
     setSelectedTable(e.target.name);
     try {
-      setLoading(true);
 
       const { data: skillData, error: skillsError } = await supabase
         .from("skills_" + e.target.name)

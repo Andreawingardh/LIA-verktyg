@@ -25,7 +25,7 @@ export default function EditPositionForm({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [skillsExpanded, setSkillsExpanded] = useState(false);
-  const [softwareExpanded, setSoftwareExpanded] = useState(false);
+  const [softwareExpanded, setSoftwareExpanded] = useState(false); // Start collapsed so button shows
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -435,7 +435,6 @@ export default function EditPositionForm({
     setSelectedTable(newTableName);
 
     try {
-      setLoading(true);
 
       // Load skills options for the new role
       await loadSkillsOptions(newTableName);

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import styles from "../../page.module.css";
 import LoginPopup from "../form/LoginPopup";
 import RegistrationPopup from "../form/RegistrationPopup";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabase/client";
 import { logout } from "../../login/actions"; 
+import styles from "./Header.module.css";
 
 
 export default function Header({ metadata }) {

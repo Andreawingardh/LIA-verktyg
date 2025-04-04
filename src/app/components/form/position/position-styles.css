@@ -1,5 +1,5 @@
 /* Position item styles */
-.positions-list {
+/* .positions-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -72,7 +72,7 @@
 
 .delete-button:hover {
   background-color: rgba(244, 67, 54, 0.05);
-}
+} */
 
 /* Empty state */
 .no-positions {
