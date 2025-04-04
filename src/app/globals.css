@@ -48,6 +48,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 * {
@@ -66,3 +69,30 @@ a {
     color-scheme: dark;
   }
 } */
+
+h3 {
+  /* Typography */
+  color: var(--base-primary-foreground, #fff);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* heading-3/leading-normal/medium -MOBILE */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-2x-large-font-size, 1.42375rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 130%; /* 1.85088rem */
+  letter-spacing: -0.0125rem;
+}
+
+p {
+  /* color: var(--base-foreground, #0f1314); */
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+}
