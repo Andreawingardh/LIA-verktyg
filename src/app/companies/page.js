@@ -302,7 +302,7 @@ export default function Companies() {
                           : "skillButton"
                       }
                       onClick={() => handleSkillToggle(software)}
-                    >
+                    ><img src={`/images/software-icons/${software.skills_name}.svg`} alt={software.skills_name} />
                       {software.skills_name}
                     </button>
                   ))}

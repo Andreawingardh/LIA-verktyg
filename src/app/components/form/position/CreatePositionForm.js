@@ -292,7 +292,7 @@ export default function CreatePositionForm({ user, onClose }) {
                       : "skillButton"
                   }
                   onClick={() => handleSoftwareToggle(software)}
-                >
+                ><img src={`/images/software-icons/${software.skills_name}.svg`} alt={software.skills_name} />
                   {software.skills_name}
                   {isSoftwareSelected(software.id) ? (
                     <svg
