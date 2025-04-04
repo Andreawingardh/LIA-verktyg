@@ -1,6 +1,5 @@
 .footer {
   display: flex;
-
   flex-direction: column;
   align-items: flex-start;
 
@@ -12,7 +11,6 @@
 
 .container {
   display: flex;
-
   padding: 0px var(--spacing-4, 16px);
   flex-direction: column;
   align-items: center;
@@ -330,6 +328,14 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  text-decoration: underline;
+}
+
+.brandLink a:hover,
+.memberLink:hover path,
+.memberLink:hover {
+  color: #0143d3;
+  fill: #0143d3;
 }
 
 .copyright {

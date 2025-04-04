@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import styles from "./Footer.module.css";
 import RegistrationPopup from "../form/RegistrationPopup";
-import LoginPopup from "..//form/LoginPopup";
+import LoginPopup from "../form/LoginPopup";
 
 const Footer = () => {
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
