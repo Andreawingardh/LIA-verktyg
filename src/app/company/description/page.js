@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { FormProvider } from "../../components/form/FormContext";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 import { ProgressIndicator } from "../../components/form/ProgressIndicator";
-import "../company.css"
+import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
+import "../company.css";
 
 export default function DescriptionPage() {
   return (
@@ -23,38 +24,64 @@ function DescriptionForm() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showCancelPopup, setShowCancelPopup] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    if (!authLoading) {
+    // Only run this check once to prevent redirect loops
+    if (!initialized && !authLoading) {
+      setInitialized(true);
+      
       const registrationStep = localStorage.getItem("registrationStep");
       const companyName = localStorage.getItem("companyName");
-
-      if (registrationStep === "description" && companyName) {
+      
+      if ((user || localStorage.getItem("registrationEmail")) && 
+          registrationStep === "description" && companyName) {
+        setLoading(false);
+      } else if (companyName) {
+        // If we have a company name but wrong step, correct the step
+        localStorage.setItem("registrationStep", "description");
         setLoading(false);
       } else {
         router.push("/company/baseInfo");
       }
     }
-  }, [authLoading, router]);
+  }, [authLoading, router, initialized, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (redirecting) {
+      return;
+    }
+    
     setIsSubmitting(true);
     setError("");
 
     try {
       localStorage.setItem("companyDescription", description);
       localStorage.setItem("companyLocation", location);
-
       localStorage.setItem("registrationStep", "contact");
-
-      router.push("/company/contact");
+      
+      // Mark that we're redirecting to prevent multiple redirects
+      setRedirecting(true);
+      
+      // Add a small delay before redirecting
+      setTimeout(() => {
+        router.push("/company/contact");
+      }, 100);
+      
     } catch (err) {
       console.error("Error in Description:", err);
       setError("Ett fel uppstod när informationen skulle sparas");
-    } finally {
       setIsSubmitting(false);
+      setRedirecting(false);
     }
+  };
+
+  const handleCancelClick = () => {
+    setShowCancelPopup(true);
   };
 
   if (loading || authLoading) {
@@ -105,16 +132,26 @@ function DescriptionForm() {
           <button
             className="profileSubmitButton"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || redirecting}
           >
             {isSubmitting ? "Sparar..." : "Fortsätt till nästa steg"}
           </button>
 
-          <button type="button" className="cancelButton">
+          <button 
+            type="button" 
+            className="cancelButton"
+            onClick={handleCancelClick}
+          >
             Avbryt Registrering
           </button>
         </footer>
       </form>
+
+      {/* Cancel Confirmation Popup */}
+      <CancelConfirmationPopup 
+        isOpen={showCancelPopup} 
+        onClose={() => setShowCancelPopup(false)} 
+      />
     </div>
   );
 }

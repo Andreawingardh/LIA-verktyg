@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { FormProvider } from "../../components/form/FormContext";
 import { supabase } from "../../../utils/supabase/client";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
-import "../company.css"
+import "../company.css";
 import { ProgressIndicator } from "../../components/form/ProgressIndicator";
+import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
 
 export default function ContactPage() {
   return (
@@ -24,27 +25,44 @@ function ContactForm() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showCancelPopup, setShowCancelPopup] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    if (!authLoading) {
+    // Only run this check once to prevent redirect loops
+    if (!initialized && !authLoading) {
+      setInitialized(true);
+      
       const registrationStep = localStorage.getItem("registrationStep");
       const description = localStorage.getItem("companyDescription");
-
-      if (registrationStep === "contact" && description) {
-        const email = localStorage.getItem("registrationEmail");
+      const email = localStorage.getItem("registrationEmail");
+      
+      if ((user || email) && registrationStep === "contact" && description) {
         if (email && !contactEmail) {
           setContactEmail(email);
         }
-
+        setLoading(false);
+      } else if (description) {
+        // If we have a description but wrong step, correct it
+        localStorage.setItem("registrationStep", "contact");
+        if (email && !contactEmail) {
+          setContactEmail(email);
+        }
         setLoading(false);
       } else {
         router.push("/company/description");
       }
     }
-  }, [authLoading, contactEmail, router]);
+  }, [authLoading, contactEmail, router, initialized, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (redirecting || isSubmitting) {
+      return;
+    }
+    
     setIsSubmitting(true);
     setError("");
 
@@ -58,6 +76,7 @@ function ContactForm() {
       const displayImageUrl = localStorage.getItem("displayImageUrl");
 
       if (!user) {
+        // Only try to sign up if we don't already have a user
         const { data, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
@@ -92,13 +111,10 @@ function ContactForm() {
         ]);
 
       if (insertError) throw insertError;
-
-      // Handle file uploads if they exist
-      const hasLogo = localStorage.getItem("hasLogo") === "true";
-      const hasDisplayImage =
-        localStorage.getItem("hasDisplayImage") === "true";
-
-
+      
+      // Set a flag in localStorage to show completion popup on dashboard
+      localStorage.setItem("showCompletionPopup", "true");
+      
       // Clear registration data from localStorage
       localStorage.removeItem("registrationStep");
       localStorage.removeItem("registrationEmail");
@@ -111,13 +127,21 @@ function ContactForm() {
       localStorage.removeItem("logoUrl");
       localStorage.removeItem("displayImageUrl");
 
+      // Mark that we're redirecting
+      setRedirecting(true);
+      
+      // Redirect to dashboard
       router.push("/dashboard");
+      
     } catch (err) {
       console.error("Error in Contact:", err);
       setError(err.message || "Ett fel uppstod när profilen skulle skapas");
-    } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCancelClick = () => {
+    setShowCancelPopup(true);
   };
 
   if (loading || authLoading) {
@@ -168,16 +192,27 @@ function ContactForm() {
           <button
             className="profileSubmitButton"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || redirecting}
           >
             {isSubmitting ? "Skapar profil..." : "Slutför Företagsprofil"}
           </button>
 
-          <button type="button" className="cancelButton">
+          <button 
+            type="button" 
+            className="cancelButton"
+            onClick={handleCancelClick}
+            disabled={isSubmitting || redirecting}
+          >
             Avbryt Registrering
           </button>
         </footer>
       </form>
+
+      {/* Cancel Confirmation Popup */}
+      <CancelConfirmationPopup 
+        isOpen={showCancelPopup} 
+        onClose={() => setShowCancelPopup(false)} 
+      />
     </div>
   );
 }

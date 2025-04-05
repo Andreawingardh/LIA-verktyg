@@ -2,24 +2,38 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useSupabaseAuth } from "../../hook/useSupabaseAuth";
 import { supabase } from "../../utils/supabase/client";
 import EditProfileButton from "../components/profile/EditProfileButton";
+import CompletionConfirmationPopup from "../components/form/CompletionConfirmationPopup";
 import "./dashboard.css";
 import AddPositionButton from "../components/profile/addPositionButton";
 import PositionCard from "../components/cards/PositionCard";
+import AddPositionOverlay from "../components/profile/addPositionOverlay";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { user, loading: authLoading } = useSupabaseAuth();
   const [companyProfile, setCompanyProfile] = useState(null);
   const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showCompletionPopup, setShowCompletionPopup] = useState(false);
+  const [showAddPostionOverlay, setShowAddPositionOverlay] = useState(false);
 
   useEffect(() => {
     if (user && !authLoading) {
       fetchCompanyProfile();
       fetchPositions();
+      
+      // Check if we should show the completion popup
+      const shouldShowPopup = localStorage.getItem("showCompletionPopup");
+      if (shouldShowPopup === "true") {
+        setShowCompletionPopup(true);
+        // Remove the flag from localStorage
+        localStorage.removeItem("showCompletionPopup");
+      }
     } else if (!authLoading && !user) {
       // Redirect to login if not authenticated
       window.location.href = "/";
@@ -61,6 +75,14 @@ export default function DashboardPage() {
 
   const refreshPositions = () => {
     fetchPositions();
+  };
+
+  const handleAddLiaPosition = () => {
+    // Close the completion popup
+    setShowCompletionPopup(false);
+    
+    // Redirect to LIA position creation page
+    setShowAddPositionOverlay(true);
   };
 
   if (authLoading || loading) {
@@ -149,6 +171,19 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      
+      {/* Completion Confirmation Popup */}
+      <CompletionConfirmationPopup 
+        isOpen={showCompletionPopup} 
+        onClose={() => setShowCompletionPopup(false)}
+        onAddLiaPosition={handleAddLiaPosition}
+      />
+
+      <AddPositionOverlay
+        isOpen={showAddPostionOverlay} 
+        onClose={() => setShowAddPositionOverlay(false)}
+        onAddLiaPosition={handleAddLiaPosition}
+      />
     </main>
   );
 }

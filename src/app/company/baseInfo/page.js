@@ -7,7 +7,7 @@ import { supabase } from "../../../utils/supabase/client";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 import "../company.css";
 import { ProgressIndicator } from "../../components/form/ProgressIndicator";
-
+import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
 
 export default function RegisterPage() {
   return (
@@ -31,6 +31,9 @@ function BaseInfoForm() {
   const [success, setSuccess] = useState(null);
   const [logoUrl, setLogoUrl] = useState(null);
   const [displayImageUrl, setDisplayImageUrl] = useState(null);
+  const [showCancelPopup, setShowCancelPopup] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   const fileUpload = async (file, type) => {
     if (!file) return;  
@@ -75,10 +78,12 @@ function BaseInfoForm() {
       //Here we add the file into local storage
       if (type === "logo") {
         localStorage.setItem("logoUrl", data.publicUrl);
+        setLogoUrl(data.publicUrl);
         console.log(data.publicUrl);
       } else if (type === "display") {
         console.log(data.publicUrl);
         localStorage.setItem("displayImageUrl", data.publicUrl);
+        setDisplayImageUrl(data.publicUrl);
       }
 
       return data.publicUrl
@@ -92,17 +97,29 @@ function BaseInfoForm() {
   };
 
   useEffect(() => {
-    if (!authLoading) {
-      if (user || localStorage.getItem("registrationEmail")) {
+    // Only run this check once to prevent redirect loops
+    if (!initialized && !authLoading) {
+      setInitialized(true);
+      
+      const registrationStep = localStorage.getItem("registrationStep");
+      const registrationEmail = localStorage.getItem("registrationEmail");
+      
+      if (user || (registrationEmail && registrationStep === "baseInfo")) {
         setLoading(false);
-      } else {
+      } else if (!registrationEmail) {
+        // Only redirect if there's no registration email at all
         router.push("/login");
       }
     }
-  }, [authLoading, user, router]);
+  }, [authLoading, user, router, initialized]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (redirecting) {
+      return;
+    }
+    
     setIsSubmitting(true);
     setError("");
 
@@ -118,19 +135,27 @@ function BaseInfoForm() {
       }
 
       localStorage.setItem("registrationStep", "description");
-
-      router.push("/company/description");
+      
+      // Mark that we're redirecting to prevent multiple redirects
+      setRedirecting(true);
+      
+      // Add a small delay before redirecting
+      setTimeout(() => {
+        router.push("/company/description");
+      }, 100);
+      
     } catch (err) {
       console.error("Error in BaseInfo:", err);
       setError("Ett fel uppstod när informationen skulle sparas");
-    } finally {
       setIsSubmitting(false);
+      setRedirecting(false);
     }
   };
 
   const handleLogoChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      setLogo(file);
       const fileUrl = await fileUpload(file, "logo");
       console.log(fileUrl)
       console.log(error)
@@ -141,8 +166,8 @@ function BaseInfoForm() {
     console.log("handleDisplayImageChange triggered");
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      setDisplayImage(file);
       console.log("Selected file:", file);
-
 
       const fileUrl = await fileUpload(file, "display");
       console.log("Returned URL:", fileUrl);
@@ -152,50 +177,22 @@ function BaseInfoForm() {
     }
   };
 
+  const handleCancelClick = () => {
+    setShowCancelPopup(true);
+  };
+
   if (loading || authLoading) {
     return <div>Laddar...</div>;
   }
 
   return (
     <div className="container">
-
-      <h2>Skapa företagsprofil</h2>
       <form className="contentWrapper" onSubmit={handleSubmit}>
-        <label htmlFor="companyName">Företagsnamn</label>
-        <input
-          id="companyName"
-          name="companyName"
-          type="text"
-          required
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
-          disabled={isSubmitting}
-        />
-
-        <label htmlFor="logo">Logga</label>
-        <input
-          id="logo"
-          name="logo"
-          type="file"
-          accept="image/*" 
-          onChange={handleLogoChange}
-          disabled={isSubmitting}
-        />
-
-        <label htmlFor="displayImage">Omslagsbild</label>
-        <input
-          id="displayImage"
-          name="displayImage"
-          type="file"
-          accept="image/*" 
-          onChange={handleDisplayImageChange}
-          disabled={isSubmitting}
-        />
-     
         <header className="contentHeader">
           <h2 className="title">Skapa företagsprofil</h2>
           <ProgressIndicator currentStep="baseInfo" />
         </header>
+        
         <article className="inputSingle">
           <label className="popupTitle" htmlFor="companyName">
             Företagsnamn
@@ -225,6 +222,7 @@ function BaseInfoForm() {
               onChange={handleLogoChange}
               disabled={isSubmitting}
             />
+            {logoUrl && <p className="success-message">Logga uppladdad</p>}
           </div>
         </article>
 
@@ -241,6 +239,7 @@ function BaseInfoForm() {
               onChange={handleDisplayImageChange}
               disabled={isSubmitting}
             />
+            {displayImageUrl && <p className="success-message">Omslagsbild uppladdad</p>}
           </div>
         </article>
 
@@ -250,16 +249,26 @@ function BaseInfoForm() {
           <button
             className="profileSubmitButton"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || redirecting}
           >
             {isSubmitting ? "Sparar..." : "Fortsätt till nästa steg"}
           </button>
 
-          <button type="button" className="cancelButton">
+          <button 
+            type="button" 
+            className="cancelButton"
+            onClick={handleCancelClick}
+          >
             Avbryt Registrering
           </button>
         </footer>
       </form>
+
+      {/* Cancel Confirmation Popup */}
+      <CancelConfirmationPopup 
+        isOpen={showCancelPopup} 
+        onClose={() => setShowCancelPopup(false)} 
+      />
     </div>
   );
 }
