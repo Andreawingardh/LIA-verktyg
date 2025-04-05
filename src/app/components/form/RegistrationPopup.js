@@ -254,7 +254,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             />
             
             </div>
-            {/* Fixed-height container for password requirements to prevent layout shifting */}
+
           <div className="password-requirements-container">
            
             {errors.password && errors.passwordRequirements && (

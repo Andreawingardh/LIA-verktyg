@@ -27,15 +27,13 @@ export default function DashboardPage() {
       fetchCompanyProfile();
       fetchPositions();
       
-      // Check if we should show the completion popup
+      
       const shouldShowPopup = localStorage.getItem("showCompletionPopup");
       if (shouldShowPopup === "true") {
         setShowCompletionPopup(true);
-        // Remove the flag from localStorage
         localStorage.removeItem("showCompletionPopup");
       }
     } else if (!authLoading && !user) {
-      // Redirect to login if not authenticated
       window.location.href = "/";
     }
   }, [user, authLoading]);
@@ -78,10 +76,8 @@ export default function DashboardPage() {
   };
 
   const handleAddLiaPosition = () => {
-    // Close the completion popup
     setShowCompletionPopup(false);
     
-    // Redirect to LIA position creation page
     setShowAddPositionOverlay(true);
   };
 
@@ -179,6 +175,8 @@ export default function DashboardPage() {
         onAddLiaPosition={handleAddLiaPosition}
       />
 
+
+      {/* Add Position Overlay */}
       <AddPositionOverlay
         isOpen={showAddPostionOverlay} 
         onClose={() => setShowAddPositionOverlay(false)}
