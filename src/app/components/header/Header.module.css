@@ -18,6 +18,14 @@
   align-items: center;
   gap: var(--spacing-3, 12px);
   text-decoration: none;
+  /* Better focus styling for accessibility */
+  outline: none;
+}
+
+.linkWrapper:focus-visible {
+  outline: 2px solid var(--base-primary, #e51236);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .logoText {
@@ -37,8 +45,6 @@
   background: var(--base-card, #f0f2f4);
   color: var(--base-secondary, #001a52);
   font-feature-settings: "liga" off, "clig" off;
-
-  /* body/leading-none/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-base-font-size, 16px);
   font-style: normal;
@@ -55,7 +61,6 @@
   background: var(--base-background, #fff);
   position: relative;
   z-index: 10;
-  /* shadow/lg */
   box-shadow: 0px 32px 9px 0px rgba(0, 0, 0, 0),
     0px 20px 8px 0px rgba(0, 0, 0, 0.01), 0px 11px 7px 0px rgba(0, 0, 0, 0.05),
     0px 5px 5px 0px rgba(0, 0, 0, 0.09), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
@@ -94,10 +99,16 @@
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
   transition: background-color 0.3s ease;
+  border-radius: var(--border-radius-full, 22px);
 }
 
-.menuButtonOpen {
-  color: #e51236;
+.menuButton:hover,
+.menuButton:focus {
+  background-color: var(--base-accent, #e6e6e6);
+}
+
+.menuButton:focus-visible {
+  outline: 2px solid var(--base-primary, #e51236);
 }
 
 .menuButton svg {
@@ -152,8 +163,6 @@
   margin: 0;
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
-
-  /* heading-4/leading-none/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-xlarge-font-size, 20.25px);
   font-style: normal;
@@ -181,6 +190,17 @@
   color: #333;
   font-size: 1rem;
   width: 100%;
+  padding: var(--spacing-2, 8px);
+  border-radius: 4px;
+}
+
+.mobileNavLink:hover {
+  background-color: var(--base-accent, #e6e6e6);
+}
+
+.mobileNavLink:focus-visible {
+  outline: 2px solid var(--base-primary, #e51236);
+  outline-offset: 2px;
 }
 
 .mobileButtons {
@@ -208,8 +228,6 @@
   text-align: center;
   font-feature-settings: "liga" off, "clig" off;
   text-overflow: ellipsis;
-
-  /* heading-4/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-xlarge-font-size, 20.25px);
   font-style: normal;
@@ -219,7 +237,6 @@
 }
 
 /* Desktop styling */
-
 .desktopWrapper {
   display: flex;
   max-width: 1500px;
@@ -229,6 +246,7 @@
   align-items: center;
   flex: 1 0 0;
 }
+
 .desktopHeader {
   display: flex;
   width: 100%;
@@ -237,8 +255,6 @@
   align-items: center;
   position: absolute;
   background: var(--base-background, #fff);
-
-  /* shadow/lg */
   box-shadow: 0px 32px 9px 0px rgba(0, 0, 0, 0),
     0px 20px 8px 0px rgba(0, 0, 0, 0.01), 0px 11px 7px 0px rgba(0, 0, 0, 0.05),
     0px 5px 5px 0px rgba(0, 0, 0, 0.09), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
@@ -263,6 +279,13 @@
   height: var(--width-w-11, 44px);
   align-items: center;
   gap: var(--spacing-3, 12px);
+  text-decoration: none;
+}
+
+.desktopLogo:focus-visible {
+  outline: 2px solid var(--base-primary, #e51236);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .desktopLogoSub {
@@ -272,6 +295,7 @@
   align-items: center;
   border-radius: var(--border-radius-full, 22px);
   background: var(--base-card, #f0f2f4);
+  color: var(--base-secondary, #001a52);
 }
 
 .desktopNav {
@@ -296,14 +320,19 @@
   border-radius: var(--border-radius-full, 22px);
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
-
-  /* body/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-base-font-size, 16px);
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  text-decoration: none;
+  position: relative;
+}
+
+.desktopNavLink:focus-visible {
+  outline: 2px solid var(--base-primary, #e51236);
+  outline-offset: 2px;
 }
 
 .desktopButtons {
@@ -312,22 +341,21 @@
   gap: var(--spacing-3, 12px);
 }
 
-/* Button styling */
-.createProfileButton {
+/* Button styling with improved accessibility */
+.createProfileButton,
+.loginButton,
+.logoutButton,
+.desktopCompanyProfileButton,
+.desktopCreateProfileButton,
+.desktopLoginButton,
+.desktopLogoutButton {
   display: flex;
   height: var(--height-h-11, 44px);
   padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
   justify-content: center;
   align-items: center;
   gap: var(--spacing-2, 8px);
-  align-self: stretch;
   border-radius: var(--border-radius-full, 22px);
-  border: 1px solid var(--base-secondary, #001a52);
-  background: var(--base-secondary, #001a52);
-  color: var(--base-secondary-foreground, #fff);
-  font-feature-settings: "liga" off, "clig" off;
-
-  /* body/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-base-font-size, 16px);
   font-style: normal;
@@ -335,7 +363,28 @@
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Focus styles for buttons */
+.createProfileButton:focus-visible,
+.loginButton:focus-visible,
+.logoutButton:focus-visible,
+.desktopCompanyProfileButton:focus-visible,
+.desktopCreateProfileButton:focus-visible,
+.desktopLoginButton:focus-visible,
+.desktopLogoutButton:focus-visible {
+  outline: 2px solid var(--base-primary, #e51236);
+}
+
+/* Primary Button Styles */
+.createProfileButton,
+.desktopCreateProfileButton {
+  align-self: stretch;
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-secondary, #001a52);
+  color: var(--base-secondary-foreground, #fff);
 }
 
 .createProfileButton:hover,
@@ -344,110 +393,32 @@
   color: var(--base-secondary, #001a52);
 }
 
-.desktopCompanyProfileButton:hover {
-  color: var(--base-secondary-foreground, #fff);
-  background: var(--base-secondary, #001a52);
-  cursor: pointer;
-}
-
-.desktopCompanyProfileButton {
-  display: flex;
-  height: var(--height-h-11, 44px);
-  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2, 8px);
-  border-radius: var(--border-radius-full, 22px);
-  border: 1px solid var(--base-secondary, #001a52);
-  background: var(--base-background, #fff);
-  color: var(--base-secondary, #001a52);
-  font-feature-settings: "liga" off, "clig" off;
-
-  /* body/leading-normal/medium */
-  font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-base-font-size, 16px);
-  font-style: normal;
-  font-weight: var(--font-weight-medium, 500);
-  line-height: 150%; /* 24px */
-  letter-spacing: 0.2px;
-}
-
-.desktopCreateProfileButton {
-  display: flex;
-  height: var(--height-h-11, 44px);
-  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2, 8px);
-  border-radius: var(--border-radius-full, 22px);
-  border: 1px solid var(--base-secondary, #001a52);
-  background: var(--base-secondary, #001a52);
-  color: var(--base-secondary-foreground, #fff);
-  font-feature-settings: "liga" off, "clig" off;
-
-  /* body/leading-normal/medium */
-  font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-base-font-size, 16px);
-  font-style: normal;
-  font-weight: var(--font-weight-medium, 500);
-  line-height: 150%; /* 24px */
-  letter-spacing: 0.2px;
-  cursor: pointer;
-}
-
-.desktopLoginButton,
-.desktopLogoutButton {
-  display: flex;
-  height: var(--height-h-11, 44px);
-  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
-  justify-content: center;
-  align-items: center;
-  border: none;
-  background-color: transparent;
-  gap: var(--spacing-2, 8px);
-  border-radius: var(--border-radius-full, 22px);
-  color: var(--base-foreground, #0f1314);
-  font-feature-settings: "liga" off, "clig" off;
-
-  /* body/leading-normal/medium */
-  font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-base-font-size, 16px);
-  font-style: normal;
-  font-weight: var(--font-weight-medium, 500);
-  line-height: 150%; /* 24px */
-  letter-spacing: 0.2px;
-  cursor: pointer;
-}
-
+/* Outline Button Styles */
 .loginButton,
-.logoutButton {
-  display: flex;
-  height: var(--height-h-11, 44px);
-  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2, 8px);
+.logoutButton,
+.desktopCompanyProfileButton {
   align-self: stretch;
-  border-radius: var(--border-radius-full, 9999px);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-background, #fff);
-  cursor: pointer;
   color: var(--base-secondary, #001a52);
-  font-feature-settings: "liga" off, "clig" off;
-
-  /* body/leading-normal/medium */
-  font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-base-font-size, 16px);
-  font-style: normal;
-  font-weight: var(--font-weight-medium, 500);
-  line-height: 150%; /* 24px */
-  letter-spacing: 0.2px;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .loginButton:hover,
 .logoutButton:hover {
   background-color: #f5f5f5;
+}
+
+.desktopCompanyProfileButton:hover {
+  color: var(--base-secondary-foreground, #fff);
+  background: var(--base-secondary, #001a52);
+}
+
+/* Text Button Styles */
+.desktopLoginButton,
+.desktopLogoutButton {
+  border: none;
+  background-color: transparent;
+  color: var(--base-foreground, #0f1314);
 }
 
 .desktopLoginButton:hover,
@@ -467,6 +438,24 @@
   color: #999;
 }
 
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .linkWrapper:focus-visible,
+  .menuButton:focus-visible,
+  .mobileNavLink:focus-visible,
+  .desktopLogo:focus-visible,
+  .desktopNavLink:focus-visible,
+  .createProfileButton:focus-visible,
+  .loginButton:focus-visible,
+  .logoutButton:focus-visible,
+  .desktopCompanyProfileButton:focus-visible,
+  .desktopCreateProfileButton:focus-visible,
+  .desktopLoginButton:focus-visible,
+  .desktopLogoutButton:focus-visible {
+    outline: 2px solid var(--base-primary, #e51236);
+  }
+}
+
 /* Media queries to ensure proper transition between mobile and desktop */
 @media (max-width: 960px) {
   .mobileButtons .createProfileButton,
@@ -474,5 +463,26 @@
     width: 100%;
     text-align: center;
     margin-top: 0.5rem;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .mobileNav {
+    transition: none;
+  }
+
+  .menuButton svg {
+    transition: none;
+  }
+
+  .createProfileButton,
+  .loginButton,
+  .logoutButton,
+  .desktopCompanyProfileButton,
+  .desktopCreateProfileButton,
+  .desktopLoginButton,
+  .desktopLogoutButton {
+    transition: none;
   }
 }
