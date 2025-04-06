@@ -35,17 +35,16 @@
   /* Border radius */
   --border-radius-lg: 0.625rem;
   --border-radius-xl: 0.75rem;
-  --border-radius-full: 1rem;
+  --border-radius-full: 22px;
 }
 
 .container {
   display: flex;
-  width: 100vw;
-  height: 100vh;
-  padding: var(--spacing-12, 48px) var(--spacing-4, 16px);
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+width: 100vw;
+height: 100vh;
+padding: var(--spacing-12, 48px) var(--spacing-4, 16px);
+flex-direction: column;
+align-items: center;
 }
 
 .contentWrapper {
@@ -54,9 +53,46 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: var(--spacing-6, 24px);
-  align-self: stretch;
+  /* Remove align-self: stretch */
   width: 100%;
   flex: 1;
+  padding-bottom: 6vh;
+  max-width: 580px;
+  min-width: 320px;
+  /* Add these lines to center the form */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.goBackButton {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 22px);
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  cursor: pointer;
+}
+
+.goBackButton:hover {
+  background: var(--base-accent, #E6E6E6);
+}
+
+textarea.profileInputs{
+  resize: none;
 }
 
 .title {
@@ -71,14 +107,6 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: 130%; /* 29.614px */
   letter-spacing: -0.2px;
-}
-
-.inputSingle {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-2, 8px);
-  align-self: stretch;
 }
 
 .profileInputs {
@@ -120,12 +148,19 @@
 
 .buttonGroup {
   display: flex;
+  min-width: 320px;
   width: 100%;
+  max-width: 358px;
   flex-direction: column;
   justify-content: flex-start;
   gap: var(--spacing-2, 8px);
   margin-top: auto;
   align-self: center;
+  position: sticky;
+  bottom: 0;
+  background-color: var(--base-background, #fff);
+  padding-top: var(--spacing-4, 16px);
+  padding-bottom: var(--spacing-4, 16px);
 }
 
 .profileSubmitButton {
@@ -136,9 +171,9 @@
   align-items: center;
   gap: var(--spacing-2, 8px);
   align-self: stretch;
-  border-radius: var(--border-radius-full, 9999px);
-  border: 1px solid var(--base-secondary, #001a52);
-  background: var(--base-secondary, #001a52);
+  border-radius: var(--border-radius-full, 22px);
+border: 1px solid var(--base-secondary, #001A52);
+background: var(--base-secondary, #001A52);
   color: var(--base-secondary-foreground, #fff);
   font-feature-settings: "liga" off, "clig" off;
 
@@ -182,27 +217,27 @@
 
 .contentHeader {
   display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: flex-start;
-gap: var(--spacing-6, 24px);
-align-self: stretch;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--spacing-6, 24px);
+  align-self: stretch;
 }
 
 .progressWrapper {
   display: flex;
-align-items: center;
-gap: var(--spacing-4, 16px);
-align-self: stretch;
+  align-items: center;
+  gap: var(--spacing-4, 16px);
+  align-self: stretch;
 }
 
 .progressTab {
   display: flex;
-height: 34px;
-flex-direction: column;
-align-items: center;
-gap: var(--spacing-1-5, 6px);
-flex: 1 0 0;
+  height: 34px;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1-5, 6px);
+  flex: 1 0 0;
 }
 
 .progressBar {
@@ -210,21 +245,21 @@ flex: 1 0 0;
   flex-shrink: 0;
   align-self: stretch;
   border-radius: var(--border-radius-full, 9999px);
-  background: var(--base-primary, #E51236); /* Default - bright red */
+  background: var(--base-primary, #e51236); 
 }
 
 .progressBar.completed {
-  background: rgba(229, 18, 54, 0.5); /* Faded red for completed steps */
+  background: rgba(229, 18, 54, 0.5); 
 }
 
 .progressBar.inactive {
-  background: #D1D5DB; /* Grey for steps not yet visited */
+  background: #d1d5db; 
 }
 
 .progressPosition {
   align-self: stretch;
-  color: var(--base-primary, #E51236); /* Default - bright red */
-  font-feature-settings: 'liga' off, 'clig' off;
+  color: var(--base-primary, #e51236); 
+  font-feature-settings: "liga" off, "clig" off;
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-small-font-size, 14px);
   font-style: normal;
@@ -233,10 +268,9 @@ flex: 1 0 0;
   letter-spacing: 0.2px;
 }
 
-.progressPosition.completed {
-  color: rgba(229, 18, 54, 0.5); /* Faded red for completed steps */
-}
-
-.progressPosition.inactive {
-  color: #9CA3AF; /* Grey for steps not yet visited */
+@media (min-width: 960px){
+  .container {
+    padding-top: 13vh;
+    padding-bottom: 0vh;
+  }
 }

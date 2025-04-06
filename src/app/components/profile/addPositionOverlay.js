@@ -15,14 +15,14 @@ export default function AddPositionOverlay({
 }) {
   return (
     <div
-      className="popup-overlay"
+      className="popup-overlay-add"
       style={{ display: isOpen ? "flex" : "none" }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
-      }}
+      }}  
     >
       <div
-        className="popup-content edit-profile-overlay"
+        className="popup-content-add edit-profile-overlay"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="popup-header">

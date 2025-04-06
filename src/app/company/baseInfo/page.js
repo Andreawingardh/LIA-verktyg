@@ -35,8 +35,24 @@ function BaseInfoForm() {
   const [redirecting, setRedirecting] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
+  // Add effect to prevent scrolling when popup is shown
+  useEffect(() => {
+    if (showCancelPopup) {
+      // Prevent scrolling
+      document.body.style.overflow = "hidden";
+    } else {
+      // Re-enable scrolling
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup function to reset overflow when component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showCancelPopup]);
+
   const fileUpload = async (file, type) => {
-    if (!file) return;  
+    if (!file) return;
 
     setUploading(true);
     setError(null);
@@ -86,7 +102,7 @@ function BaseInfoForm() {
         setDisplayImageUrl(data.publicUrl);
       }
 
-      return data.publicUrl
+      return data.publicUrl;
     } catch (err) {
       setError(err.message || "File upload failed");
       console.error("Error uploading file:", err);
@@ -100,10 +116,10 @@ function BaseInfoForm() {
     // Only run this check once to prevent redirect loops
     if (!initialized && !authLoading) {
       setInitialized(true);
-      
+
       const registrationStep = localStorage.getItem("registrationStep");
       const registrationEmail = localStorage.getItem("registrationEmail");
-      
+
       if (user || (registrationEmail && registrationStep === "baseInfo")) {
         setLoading(false);
       } else if (!registrationEmail) {
@@ -115,11 +131,11 @@ function BaseInfoForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (redirecting) {
       return;
     }
-    
+
     setIsSubmitting(true);
     setError("");
 
@@ -135,15 +151,14 @@ function BaseInfoForm() {
       }
 
       localStorage.setItem("registrationStep", "description");
-      
+
       // Mark that we're redirecting to prevent multiple redirects
       setRedirecting(true);
-      
+
       // Add a small delay before redirecting
       setTimeout(() => {
         router.push("/company/description");
       }, 100);
-      
     } catch (err) {
       console.error("Error in BaseInfo:", err);
       setError("Ett fel uppstod när informationen skulle sparas");
@@ -157,8 +172,8 @@ function BaseInfoForm() {
       const file = e.target.files[0];
       setLogo(file);
       const fileUrl = await fileUpload(file, "logo");
-      console.log(fileUrl)
-      console.log(error)
+      console.log(fileUrl);
+      console.log(error);
     }
   };
 
@@ -181,6 +196,10 @@ function BaseInfoForm() {
     setShowCancelPopup(true);
   };
 
+  const handleGoBack = () => {
+    router.push("/");
+  };
+
   if (loading || authLoading) {
     return <div>Laddar...</div>;
   }
@@ -189,10 +208,27 @@ function BaseInfoForm() {
     <div className="container">
       <form className="contentWrapper" onSubmit={handleSubmit}>
         <header className="contentHeader">
+          <button type="button" className="goBackButton" onClick={handleGoBack}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M8.47124 2.86177C8.73159 3.12212 8.73159 3.54423 8.47124 3.80458L4.94265 7.33316H12.6665C13.0347 7.33316 13.3332 7.63164 13.3332 7.99983C13.3332 8.36802 13.0347 8.66649 12.6665 8.66649H4.94264L8.47124 12.1951C8.73159 12.4555 8.73159 12.8776 8.47124 13.1379C8.21089 13.3983 7.78878 13.3983 7.52843 13.1379L2.86177 8.47123C2.73674 8.34621 2.6665 8.17664 2.6665 7.99983C2.6665 7.82302 2.73674 7.65345 2.86177 7.52842L7.52843 2.86177C7.78878 2.60142 8.21089 2.60142 8.47124 2.86177Z"
+                fill="#0F1314"
+              />
+            </svg>
+            Gå tillbaka
+          </button>
           <h2 className="title">Skapa företagsprofil</h2>
           <ProgressIndicator currentStep="baseInfo" />
         </header>
-        
+
         <article className="inputSingle">
           <label className="popupTitle" htmlFor="companyName">
             Företagsnamn
@@ -239,7 +275,9 @@ function BaseInfoForm() {
               onChange={handleDisplayImageChange}
               disabled={isSubmitting}
             />
-            {displayImageUrl && <p className="success-message">Omslagsbild uppladdad</p>}
+            {displayImageUrl && (
+              <p className="success-message">Omslagsbild uppladdad</p>
+            )}
           </div>
         </article>
 
@@ -254,8 +292,8 @@ function BaseInfoForm() {
             {isSubmitting ? "Sparar..." : "Fortsätt till nästa steg"}
           </button>
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="cancelButton"
             onClick={handleCancelClick}
           >
@@ -265,9 +303,9 @@ function BaseInfoForm() {
       </form>
 
       {/* Cancel Confirmation Popup */}
-      <CancelConfirmationPopup 
-        isOpen={showCancelPopup} 
-        onClose={() => setShowCancelPopup(false)} 
+      <CancelConfirmationPopup
+        isOpen={showCancelPopup}
+        onClose={() => setShowCancelPopup(false)}
       />
     </div>
   );

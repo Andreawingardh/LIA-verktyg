@@ -25,63 +25,46 @@ function DescriptionForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showCancelPopup, setShowCancelPopup] = useState(false);
-  const [redirecting, setRedirecting] = useState(false);
-  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    // Only run this check once to prevent redirect loops
-    if (!initialized && !authLoading) {
-      setInitialized(true);
-      
+    if (!authLoading) {
       const registrationStep = localStorage.getItem("registrationStep");
       const companyName = localStorage.getItem("companyName");
-      
-      if ((user || localStorage.getItem("registrationEmail")) && 
-          registrationStep === "description" && companyName) {
-        setLoading(false);
-      } else if (companyName) {
-        // If we have a company name but wrong step, correct the step
-        localStorage.setItem("registrationStep", "description");
+
+      if (registrationStep === "description" && companyName) {
         setLoading(false);
       } else {
         router.push("/company/baseInfo");
       }
     }
-  }, [authLoading, router, initialized, user]);
+  }, [authLoading, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (redirecting) {
-      return;
-    }
-    
     setIsSubmitting(true);
     setError("");
 
     try {
       localStorage.setItem("companyDescription", description);
       localStorage.setItem("companyLocation", location);
+
       localStorage.setItem("registrationStep", "contact");
-      
-      // Mark that we're redirecting to prevent multiple redirects
-      setRedirecting(true);
-      
-      // Add a small delay before redirecting
-      setTimeout(() => {
-        router.push("/company/contact");
-      }, 100);
-      
+
+      router.push("/company/contact");
     } catch (err) {
       console.error("Error in Description:", err);
       setError("Ett fel uppstod när informationen skulle sparas");
+    } finally {
       setIsSubmitting(false);
-      setRedirecting(false);
     }
   };
 
   const handleCancelClick = () => {
     setShowCancelPopup(true);
+  };
+
+  const handleGoBack = () => {
+    router.push("/company/baseInfo");
   };
 
   if (loading || authLoading) {
@@ -92,14 +75,31 @@ function DescriptionForm() {
     <div className="container">
       <form className="contentWrapper" onSubmit={handleSubmit}>
         <header className="contentHeader">
+          <button type="button" className="goBackButton" onClick={handleGoBack}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M8.47124 2.86177C8.73159 3.12212 8.73159 3.54423 8.47124 3.80458L4.94265 7.33316H12.6665C13.0347 7.33316 13.3332 7.63164 13.3332 7.99983C13.3332 8.36802 13.0347 8.66649 12.6665 8.66649H4.94264L8.47124 12.1951C8.73159 12.4555 8.73159 12.8776 8.47124 13.1379C8.21089 13.3983 7.78878 13.3983 7.52843 13.1379L2.86177 8.47123C2.73674 8.34621 2.6665 8.17664 2.6665 7.99983C2.6665 7.82302 2.73674 7.65345 2.86177 7.52842L7.52843 2.86177C7.78878 2.60142 8.21089 2.60142 8.47124 2.86177Z"
+                fill="#0F1314"
+              />
+            </svg>
+            Gå tillbaka
+          </button>
           <h2 className="title">Skapa företagsprofil</h2>
-          
-          {/* Add the progress indicator component */}
           <ProgressIndicator currentStep="description" />
         </header>
-        
+
         <article className="inputSingle">
-          <label className="popupTitle" htmlFor="location">Kontorsort</label>
+          <label className="popupTitle" htmlFor="location">
+            Kontorsort
+          </label>
           <input
             id="location"
             name="location"
@@ -113,7 +113,9 @@ function DescriptionForm() {
         </article>
 
         <article className="inputSingle">
-          <label className="popupTitle" htmlFor="description">Företagsbeskrivning</label>
+          <label className="popupTitle" htmlFor="description">
+            Företagsbeskrivning
+          </label>
           <textarea
             id="description"
             name="description"
@@ -122,7 +124,7 @@ function DescriptionForm() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             disabled={isSubmitting}
-            style={{ height: '150px' }}
+            style={{ height: "150px" }}
           />
         </article>
 
@@ -132,13 +134,13 @@ function DescriptionForm() {
           <button
             className="profileSubmitButton"
             type="submit"
-            disabled={isSubmitting || redirecting}
+            disabled={isSubmitting}
           >
             {isSubmitting ? "Sparar..." : "Fortsätt till nästa steg"}
           </button>
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="cancelButton"
             onClick={handleCancelClick}
           >
@@ -148,9 +150,9 @@ function DescriptionForm() {
       </form>
 
       {/* Cancel Confirmation Popup */}
-      <CancelConfirmationPopup 
-        isOpen={showCancelPopup} 
-        onClose={() => setShowCancelPopup(false)} 
+      <CancelConfirmationPopup
+        isOpen={showCancelPopup}
+        onClose={() => setShowCancelPopup(false)}
       />
     </div>
   );
