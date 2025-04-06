@@ -171,8 +171,12 @@
   height: var(--height-h-12, 48px);
   aspect-ratio: 1/1;
   border-radius: var(--border-radius-md, 6px);
-  background: url(../../../assets/profile-images/Card/Avatar.png) lightgray 50% /
-    cover no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatarImage {
+  object-fit: cover;
 }
 
 .memberName {

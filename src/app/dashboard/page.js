@@ -1,4 +1,3 @@
-// pages/dashboard/page.js
 "use client";
 
 import { useState, useEffect } from "react";
@@ -114,8 +113,7 @@ export default function DashboardPage() {
                         alt={`${companyProfile.name} logotyp`}
                       />
                     </div>
-                  )}
-
+                    )}
                 <div className="company-details">
                   <h2>{companyProfile.name}</h2>
                   <p className="location">{companyProfile.location}</p>
