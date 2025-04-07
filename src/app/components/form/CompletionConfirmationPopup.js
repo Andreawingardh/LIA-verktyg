@@ -1,32 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabase } from "../../../utils/supabase/client";
-import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
-import CreatePositions from "../../positions/create/page";
+import { useRouter } from "next/navigation";
+import "./popup.css";
 
-import "../form/popup.css";
-
-export default function AddPositionOverlay({
+export default function CompletionConfirmationPopup({
   isOpen,
   onClose,
-  companyId,
-  onProfileUpdate,
+  onAddLiaPosition,
 }) {
+  const router = useRouter();
+
+  const handleShowProfile = () => {
+    onClose();
+  };
+
   return (
     <div
-      className="popup-overlay-add"
+      className="popup-overlay"
       style={{ display: isOpen ? "flex" : "none" }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
-      }}  
+      }}
     >
-      <div
-        className="popup-content-add edit-profile-overlay"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         <div className="popup-header">
-          <h2 className="popup-title">Lägg till LIA-position</h2>
+          <h2>Profil skapad!</h2>
           <button className="close-btn" onClick={onClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -46,12 +44,30 @@ export default function AddPositionOverlay({
           </button>
         </div>
 
-        <CreatePositions
-          companyId={companyId}
-          onProfileUpdate={onProfileUpdate}
-          onClose={onClose}
-        />
-       
+        <div className="formwrapper">
+          <p>
+            Nu kommer studenter kunna upptäcka er. Vill du fortsätta att lägga
+            till era LIA-positioner?
+          </p>
+
+          <footer className="button-group">
+            <button
+              type="button"
+              className="submitButton"
+              onClick={onAddLiaPosition}
+            >
+              Ja, lägg till LIA-position
+            </button>
+
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={handleShowProfile}
+            >
+              Nej, visa mig min profil
+            </button>
+          </footer>
+        </div>
       </div>
     </div>
   );

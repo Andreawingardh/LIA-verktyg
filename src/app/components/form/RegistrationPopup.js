@@ -15,6 +15,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   // Password requirements
   const passwordRequirements = {
@@ -25,24 +26,24 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     hasSpecial: false
   };
 
-  // Debounced validation for smoother experience
+ 
   useEffect(() => {
     const handler = setTimeout(() => {
       validateForm();
-    }, 100); // Small delay to prevent constant updates
+    }, 100); 
     
     return () => {
       clearTimeout(handler);
     };
   }, [email, password]);
 
-  // Form validation logic
+  
   const validateForm = () => {
     const newErrors = {};
     let formIsValid = true;
     const missingRequirements = [];
 
-    // Email validation
+   
     if (email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
@@ -51,33 +52,33 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
       }
     }
 
-    // Password validation
+   
     if (password) {
-      // Check for minimum length
+     
       if (password.length < passwordRequirements.minLength) {
         missingRequirements.push('minLength');
         formIsValid = false;
       }
       
-      // Check for uppercase letters
+     
       if (!/[A-Z]/.test(password)) {
         missingRequirements.push('uppercase');
         formIsValid = false;
       }
       
-      // Check for lowercase letters
+      
       if (!/[a-z]/.test(password)) {
         missingRequirements.push('lowercase');
         formIsValid = false;
       }
       
-      // Check for numbers
+      
       if (!/\d/.test(password)) {
         missingRequirements.push('number');
         formIsValid = false;
       }
       
-      // Check for special characters
+     
       if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
         missingRequirements.push('special');
         formIsValid = false;
@@ -103,23 +104,23 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Final validation before submission
+    
     validateForm();
-    if (!isFormValid) {
+    if (!isFormValid || redirecting) {
       return;
     }
     
     setLoading(true);
 
     try {
-      // Try to register with Supabase
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
       });
 
       if (error) {
-        // Handle Supabase registration errors more specifically
+        
         console.log("Supabase registration error:", error);
         
         if (error.message.includes("already registered") || error.message.includes("already in use")) {
@@ -128,34 +129,40 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
           setErrors({...errors, email: error.message});
         } else if (error.message.includes("password") || error.message.includes("Password")) {
           setErrors({...errors, password: error.message});
-          // Always show password requirements when there's a password error
           validateForm();
         } else if (error.message.includes("too many requests") || error.message.includes("rate limit")) {
           setErrors({...errors, general: "För många försök. Vänligen försök igen senare."});
         } else {
           setErrors({...errors, general: error.message});
         }
-        throw error;
+        setLoading(false);
+        return;
       }
+
+      setRedirecting(true);
 
       // Store registration data and proceed
       localStorage.setItem("registrationEmail", email);
       localStorage.setItem("registrationPassword", password);
       localStorage.setItem("registrationStep", "baseInfo");
 
+      
       onClose();
-      router.push("/company/baseInfo");
+      
+      setTimeout(() => {
+        router.push("/company/baseInfo");
+      }, 100);
+      
     } catch (err) {
       console.error("Registration error:", err);
-      // Only set a general error if no specific errors were set
       if (!errors.email && !errors.password) {
         setErrors({
           ...errors, 
           general: err.message || "Ett fel uppstod vid registrering"
         });
       }
-    } finally {
       setLoading(false);
+      setRedirecting(false);
     }
   };
 
@@ -204,7 +211,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                // Clear email error when user types
                 if (errors.email) {
                   const { email, ...rest } = errors;
                   setErrors(rest);
@@ -248,7 +254,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             />
             
             </div>
-            {/* Fixed-height container for password requirements to prevent layout shifting */}
+
           <div className="password-requirements-container">
            
             {errors.password && errors.passwordRequirements && (
@@ -279,13 +285,13 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             
           </div>
 
-          
+          {errors.general && <p className="error-message">{errors.general}</p>}
 
           <footer className="button-group">
             <button 
               type="submit" 
               id="createButton"
-              disabled={loading || !isFormValid}
+              disabled={loading || !isFormValid || redirecting}
               className={!isFormValid ? "button-disabled" : ""}
             >
               {loading ? "Skapar konto..." : "Skapa Företagskonto"}

@@ -366,13 +366,13 @@ feature/uploading-and-accessing-images
 
   return (
     <div
-      className="popup-overlay"
+      className="popup-overlay-edit"
       onClick={(e) => {
         if (e.target === e.currentTarget) handleCancel();
       }}
     >
       <div
-        className="popup-content edit-profile-overlay"
+        className="popup-content-edit edit-profile-overlay"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="popup-header">

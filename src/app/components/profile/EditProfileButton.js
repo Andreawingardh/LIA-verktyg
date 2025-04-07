@@ -19,7 +19,7 @@ export default function EditProfileButton({ companyId, onProfileUpdate }) {
     <>
       <button
         onClick={openOverlay}
-        className="edit-profile-button primary-button"
+        className="company-edit-button"
         aria-label="Redigera företagsprofil"
       >
         Redigera Profil

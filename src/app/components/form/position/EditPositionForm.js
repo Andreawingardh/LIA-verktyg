@@ -25,15 +25,15 @@ export default function EditPositionForm({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [skillsExpanded, setSkillsExpanded] = useState(false);
-  const [softwareExpanded, setSoftwareExpanded] = useState(false); // Start collapsed so button shows
+  const [softwareExpanded, setSoftwareExpanded] = useState(false); 
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Use a ref to track if we've initialized skills to prevent double loading
+  
   const initializedRef = useRef(false);
 
-  // Debug logging for all state changes
+  
   useEffect(() => {
     console.log("Current state - selectedMainSkills:", selectedMainSkills);
   }, [selectedMainSkills]);
@@ -42,13 +42,13 @@ export default function EditPositionForm({
     console.log("Current state - selectedSoftware:", selectedSoftware);
   }, [selectedSoftware]);
 
-  // Load position data on mount
+ 
   useEffect(() => {
     if (position && position.id && !initializedRef.current) {
       console.log("Loading position data:", position);
       initializedRef.current = true;
 
-      // Initialize form data from position
+      
       setFormData({
         id: position.id,
         user_id: position.user_id,
@@ -56,13 +56,13 @@ export default function EditPositionForm({
         spots: position.spots || 1,
       });
 
-      // Determine table name for database queries
+   
       const tableName = getTableNameFromTitle(position.title);
       console.log("Determined table name:", tableName);
 
       setSelectedTable(tableName);
 
-      // Load skills and selected skills
+      
       if (tableName) {
         loadPositionData(tableName);
       } else {
@@ -75,14 +75,14 @@ export default function EditPositionForm({
     }
   }, [position]);
 
-  // Helper function to determine table name from position title
+ 
   const getTableNameFromTitle = (title) => {
     if (title === "Webbutvecklare") return "webbutvecklare";
     if (title === "Digital designer") return "digitaldesigner";
     return "";
   };
 
-  // Load position data including skills
+  
   const loadPositionData = async (tableName) => {
     try {
       setLoading(true);
@@ -90,10 +90,10 @@ export default function EditPositionForm({
         `Loading position data for position ID ${position.id} from table ${tableName}`
       );
 
-      // Load available skills and software options
+     
       await loadSkillsOptions(tableName);
 
-      // Load selected skills for this position
+     
       const { data: positionSkills, error: skillsError } = await supabase
         .from(`${tableName}_skill_position`)
         .select(
@@ -114,7 +114,7 @@ export default function EditPositionForm({
         positionSkills
       );
 
-      // Reset skills arrays to ensure we start clean
+      
       const mainSkills = [];
       const software = [];
 
@@ -123,7 +123,6 @@ export default function EditPositionForm({
           const skill = item[`skills_${tableName}`];
           if (skill) {
             if (skill.type === "Skills") {
-              // Only add up to 3 main skills
               if (mainSkills.length < 3) {
                 mainSkills.push(skill);
               }
@@ -147,7 +146,6 @@ export default function EditPositionForm({
     }
   };
 
-  // Load available skills and software options
   const loadSkillsOptions = async (tableName) => {
     try {
       console.log(`Loading skills options from skills_${tableName}`);
@@ -186,11 +184,9 @@ export default function EditPositionForm({
     }
   };
 
-  // Handle form submission with explicit transaction
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form data
     if (!formData.title) {
       alert("Du måste välja en roll");
       return;
@@ -201,7 +197,6 @@ export default function EditPositionForm({
       return;
     }
 
-    // Ensure we don't have more than 3 main skills
     if (selectedMainSkills.length > 3) {
       alert("Du kan bara välja max 3 huvudkunskaper.");
       return;
@@ -213,9 +208,7 @@ export default function EditPositionForm({
       console.log("Selected skills:", selectedMainSkills);
       console.log("Selected software:", selectedSoftware);
 
-      // Use a transaction to ensure all operations succeed or fail together
       const transaction = async () => {
-        // 1. Update position record
         const { data: updateData, error: updateError } = await supabase
           .from("positions")
           .update({
@@ -232,7 +225,6 @@ export default function EditPositionForm({
 
         console.log("Position record updated successfully:", updateData);
 
-        // 2. Delete existing skill associations - with verification
         const { error: deleteError } = await supabase
           .from(`${selectedTable}_skill_position`)
           .delete()
@@ -245,7 +237,6 @@ export default function EditPositionForm({
 
         console.log("Deleted existing skill associations");
 
-        // Optional check to see if any skills remain (but don't throw error)
         const { data: remainingSkills, error: verifyError } = await supabase
           .from(`${selectedTable}_skill_position`)
           .select()
@@ -253,7 +244,6 @@ export default function EditPositionForm({
 
         if (verifyError) {
           console.error("Error checking remaining skills:", verifyError);
-          // Don't throw here, just log the error
         }
 
         if (remainingSkills && remainingSkills.length > 0) {
@@ -261,12 +251,10 @@ export default function EditPositionForm({
             "Some skills may not have been deleted:",
             remainingSkills
           );
-          // Don't throw here, just log a warning
         } else {
           console.log("Verified all existing skill associations were deleted");
         }
 
-        // 3. Prepare skills data for insertion (ensuring max 3 main skills)
         const limitedMainSkills = selectedMainSkills.slice(0, 3);
         const allSelectedSkills = [...limitedMainSkills, ...selectedSoftware];
 
@@ -293,7 +281,6 @@ export default function EditPositionForm({
 
           console.log("Skills inserted successfully:", insertedSkills);
 
-          // Verify insertion succeeded - but don't throw on failure
           const { data: finalSkills, error: verifyInsertError } = await supabase
             .from(`${selectedTable}_skill_position`)
             .select(
@@ -309,13 +296,11 @@ export default function EditPositionForm({
               "Error verifying skill insertion:",
               verifyInsertError
             );
-            // Don't throw here, just log the error
           } else {
             console.log("Verified skills were inserted:", finalSkills);
 
             if (finalSkills.length !== skillsToInsert.length) {
               console.warn("Not all skills were inserted correctly");
-              // Don't throw here, just log a warning
             }
           }
         } else {
@@ -325,30 +310,24 @@ export default function EditPositionForm({
         return { success: true, position: updateData[0] };
       };
 
-      // Execute the transaction
       const result = await transaction();
 
       if (result.success) {
-        // 4. Show success message
         setSuccessMessage("Positionen har uppdaterats");
 
-        // 5. Notify parent component
         if (onPositionUpdate && typeof onPositionUpdate === "function") {
           console.log("Calling onPositionUpdate callback with updated data");
 
-          // Call the update callback with the updated data to force refresh
           onPositionUpdate({
             ...position,
             ...formData,
             mainSkills: selectedMainSkills.slice(0, 3),
             software: selectedSoftware,
-            updatedAt: new Date().toISOString(), // Add timestamp to force refresh
+            updatedAt: new Date().toISOString(),
           });
         } else {
           console.warn("onPositionUpdate is not a function or not provided");
         }
-
-        // 6. Close the form after a short delay to show success message
         setTimeout(() => {
           onClose();
         }, 1000);
@@ -374,7 +353,6 @@ export default function EditPositionForm({
       setIsSaving(true);
       console.log(`Deleting position ID: ${position.id}`);
 
-      // Call the RPC function with the correct name and parameter
       const { data, error } = await supabase.rpc(
         "delete_position_in_all_tables",
         { delete_position: position.id }
@@ -387,16 +365,14 @@ export default function EditPositionForm({
 
       console.log("Position and related entries deleted successfully");
 
-      // Show success message
+  
       setSuccessMessage("Positionen har tagits bort");
 
-      // Notify parent component
       if (onPositionUpdate && typeof onPositionUpdate === "function") {
         console.log("Calling onPositionUpdate callback after deletion");
-        onPositionUpdate(null); // Pass null to indicate deletion
+        onPositionUpdate(null);
       }
 
-      // Close the form after a short delay
       setTimeout(() => {
         onClose();
       }, 1000);
@@ -408,7 +384,6 @@ export default function EditPositionForm({
       setIsSaving(false);
     }
   };
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(`Field change: ${name} = ${value}`);
@@ -419,7 +394,6 @@ export default function EditPositionForm({
     }));
   };
 
-  // Handle role/title selection change
   const handleTitleChange = async (e) => {
     e.preventDefault();
     const newTitle = e.target.value;
@@ -436,10 +410,8 @@ export default function EditPositionForm({
 
     try {
 
-      // Load skills options for the new role
       await loadSkillsOptions(newTableName);
 
-      // If changing to a different role, reset selected skills
       if (position.title !== newTitle) {
         console.log("Role changed, resetting selected skills");
         setSelectedMainSkills([]);
@@ -453,13 +425,11 @@ export default function EditPositionForm({
     }
   };
 
-  // Handle main skill selection/deselection with strict enforcement of the 3-skill limit
   const handleMainSkillToggle = (skill) => {
     setSelectedMainSkills((prevSkills) => {
       const isAlreadySelected = prevSkills.some((s) => s.id === skill.id);
 
       if (isAlreadySelected) {
-        // Remove the skill if it's already selected
         const newSkills = prevSkills.filter((s) => s.id !== skill.id);
         console.log(
           `Removed skill: ${skill.skills_name}, New skills:`,
@@ -467,7 +437,6 @@ export default function EditPositionForm({
         );
         return newSkills;
       } else {
-        // Add if not at limit
         if (prevSkills.length < 3) {
           const newSkills = [...prevSkills, skill];
           console.log(
@@ -476,21 +445,17 @@ export default function EditPositionForm({
           );
           return newSkills;
         } else {
-          // Show warning if trying to add more than 3
           alert("Du kan välja max 3 huvudkunskaper");
           return prevSkills;
         }
       }
     });
   };
-
-  // Handle software selection/deselection
   const handleSoftwareToggle = (software) => {
     setSelectedSoftware((prevSoftware) => {
       const isAlreadySelected = prevSoftware.some((s) => s.id === software.id);
 
       if (isAlreadySelected) {
-        // Remove if already selected
         const newSoftware = prevSoftware.filter((s) => s.id !== software.id);
         console.log(
           `Removed software: ${software.skills_name}, New software:`,
@@ -498,7 +463,6 @@ export default function EditPositionForm({
         );
         return newSoftware;
       } else {
-        // Add the software
         const newSoftware = [...prevSoftware, software];
         console.log(
           `Added software: ${software.skills_name}, New software:`,
@@ -508,8 +472,6 @@ export default function EditPositionForm({
       }
     });
   };
-
-  // Helper functions to check if a skill is selected
   const isMainSkillSelected = (skillId) => {
     return selectedMainSkills.some((skill) => skill.id === skillId);
   };
@@ -518,7 +480,6 @@ export default function EditPositionForm({
     return selectedSoftware.some((software) => software.id === softwareId);
   };
 
-  // Show loading state
   if (loading) {
     return <div className="loading">Laddar...</div>;
   }
