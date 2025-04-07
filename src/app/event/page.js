@@ -1,6 +1,7 @@
 import { EventCard } from "../components/cards/EventCard";
 import styles from "./event.module.css";
 import { AddToCalendarButton } from "add-to-calendar-button-react";
+import { PositionsBanner } from "../components/cards/PositionsBanner";
 
 export default function Positions() {
   return (
@@ -54,6 +55,7 @@ export default function Positions() {
         </div>
       </section>
       <EventCard />
+      <PositionsBanner />
     </>
   );
 }
