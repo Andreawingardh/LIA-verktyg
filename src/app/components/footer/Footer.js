@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "./Footer.module.css";
 import RegistrationPopup from "../form/RegistrationPopup";
 import LoginPopup from "../form/LoginPopup";
-import Image from 'next/image';
+import Image from "next/image";
 
 const Footer = () => {
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
@@ -108,6 +108,7 @@ const Footer = () => {
                       alt=""
                       fill
                       className={styles.avatarImage}
+                      sizes="width: 100vw, height: 100vh"
                     />
                   </div>
                   <div className={styles.memberInfo}>
