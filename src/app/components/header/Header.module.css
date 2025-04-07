@@ -403,9 +403,15 @@
   color: var(--base-secondary, #001a52);
 }
 
-.loginButton:hover,
+.loginButton:hover
+ {
+  background-color:var(--base-background, #fff);
+}
+
 .logoutButton:hover {
-  background-color: #f5f5f5;
+  border: 1px solid var(--base-secondary, #001A52);
+background: var(--base-secondary, #001A52);
+color: var(--base-secondary-foreground, #FFF);
 }
 
 .desktopCompanyProfileButton:hover {

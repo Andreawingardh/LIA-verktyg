@@ -231,7 +231,7 @@ function BaseInfoForm() {
 
         <article className="inputSingle">
           <label className="popupTitle" htmlFor="companyName">
-            Företagsnamn
+            Företagsnamn <span className="asterix">*</span>
           </label>
           <input
             id="companyName"
@@ -242,6 +242,7 @@ function BaseInfoForm() {
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             disabled={isSubmitting}
+            placeholder="Skriv företagets namn"
           />
         </article>
 

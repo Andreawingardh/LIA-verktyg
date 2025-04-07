@@ -40,21 +40,38 @@ export default function CancelConfirmationPopup({ isOpen, onClose }) {
         }
       }
 
-      const { error: insertError } = await supabase.from("companies").insert([
-        {
-          user_id: userId,
-          name: companyName,
-          description: "",
-          location: "",
-          website: "",
-          email: email,
-          logo_url: null,
-          display_image_url: null,
-        },
-      ]);
+      // Make the company name unique by adding a timestamp and random string
+      const uniqueCompanyName = `${companyName}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
 
-      if (insertError) throw insertError;
+      // First check if the user already has a company
+      const { data: existingCompanies, error: fetchError } = await supabase
+        .from("companies")
+        .select("id")
+        .eq("user_id", userId);
 
+      if (fetchError) {
+        console.error("Error checking for existing companies:", fetchError);
+      }
+
+      // If user already has a company, don't create a new one
+      if (!existingCompanies || existingCompanies.length === 0) {
+        const { error: insertError } = await supabase.from("companies").insert([
+          {
+            user_id: userId,
+            name: uniqueCompanyName, // Use the unique name
+            description: "",
+            location: "",
+            website: "",
+            email: email,
+            logo_url: null,
+            display_image_url: null,
+          },
+        ]);
+
+        if (insertError) throw insertError;
+      }
+
+      // Clear all localStorage registration data
       localStorage.removeItem("registrationStep");
       localStorage.removeItem("registrationEmail");
       localStorage.removeItem("registrationPassword");

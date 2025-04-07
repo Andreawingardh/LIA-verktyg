@@ -28,7 +28,6 @@ function ContactForm() {
   const [showCancelPopup, setShowCancelPopup] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
   const [initialized, setInitialized] = useState(false);
-
  
   useEffect(() => {
     if (showCancelPopup) {
@@ -49,21 +48,27 @@ function ContactForm() {
 
       const registrationStep = localStorage.getItem("registrationStep");
       const description = localStorage.getItem("companyDescription");
+      const location = localStorage.getItem("companyLocation");
       const email = localStorage.getItem("registrationEmail");
 
-      if ((user || email) && registrationStep === "contact" && description) {
+      console.log("Contact Page Init: ", { registrationStep, description, location, email });
+
+      if ((user || email) && description && location) {
+        if (registrationStep !== "contact") {
+          localStorage.setItem("registrationStep", "contact");
+        }
+        
         if (email && !contactEmail) {
           setContactEmail(email);
         }
+        
         setLoading(false);
-      } else if (description) {
-        localStorage.setItem("registrationStep", "contact");
-        if (email && !contactEmail) {
-          setContactEmail(email);
-        }
-        setLoading(false);
-      } else {
+      } else if (!description || !location) {
+        // If we're missing description or location, go back to description page
+        console.log("Redirecting to description due to missing data");
         router.push("/company/description");
+      } else {
+        setLoading(false);
       }
     }
   }, [authLoading, contactEmail, router, initialized, user]);
@@ -166,7 +171,6 @@ function ContactForm() {
   return (
     <div className="container">
       <form className="contentWrapper" onSubmit={handleSubmit}>
-        {/* Add Go Back button */}
         <button type="button" className="goBackButton" onClick={handleGoBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +196,7 @@ function ContactForm() {
 
         <article className="inputSingle">
           <label className="popupTitle" htmlFor="website">
-            Hemsida
+            Hemsida <span className="asterix">*</span>
           </label>
           <input
             id="website"
@@ -203,6 +207,7 @@ function ContactForm() {
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
             disabled={isSubmitting}
+            placeholder="Skriv länken till eran hemsida"
           />
         </article>
 
@@ -219,7 +224,11 @@ function ContactForm() {
             value={contactEmail}
             onChange={(e) => setContactEmail(e.target.value)}
             disabled={isSubmitting}
+            placeholder="Skriv företagets kontaktmail"
           />
+          <p>
+          Kontaktmail kommer synas på eran företagssida.
+          </p>
         </article>
 
         {error && <p style={{ color: "red" }}>{error}</p>}

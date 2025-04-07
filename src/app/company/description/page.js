@@ -25,37 +25,85 @@ function DescriptionForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showCancelPopup, setShowCancelPopup] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
+  const [initialized, setInitialized] = useState(false);
+  const MAX_DESCRIPTION_LENGTH = 120;
 
+  // Effect to prevent scrolling when popup is shown
   useEffect(() => {
-    if (!authLoading) {
+    if (showCancelPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showCancelPopup]);
+
+  // Initialize form and handle navigation checks
+  useEffect(() => {
+    // Only run this check once to prevent redirect loops
+    if (!initialized && !authLoading) {
+      setInitialized(true);
+
       const registrationStep = localStorage.getItem("registrationStep");
       const companyName = localStorage.getItem("companyName");
+      const savedDescription = localStorage.getItem("companyDescription");
+      const savedLocation = localStorage.getItem("companyLocation");
 
-      if (registrationStep === "description" && companyName) {
+      // If we have saved description/location values, restore them
+      if (savedDescription) setDescription(savedDescription);
+      if (savedLocation) setLocation(savedLocation);
+
+      if ((user || localStorage.getItem("registrationEmail")) && 
+          ((registrationStep === "description" && companyName) || 
+           (companyName && !registrationStep))) {
         setLoading(false);
-      } else {
+      } else if (!companyName) {
         router.push("/company/baseInfo");
+      } else {
+        setLoading(false);
       }
     }
-  }, [authLoading, router]);
+  }, [authLoading, router, initialized, user]);
+
+  const handleDescriptionChange = (e) => {
+    const newValue = e.target.value;
+    // Only update if within character limit
+    if (newValue.length <= MAX_DESCRIPTION_LENGTH) {
+      setDescription(newValue);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (redirecting || isSubmitting) {
+      return;
+    }
+
     setIsSubmitting(true);
     setError("");
 
     try {
       localStorage.setItem("companyDescription", description);
       localStorage.setItem("companyLocation", location);
-
       localStorage.setItem("registrationStep", "contact");
-
-      router.push("/company/contact");
+      
+      // Mark that we're redirecting to prevent multiple redirects
+      setRedirecting(true);
+      
+      // Add a small delay before redirecting
+      setTimeout(() => {
+        router.push("/company/contact");
+      }, 100);
     } catch (err) {
       console.error("Error in Description:", err);
       setError("Ett fel uppstod när informationen skulle sparas");
-    } finally {
       setIsSubmitting(false);
+      setRedirecting(false);
     }
   };
 
@@ -98,7 +146,7 @@ function DescriptionForm() {
 
         <article className="inputSingle">
           <label className="popupTitle" htmlFor="location">
-            Kontorsort
+            Kontorsort <span className="asterix">*</span>
           </label>
           <input
             id="location"
@@ -108,24 +156,33 @@ function DescriptionForm() {
             required
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            disabled={isSubmitting}
+            disabled={isSubmitting || redirecting}
+            placeholder="Skriv den ort kontoret befinner sig"
           />
         </article>
 
-        <article className="inputSingle">
-          <label className="popupTitle" htmlFor="description">
-            Företagsbeskrivning
-          </label>
+        <article className="inputTextarea">
+          <div className="labelWithCounter">
+            <label className="popupTitle" htmlFor="description">
+              Företagsbeskrivning
+            </label>
+            <span className={`characterCounter ${description.length >= MAX_DESCRIPTION_LENGTH ? 'characterCounterMax' : ''}`}>
+              {description.length}/{MAX_DESCRIPTION_LENGTH}
+            </span>
+          </div>
           <textarea
             id="description"
             name="description"
-            className="profileInputs"
-            required
+            className="textProfileInputs" 
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            disabled={isSubmitting}
+            onChange={handleDescriptionChange}
+            disabled={isSubmitting || redirecting}
             style={{ height: "150px" }}
+            placeholder="Skriv kort om erat företag och praktikplats"
+            maxLength={MAX_DESCRIPTION_LENGTH}
           />
+          <p>Vad för projekt brukar ni jobba med?<br></br>
+            Vad kan praktikanter förvänta sig?</p>
         </article>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
@@ -134,7 +191,7 @@ function DescriptionForm() {
           <button
             className="profileSubmitButton"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || redirecting}
           >
             {isSubmitting ? "Sparar..." : "Fortsätt till nästa steg"}
           </button>
@@ -143,6 +200,7 @@ function DescriptionForm() {
             type="button"
             className="cancelButton"
             onClick={handleCancelClick}
+            disabled={isSubmitting || redirecting}
           >
             Avbryt Registrering
           </button>

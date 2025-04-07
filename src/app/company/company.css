@@ -112,7 +112,7 @@ textarea.profileInputs{
 .profileInputs {
   display: flex;
   height: var(--height-h-11, 44px);
-  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
   align-items: center;
   gap: var(--spacing-1, 4px);
   align-self: stretch;
@@ -133,6 +133,73 @@ textarea.profileInputs{
   letter-spacing: 0.2px;
 }
 
+.inputSingle p {
+  color: var(--base-muted-foreground, #495B62);
+font-feature-settings: 'liga' off, 'clig' off;
+
+/* body/leading-normal/regular */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 16px);
+font-style: normal;
+font-weight: var(--font-weight-normal, 400);
+line-height: 150%; /* 24px */
+letter-spacing: 0.2px;
+text-wrap: wrap;
+}
+
+.textProfileInputs {
+  display: flex;
+min-height: 60px;
+padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
+align-items: flex-start;
+flex: 1 0 0;
+align-self: stretch;
+border-radius: var(--border-radius-lg, 10px);
+border: 1px solid var(--base-input, #BFBFBF);
+background: var(--base-background, #FFF);
+resize: none;
+overflow: hidden;
+color: var(--base-muted-foreground, #495B62);
+font-feature-settings: 'liga' off, 'clig' off;
+text-overflow: ellipsis;
+text-wrap: wrap;
+
+/* body/leading-normal/regular */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 16px);
+font-style: normal;
+font-weight: var(--font-weight-normal, 400);
+line-height: 150%; /* 24px */
+letter-spacing: 0.2px;
+}
+
+.inputTextarea {
+  display: flex;
+height: 228px;
+flex-direction: column;
+align-items: flex-start;
+gap: var(--spacing-2, 8px);
+align-self: stretch;
+
+}
+
+.inputTextarea p {
+  overflow: hidden;
+color: var(--base-muted-foreground, #495B62);
+font-feature-settings: 'liga' off, 'clig' off;
+text-overflow: ellipsis;
+white-space: nowrap;
+
+/* body/leading-normal/regular */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 16px);
+font-style: normal;
+font-weight: var(--font-weight-normal, 400);
+line-height: 150%; /* 24px */
+letter-spacing: 0.2px;
+align-self: stretch;
+text-wrap: wrap;
+}
 .profileFileInputs {
   display: flex;
   height: var(--height-h-11, 44px);
@@ -184,7 +251,14 @@ background: var(--base-secondary, #001A52);
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
-  border: none;
+  cursor: pointer;
+  transition: background-color .3s, color .3s, border-color .3s;
+}
+
+.profileSubmitButton:hover{
+  background-color: var(--base-secondary-foreground, #fff);
+  color: var(--base-secondary, #001A52);
+  border: 1px solid var(--base-secondary, #001A52);
 }
 
 .cancelButton {
@@ -208,11 +282,14 @@ background: var(--base-secondary, #001A52);
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .cancelButton:hover {
-  background-color: #c8ccd1;
+  background: var(--base-accent, #E6E6E6);
   cursor: pointer;
+
+  
 }
 
 .contentHeader {
@@ -266,6 +343,25 @@ background: var(--base-secondary, #001A52);
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%;
   letter-spacing: 0.2px;
+}
+
+
+.labelWithCounter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.characterCounter {
+  font-size: 14px;
+  color: var(--base-muted-foreground, #495B62);
+  font-family: var(--typography-font-family-font-sans, Inter);
+  letter-spacing: 0.2px;
+}
+
+.characterCounterMax {
+  color: var(--base-primary, #E51236);
 }
 
 @media (min-width: 960px){

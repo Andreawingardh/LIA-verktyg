@@ -174,6 +174,7 @@
   letter-spacing: 0.2px;
   background-color: transparent;
   border: none;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .button-group {
@@ -183,6 +184,7 @@
   gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
   padding-top: 0.5rem;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .formwrapper {
@@ -320,6 +322,7 @@
   align-self: stretch;
   cursor: pointer;
   position: relative;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 .secondary-button {
   display: flex;
@@ -344,18 +347,26 @@
   align-self: stretch;
   cursor: pointer;
   position: relative;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .register-btn:hover,
-.close-btn:hover,
-.close-btn:hover path,
+
 .secondary-button:hover {
   border-radius: var(--border-radius-full, 9999px);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-secondary, #001a52);
   color: var(--base-secondary-foreground, #fff);
   cursor: pointer;
-  fill: var(--base-secondary-foreground, #fff);
+ 
+}
+
+.close-btn:hover path,
+.close-btn:hover{
+  color: var(--base-foreground, #0F1314);
+  fill: var(--base-foreground, #0F1314);
+  background: var(--base-accent, #E6E6E6);
+  cursor: pointer;
 }
 
 .email-error-container {
@@ -784,6 +795,7 @@
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
   border: none;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .submitButton:hover,
@@ -924,11 +936,13 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .deleteButton:hover {
   cursor: pointer;
-  background-color: #fff8f8;
+  color: var(--base-destructive, #FFEEEF);
+  background: var(--base-destructive-foreground, #B40509);
 }
 
 /* When in confirm delete state */
