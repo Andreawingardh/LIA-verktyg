@@ -1,0 +1,50 @@
+.positionsBanner {
+  display: flex;
+  padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-6, 1.5rem);
+  align-self: stretch;
+}
+
+.positionsBanner p {
+  color: var(--base-foreground, #0f1314);
+}
+
+.rollingBannerContent {
+    /* Layout mobile */
+  display: flex;
+  width: 28rem;
+  height: 5rem;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.75rem;
+  white-space: nowrap;
+}
+
+.rollingBannerContent img {
+    /* Size mobile */
+  width: 5rem;
+  height: 5rem;
+  background-color: #0f1314;
+
+}
+
+@keyframes roll {
+    0% {
+      transform: translateX(+100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+/* Optional: Pause animation on hover */
+.rollingBannerContent:hover .rollingBannerImageWrapper {
+  animation-play-state: paused;
+}
+
+.rollingBannerImageWrapper {
+    animation: roll 15s linear infinite;
+}
