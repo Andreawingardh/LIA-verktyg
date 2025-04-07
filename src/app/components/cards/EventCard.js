@@ -1,14 +1,50 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import "./companycard.css";
 import Link from "next/link";
 import { Button } from "../button/Button";
 import "@/app/globals.css";
 import styles from "@/app/components/cards/eventcard.module.css";
+import { supabase } from "@/utils/supabase/client";
+import "@/app/components/button/button.css";
+import { AddToCalendarButton } from "add-to-calendar-button-react";
 
 export const EventCard = ({ IsSubmitted }) => {
-  async function handleSubmit(e) {}
+  const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(false);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const formName = formData.get("name");
+    const formEmail = formData.get("email");
+
+    try {
+      const { data, error } = await supabase
+        .from("lia_event_attendes")
+        .insert({ name: formName, email: formEmail })
+        .select();
+
+      if (error) {
+        console.error("Error inserting data:", error);
+        setSubmitStatus({ success: false, message: error.message });
+        return;
+      }
+
+      if (data) {
+        setSubmitStatus({ success: true });
+        console.log(data);
+      }
+    } catch (e) {
+      console.error(e);
+      setSubmitStatus({
+        success: false,
+        message: "An unexpected error occurred",
+      });
+    }
+  }
 
   return (
     <>
@@ -21,22 +57,40 @@ export const EventCard = ({ IsSubmitted }) => {
             Webbutvecklare och Digital Designers från Yrgo som vill visa vad de
             har jobbat med under året och vi hoppas att ni hittar en match. 
           </p>
-        </div>
-        <form className={styles.eventForm}>
-          <label>Namn</label>
-          <input placeholder="Skriv ditt för- och efternamn" required />
-          <label>Input</label>
-          <input placeholder="Skriv din jobbmail" required />
-          <div className={styles.checkbox}>
-            <input type="checkbox" />
-            Jag godkänner sekretesspolicyn.
+        </div>{" "}
+        {!submitStatus && (
+          <form className={styles.eventForm} onSubmit={handleSubmit}>
+            <label>Namn</label>
+            <input
+              name="name"
+              placeholder="Skriv ditt för- och efternamn"
+              required
+            />
+            <label>Input</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="Skriv din jobbmail"
+              required
+            />
+            <div className={styles.checkbox}>
+              <input type="checkbox" required />
+              Jag godkänner sekretesspolicyn.
+            </div>
+            <Button className="button" text="Jag vill gå på eventet!" />
+            {!submitStatus.success && <div> {submitStatus.message}</div>}
+          </form>
+        )}
+        {submitStatus && (
+          <div className={styles.eventForm}>
+            <h4>
+              Tack, vi ses snart! Lägg gärna till eventen i din kalender.
+            </h4>
+            <div className={styles.eventButton}>
+              
+            </div>
           </div>
-          <Button
-            className="button"
-            onClick={handleSubmit}
-            text="Jag vill gå på eventet!"
-          />
-        </form>
+        )}
       </div>
     </>
   );
