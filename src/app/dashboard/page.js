@@ -1,27 +1,38 @@
-// pages/dashboard/page.js
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useSupabaseAuth } from "../../hook/useSupabaseAuth";
 import { supabase } from "../../utils/supabase/client";
 import EditProfileButton from "../components/profile/EditProfileButton";
+import CompletionConfirmationPopup from "../components/form/CompletionConfirmationPopup";
 import "./dashboard.css";
 import AddPositionButton from "../components/profile/addPositionButton";
 import PositionCard from "../components/cards/PositionCard";
+import AddPositionOverlay from "../components/profile/addPositionOverlay";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { user, loading: authLoading } = useSupabaseAuth();
   const [companyProfile, setCompanyProfile] = useState(null);
   const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showCompletionPopup, setShowCompletionPopup] = useState(false);
+  const [showAddPostionOverlay, setShowAddPositionOverlay] = useState(false);
 
   useEffect(() => {
     if (user && !authLoading) {
       fetchCompanyProfile();
       fetchPositions();
+      
+      
+      const shouldShowPopup = localStorage.getItem("showCompletionPopup");
+      if (shouldShowPopup === "true") {
+        setShowCompletionPopup(true);
+        localStorage.removeItem("showCompletionPopup");
+      }
     } else if (!authLoading && !user) {
-      // Redirect to login if not authenticated
       window.location.href = "/";
     }
   }, [user, authLoading]);
@@ -63,6 +74,12 @@ export default function DashboardPage() {
     fetchPositions();
   };
 
+  const handleAddLiaPosition = () => {
+    setShowCompletionPopup(false);
+    
+    setShowAddPositionOverlay(true);
+  };
+
   if (authLoading || loading) {
     return <div className="loading">Laddar...</div>;
   }
@@ -96,8 +113,7 @@ export default function DashboardPage() {
                         alt={`${companyProfile.name} logotyp`}
                       />
                     </div>
-                  )}
-
+                    )}
                 <div className="company-details">
                   <h2>{companyProfile.name}</h2>
                   <p className="location">{companyProfile.location}</p>
@@ -149,6 +165,21 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      
+      {/* Completion Confirmation Popup */}
+      <CompletionConfirmationPopup 
+        isOpen={showCompletionPopup} 
+        onClose={() => setShowCompletionPopup(false)}
+        onAddLiaPosition={handleAddLiaPosition}
+      />
+
+
+      {/* Add Position Overlay */}
+      <AddPositionOverlay
+        isOpen={showAddPostionOverlay} 
+        onClose={() => setShowAddPositionOverlay(false)}
+        onAddLiaPosition={handleAddLiaPosition}
+      />
     </main>
   );
 }

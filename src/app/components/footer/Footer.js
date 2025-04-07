@@ -1,4 +1,3 @@
-// components/Footer.js
 "use client";
 import React from "react";
 import { useState } from "react";
@@ -6,6 +5,7 @@ import Link from "next/link";
 import styles from "./Footer.module.css";
 import RegistrationPopup from "../form/RegistrationPopup";
 import LoginPopup from "../form/LoginPopup";
+import Image from "next/image";
 
 const Footer = () => {
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
@@ -27,24 +27,28 @@ const Footer = () => {
       name: "Andrea Wingårdh",
       role: "Webbutvecklare",
       profileUrl: "#",
+      avatar: "/images/Card/Andrea-avatar.png",
     },
     {
       id: 2,
       name: "Linnéa Malmström",
       role: "Digital Designer",
       profileUrl: "#",
+      avatar: "/images/Card/Linnea-avatar.png",
     },
     {
       id: 3,
       name: "Mahtias Jebrand",
       role: "Webbutvecklare",
       profileUrl: "#",
+      avatar: "/images/Card/Mahtias-avatar.png",
     },
     {
       id: 4,
       name: "Markus Zeljak",
       role: "Digital Designer",
       profileUrl: "#",
+      avatar: "/images/Card/Markus-avatar.png",
     },
   ];
 
@@ -64,7 +68,7 @@ const Footer = () => {
               className={styles.ctaButton}
               onClick={() => setShowRegistrationPopup(true)}
             >
-             Skapa företagsprofil
+              Skapa företagsprofil
             </button>
           </div>
         </div>
@@ -98,7 +102,15 @@ const Footer = () => {
             {students.map((student) => (
               <li key={student.id} className={styles.teamMember}>
                 <article className={styles.memberCard}>
-                  <div className={styles.memberAvatar} aria-hidden="true"></div>
+                  <div className={styles.memberAvatar} aria-hidden="true">
+                    <Image
+                      src={student.avatar}
+                      alt=""
+                      fill
+                      className={styles.avatarImage}
+                      sizes="width: 100vw, height: 100vh"
+                    />
+                  </div>
                   <div className={styles.memberInfo}>
                     <h3 className={styles.memberName}>{student.name}</h3>
                     <p className={styles.memberRole}>{student.role}</p>

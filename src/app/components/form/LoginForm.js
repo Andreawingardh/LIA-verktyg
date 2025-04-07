@@ -57,10 +57,10 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
       if (data) {
         console.log("Login successful:", data);
         
-        // Force a refresh
+        
         router.refresh();
         
-        // Add this line to redirect to dashboard
+       
         router.push('/dashboard');
         
         if (onSuccess) {
@@ -73,7 +73,6 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
       const errorMessage = error.message;
       
       if (errorMessage.includes("Invalid login credentials")) {
-        // This could be either email or password issue, but we typically don't reveal which for security
         setErrors({
           ...newErrors,
           general: "Fel e-post eller lösenord. Vänligen försök igen."

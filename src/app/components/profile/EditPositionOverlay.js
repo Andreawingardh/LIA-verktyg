@@ -83,7 +83,7 @@ export default function EditPositionOverlay({
 
   return (
     <div
-      className="popup-overlay"
+      className="popup-overlay-edit"
       style={{ display: isOpen ? "flex" : "none" }}
       onClick={(e) => {
         e.stopPropagation();
@@ -91,7 +91,7 @@ export default function EditPositionOverlay({
       data-testid="edit-position-overlay"
     >
       <div
-        className="popup-content edit-position-overlay"
+        className="popup-content-edit edit-position-overlay"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="popup-header">
