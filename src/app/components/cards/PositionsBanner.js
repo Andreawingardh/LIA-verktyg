@@ -6,6 +6,8 @@ import { supabase } from "@/utils/supabase/client";
 import { Button } from "../button/Button";
 import "@/app/components/button/button.css";
 import RegistrationPopup from "../form/RegistrationPopup";
+import Link from "next/link";
+import LoginPopup from "../form/LoginPopup";
 
 export const PositionsBanner = () => {
     const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
@@ -59,9 +61,7 @@ export const PositionsBanner = () => {
           ))}
         </div>
       </div>
-      {/* <a href="/company/register">
-        <Button text="Skapa företagsprofil" className="light-button" />
-      </a> */}
+
 
           <Button
               text="Skapa företagsprofil"
@@ -70,7 +70,7 @@ export const PositionsBanner = () => {
       >
   
       </Button>
-      <a href="/companies">
+      <Link href="/companies">
         <Button
           className="no-frame"
           text="Gå till Lia-listan"
@@ -92,7 +92,7 @@ export const PositionsBanner = () => {
             </svg>
           }
         ></Button>
-          </a>
+          </Link>
           
                 {/* Registration Popup */}
                 {showRegistrationPopup && (

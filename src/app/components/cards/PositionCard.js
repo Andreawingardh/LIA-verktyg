@@ -289,8 +289,8 @@ export default function PositionCard() {
         </div>
       ) : (
         <p className="no-positions">
-          Du har inte lagt till några positioner ännu. Använd "Lägg till
-          position" för att skapa din första position.
+          Du har inte lagt till några positioner ännu. Använd Lägg till
+          position för att skapa din första position.
         </p>
       )}
       
