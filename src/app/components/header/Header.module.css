@@ -403,11 +403,7 @@
   color: var(--base-secondary, #001a52);
 }
 
-.loginButton:hover
- {
-  background-color:var(--base-background, #fff);
-}
-
+.loginButton:hover,
 .logoutButton:hover {
   border: 1px solid var(--base-secondary, #001A52);
 background: var(--base-secondary, #001A52);
