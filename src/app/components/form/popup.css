@@ -117,7 +117,7 @@
 }
 
 .popup-content-add,
-.popup-content-edit  {
+.popup-content-edit {
   display: flex;
   width: 93vw;
   margin: 2vh 0;
@@ -174,7 +174,7 @@
   letter-spacing: 0.2px;
   background-color: transparent;
   border: none;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .button-group {
@@ -184,7 +184,7 @@
   gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
   padding-top: 0.5rem;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .formwrapper {
@@ -322,7 +322,7 @@
   align-self: stretch;
   cursor: pointer;
   position: relative;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 .secondary-button {
   display: flex;
@@ -347,25 +347,23 @@
   align-self: stretch;
   cursor: pointer;
   position: relative;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .register-btn:hover,
-
 .secondary-button:hover {
   border-radius: var(--border-radius-full, 9999px);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-secondary, #001a52);
   color: var(--base-secondary-foreground, #fff);
   cursor: pointer;
- 
 }
 
 .close-btn:hover path,
-.close-btn:hover{
-  color: var(--base-foreground, #0F1314);
-  fill: var(--base-foreground, #0F1314);
-  background: var(--base-accent, #E6E6E6);
+.close-btn:hover {
+  color: var(--base-foreground, #0f1314);
+  fill: var(--base-foreground, #0f1314);
+  background: var(--base-accent, #e6e6e6);
   cursor: pointer;
 }
 
@@ -649,32 +647,32 @@
 
 .company-edit-button {
   display: flex;
-height: var(--height-h-11, 44px);
-padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
-justify-content: center;
-align-items: center;
-gap: var(--spacing-2, 8px);
-border-radius: var(--border-radius-full, 22px);
-border: 1px solid var(--base-secondary, #001A52);
-background: var(--base-background, #FFF);
-color: var(--base-secondary, #001A52);
-font-feature-settings: 'liga' off, 'clig' off;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 22px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-background, #fff);
+  color: var(--base-secondary, #001a52);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-normal/medium */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-medium, 500);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
-cursor: pointer;
-transition: background-color .3s, color .3s, border-color .3s;
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .company-edit-button:hover {
-  border: 1px solid var(--base-secondary, #001A52);
-background: var(--base-secondary, #001A52);
-color: var(--base-secondary-foreground, #FFF);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-secondary, #001a52);
+  color: var(--base-secondary-foreground, #fff);
 }
 
 .skillsHeader {
@@ -825,7 +823,7 @@ color: var(--base-secondary-foreground, #FFF);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
   border: none;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .submitButton:hover,
@@ -966,13 +964,13 @@ color: var(--base-secondary-foreground, #FFF);
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .deleteButton:hover {
   cursor: pointer;
-  color: var(--base-destructive, #FFEEEF);
-  background: var(--base-destructive-foreground, #B40509);
+  color: var(--base-destructive, #ffeeef);
+  background: var(--base-destructive-foreground, #b40509);
 }
 
 /* When in confirm delete state */
