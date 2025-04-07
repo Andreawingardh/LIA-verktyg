@@ -407,7 +407,7 @@ export default function Header({ metadata }) {
                 <nav className={styles.desktopNav} aria-label="Main Navigation">
                   <ul className={styles.desktopNavList}>
                     <li className={styles.desktopNavItem}>
-                      <Link href="/" className={styles.desktopNavLink}>
+                      <Link href="/event" className={styles.desktopNavLink}>
                         Mingelevent
                       </Link>
                     </li>
