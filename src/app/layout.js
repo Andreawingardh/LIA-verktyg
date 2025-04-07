@@ -5,7 +5,7 @@ import "@/assets/styles/fonts.css";
 import { Inter } from "next/font/google";
 
 
-const inter = Inter();
+const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata = {
