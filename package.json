@@ -11,9 +11,11 @@
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.3",
+    "add-to-calendar-button-react": "^2.8.7",
     "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-share": "^5.2.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -8,11 +8,65 @@ import "@/app/globals.css";
 import styles from "@/app/components/cards/eventcard.module.css";
 import { supabase } from "@/utils/supabase/client";
 import "@/app/components/button/button.css";
+import {
+  EmailShareButton,
+  FacebookMessengerShareButton,
+  FacebookShareButton,
+  GabShareButton,
+  HatenaShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  LinkedinShareButton,
+  LivejournalShareButton,
+  MailruShareButton,
+  OKShareButton,
+  PinterestShareButton,
+  PocketShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  ThreadsShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  VKShareButton,
+  WhatsappShareButton,
+  WorkplaceShareButton,
+} from "react-share";
+import {
+  EmailIcon,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  GabIcon,
+  HatenaIcon,
+  InstapaperIcon,
+  LineIcon,
+  LinkedinIcon,
+  LivejournalIcon,
+  MailruIcon,
+  OKIcon,
+  PinterestIcon,
+  PocketIcon,
+  RedditIcon,
+  TelegramIcon,
+  ThreadsIcon,
+  TumblrIcon,
+  TwitterIcon,
+  ViberIcon,
+  VKIcon,
+  WeiboIcon,
+  WhatsappIcon,
+  WorkplaceIcon,
+  XIcon,
+  BlueskyIcon,
+} from "react-share";
 import { AddToCalendarButton } from "add-to-calendar-button-react";
 
 export const EventCard = ({ IsSubmitted }) => {
   const [submitted, setSubmitted] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(false);
+  const eventTitle = "Yrgo:s mingelevent, 23 april"
+  const eventDescription = "Mingla med oss för att hitta framtida medarbetare i ert företag eller bara jobba tillsammans under LIA. Ni kommer att träffa Webbutvecklare och Digital Designers från Yrgo som vill visa vad de har jobbat med under året och vi hoppas att ni hittar en match."
+  const eventUrl = "https://yrgo-internify.vercel.app/event"
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -83,11 +137,13 @@ export const EventCard = ({ IsSubmitted }) => {
         )}
         {submitStatus && (
           <div className={styles.eventForm}>
-            <h4>
-              Tack, vi ses snart! Lägg gärna till eventen i din kalender.
-            </h4>
+            <h4>Tack, vi ses snart! Dela gärna eventet med andra.</h4>
             <div className={styles.eventButton}>
-              
+              <LinkedinShareButton url={eventUrl} title={eventTitle} description={eventDescription}>
+                <LinkedinIcon round={true} />
+              </LinkedinShareButton>
+              <FacebookShareButton url={eventUrl} title={eventTitle} description={eventDescription}><FacebookIcon round={true}></FacebookIcon></FacebookShareButton>
+              <EmailShareButton url={eventUrl} subject={eventTitle} body={eventDescription} separator="---------"><EmailIcon round={true} /></EmailShareButton>
             </div>
           </div>
         )}

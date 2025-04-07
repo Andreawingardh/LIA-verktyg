@@ -109,3 +109,12 @@
   gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
 }
+
+.eventButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+}

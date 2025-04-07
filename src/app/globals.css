@@ -96,3 +96,17 @@ p {
   line-height: 150%; /* 1.5rem */
   letter-spacing: 0.0125rem;
 }
+
+h4 {
+  color: var(--base-muted-foreground, #495b62);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* heading-4/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-xlarge-font-size, 1.5625rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 140%; /* 2.1875rem */
+  letter-spacing: -0.00625rem;
+}
