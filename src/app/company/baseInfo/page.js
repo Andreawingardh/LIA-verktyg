@@ -251,16 +251,17 @@ function BaseInfoForm() {
             Logga
           </label>
 
-          <div className="profileFileInputs">
+   
             <input
               id="logo"
               name="logo"
               type="file"
+              className="profileFileInputs"
               onChange={handleLogoChange}
               disabled={isSubmitting}
             />
             {logoUrl && <p className="success-message">Logga uppladdad</p>}
-          </div>
+          
         </article>
 
         <article className="inputSingle">
@@ -268,18 +269,18 @@ function BaseInfoForm() {
             Omslagsbild
           </label>
 
-          <div className="profileFileInputs">
+          
             <input
               id="displayImage"
               name="displayImage"
               type="file"
+              className="profileFileInputs"
               onChange={handleDisplayImageChange}
               disabled={isSubmitting}
             />
             {displayImageUrl && (
               <p className="success-message">Omslagsbild uppladdad</p>
             )}
-          </div>
         </article>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
