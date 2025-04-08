@@ -264,14 +264,42 @@
   align-items: flex-start;
   gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
+  color: var(--base-foreground, #0F1314);
+font-feature-settings: 'liga' off, 'clig' off;
+
+/* body/leading-none/medium */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 1rem);
+font-style: normal;
+font-weight: var(--font-weight-medium, 500);
+line-height: 100%; /* 1rem */
+letter-spacing: 0.0125rem;
 }
 
 .checkbox input {
   width: 1rem;
   height: 1rem;
   border-radius: var(--border-radius-sm, 0.125rem);
-  border: 1px solid var(--base-link, #00287E);
-  background: var(--base-background, #FFF);
+  border: 1px solid var(--base-link, #00287e);
+  background: var(--base-background, #fff);
+  
+}
+
+.checkbox a {
+  color: var(--base-link, #00287e);
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: 0.0125rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 }
 
 .eventButton {

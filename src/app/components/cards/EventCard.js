@@ -142,7 +142,7 @@ export const EventCard = ({ IsSubmitted }) => {
                 
                 <div className={styles.checkbox}>
                   <input type="checkbox" required />
-                  Jag godkänner sekretesspolicyn.
+                  Jag godkänner <a href="/privacy-policy">sekretesspolicyn.</a> <span className={styles.asterix}> *</span>
                 </div>
                 </section>
               <div className={styles.confirmButton}>
