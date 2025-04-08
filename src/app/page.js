@@ -9,8 +9,12 @@ import LoginPopup from "./components/form/LoginPopup";
 import { supabase } from "../utils/supabase/client";
 import { useSupabaseAuth } from "../hook/useSupabaseAuth";
 import EditProfileOverlay from "./components/profile/EditProfileOverlay";
+import { Button } from "./components/button/Button";
+import { useRouter } from "next/navigation";
+import { CardCompany } from "./components/cards/CompanyCard";
 
 export default function Home() {
+  const router = useRouter();
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const { user } = useSupabaseAuth();
@@ -44,26 +48,98 @@ export default function Home() {
     setShowLoginPopup(false);
   };
 
+  function goToEvent() {
+    router.push("/event");
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h1>Träffa nya talanger på mingel-event</h1>
-
-
-  
-        <Link href="/companies" className={styles.a}>
-          Upptäck LIA-platser
-        </Link>
-
-         {showEditPopup && (
-        <EditProfileOverlay 
-        isOpen={showEditPopup} 
-        onClose={() => setShowEditPopup(false)} 
-        companyId={companyId} 
+    <section className={styles.page}>
+      <section className={styles.landingPageHero}>
+        <div className={styles.heroContentWrapper}>
+          <div className={styles.ellipseMobile}></div>
+          <div className={styles.ellipseDesktop}></div>
+          <img src="/images/yrgo-logo-mobile.svg" className={styles.yrgoLogo} />
+          <h1 className={styles.headLine}>Mingelstund</h1>
+          <div className={styles.subheadingMobile}>
+            <p>23 april • 13:00–15:00</p>
+            <p>Visual Arena, Göteborg</p>
+          </div>
+          <p>
+            Välkommen till en avslappnad mingelstund med Yrgos digital designers
+            och webbutvecklare. Upptäck din nästa kollega i en lättsam och
+            personlig miljö.
+          </p>
+          <Button
+            text="Anmäl dig nu"
+            className={styles.eventButton}
+            onClick={goToEvent}
           />
-        )}
+        </div>
+        <div className={styles.busyContentWrapper}>
+          Upptagen 23 april? <Button text="Scrolla ner" />
+        </div>
+      </section>
+      <section className={styles.mainContentWrapper}>
+        <div className={styles.ctaText}>
+          <h3>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h3>
+          <p>
+            Bli upptäckt av Yrgos digital designers och webbutvecklare. Bli
+            kontaktad av relevanta praktikanter.{" "}
+          </p>
+          <p>Spara tid och stärk branschens framtid.</p>
+          <Button
+            text="Skapa företagsprofil"
+            className={styles.createProfileButton}
+            onClick={handleShowRegistration}
+          />
+        </div>
+        <div className={styles.companyList}>
+          <CardCompany
+                logoUrl=' /images/grebban.svg'
+                applyNowClassName="card-company-2"
+                className="card-company-instance"
+                company="Grebban"
+                headerClassName="design-component-instance-node"
+                location="Göteborg"
+                statusProperty="internship-matching"
+                id='/'
+                showApply={true}
+                showLogotype={true}></CardCompany>
+          <CardCompany
+                logoUrl=' /images/hiq.svg'
+                applyNowClassName="card-company-2"
+                className="card-company-instance"
+                company="HiQ"
+                headerClassName="design-component-instance-node"
+                location="Göteborg"
+                statusProperty="internship-matching"
+                id='/'
+                showApply={true}
+                showLogotype={true}></CardCompany>
+          <CardCompany
+                logoUrl=' /images/simmalugnt.svg'
+                applyNowClassName="card-company-2"
+                className="card-company-instance"
+                company="Simma Lugnt"
+                headerClassName="design-component-instance-node"
+                location="Göteborg"
+                statusProperty="internship-matching"
+                id='/'
+                showApply={true}
+                showLogotype={true}></CardCompany>
+          <Button className="no-frame" text="Till företagslistan"  style={{ textDecoration: 'underline' }}></Button>
+        </div>
+      </section>
 
-         {/* Registration Popup */}
+      {showEditPopup && (
+        <EditProfileOverlay
+          isOpen={showEditPopup}
+          onClose={() => setShowEditPopup(false)}
+          companyId={companyId}
+        />
+      )}
+
+      {/* Registration Popup */}
       {showRegistrationPopup && (
         <RegistrationPopup
           isOpen={showRegistrationPopup}
@@ -72,15 +148,14 @@ export default function Home() {
         />
       )}
 
-        {/* Login Popup */}
-        {showLoginPopup && (
-          <LoginPopup
-            isOpen={showLoginPopup}
-            onClose={() => setShowLoginPopup(false)}
-            onShowRegistration={handleShowRegistration}
-          />
-        )}
-      </main>
-    </div>
+      {/* Login Popup */}
+      {showLoginPopup && (
+        <LoginPopup
+          isOpen={showLoginPopup}
+          onClose={() => setShowLoginPopup(false)}
+          onShowRegistration={handleShowRegistration}
+        />
+      )}
+    </section>
   );
 }
