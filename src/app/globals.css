@@ -27,6 +27,17 @@
   --border-radius-lg: 0.625rem;
   --border-radius-xl: 0.75rem;
   --border-radius-full: 1rem;
+
+  /* Responsive fonts */
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem; 
+  --font-size-lg: 1.125rem;  
+  --font-size-xl: clamp(1.2656rem, 1.1667rem + 0.4948vw, 1.5625rem);  
+  --font-size-2xl: clamp(1.4238rem, 1.2474rem + 0.8822vw, 1.9531rem);  
+  --font-size-3xl: clamp(1.6018rem, 1.3219rem + 1.3993vw, 2.4414rem);  
+  --font-size-4xl: clamp(1.802rem, 1.3855rem + 2.0829vw, 3.0518rem);
 }
 
 /* @media (prefers-color-scheme: dark) {
