@@ -122,7 +122,10 @@ h4 {
   letter-spacing: -0.00625rem;
 }
 
-/* main {
+main {
+  padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
+  max-width: 80rem;
+  padding: 0rem var(--spacing-12, 3rem);
   margin-left:auto;
   margin-right: auto;
 
