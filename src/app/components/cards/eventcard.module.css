@@ -168,7 +168,7 @@
   align-self: stretch;
 }
 
-@media (max-width: 1024px){
+@media (max-width: 1024px) {
   .mainWrapper {
     display: flex;
     padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
@@ -177,9 +177,7 @@
     gap: var(--spacing-6, 1.5rem);
     align-self: stretch;
   }
-
 }
-
 
 .mainInformation p {
   color: var(--base-foreground, #0f1314);
@@ -201,8 +199,6 @@
   gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
 }
-
-
 
 .eventForm {
   display: flex;
@@ -231,17 +227,17 @@
   border: 1px solid var(--base-foreground, #0f1314);
   background: var(--base-background, #fff);
   overflow: hidden;
-color: var(--base-input, #BFBFBF);
-font-feature-settings: 'liga' off, 'clig' off;
-text-overflow: ellipsis;
+  color: var(--base-input, #bfbfbf);
+  font-feature-settings: "liga" off, "clig" off;
+  text-overflow: ellipsis;
 
-/* body/leading-none/regular */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 1rem);
-font-style: normal;
-font-weight: var(--font-weight-normal, 400);
-line-height: 100%; /* 1rem */
-letter-spacing: 0.0125rem;
+  /* body/leading-none/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 100%; /* 1rem */
+  letter-spacing: 0.0125rem;
 }
 .eventForm label {
   /* Layout mobile */
@@ -265,9 +261,17 @@ letter-spacing: 0.0125rem;
   display: flex;
   min-height: var(--width-w-11, 2.75rem);
   padding: var(--spacing-3-5, 0.875rem) 0rem;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
+}
+
+.checkbox input {
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--border-radius-sm, 0.125rem);
+  border: 1px solid var(--base-link, #00287E);
+  background: var(--base-background, #FFF);
 }
 
 .eventButton {
@@ -278,5 +282,3 @@ letter-spacing: 0.0125rem;
   flex-direction: row;
   gap: 1rem;
 }
-
-
