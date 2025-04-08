@@ -57,6 +57,7 @@ export default function Home() {
       <section className={styles.landingPageHero}>
         <div className={styles.heroContentWrapper}>
           <div className={styles.ellipseMobile}></div>
+          <div className={styles.ellipseDesktop}></div>
           <img src="/images/yrgo-logo-mobile.svg" className={styles.yrgoLogo} />
           <h1 className={styles.headLine}>Mingelstund</h1>
           <div className={styles.subheadingMobile}>

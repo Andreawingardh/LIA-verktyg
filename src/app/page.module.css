@@ -1,19 +1,13 @@
-/* .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-} */
+.page {
+  @media screen and (min-width: 460px) {
+    display: flex;
+    max-width: 80rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+}
 
 @media (prefers-color-scheme: dark) {
   .page {
@@ -166,13 +160,23 @@ a.secondary {
 .landingPageHero {
   /* Layout mobile */
   display: flex;
-  width: 24.375rem;
+  max-width: 24.375rem;
   height: 52rem;
   max-width: 80rem;
   padding: var(--spacing-3, 0.75rem) var(--spacing-4, 1rem);
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (min-width: 460px) {
+    display: flex;
+    height: 80vh;
+    max-width: 80rem;
+    padding: var(--spacing-3, 0.75rem) var(--spacing-12, 3rem);
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .ellipseMobile {
@@ -203,6 +207,32 @@ a.secondary {
   }
 }
 
+.ellipseDesktop {
+  display: none;
+
+  @media screen and (min-width: 460px) {
+    display: block;
+    width: 38.625rem;
+    height: 38.625rem;
+    aspect-ratio: 1/1;
+    z-index: -1;
+
+    position: absolute;
+    left: 5.125rem;
+    top: -3.71875rem;
+
+    border-radius: 38.625rem;
+    background: var(--base-background, #fff);
+
+    /* shadow/xl-red */
+    box-shadow: 0px 193px 54px 0px rgba(229, 18, 54, 0),
+      0px 123px 49px 0px rgba(229, 18, 54, 0.03),
+      0px 69px 42px 0px rgba(229, 18, 54, 0.1),
+      0px 31px 31px 0px rgba(229, 18, 54, 0.17),
+      0px 8px 17px 0px rgba(229, 18, 54, 0.2);
+  }
+}
+
 .heroContentWrapper {
   display: flex;
   max-width: 48.875rem;
@@ -211,6 +241,15 @@ a.secondary {
   gap: var(--spacing-8, 2rem);
   align-self: stretch;
   position: relative;
+
+  @media screen and (min-width: 960px) {
+    display: flex;
+    max-width: 48.875rem;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-8, 2rem);
+    align-self: stretch;
+  }
 }
 
 .yrgoLogo {
@@ -254,6 +293,12 @@ a.secondary {
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 1.6875rem */
   letter-spacing: 0.00938rem;
+
+  @media screen and (min-width: 460px) {
+    display: flex;
+    gap: 2rem;
+    margin: 0 auto;
+  }
 }
 
 .eventButton {
@@ -322,5 +367,11 @@ a.secondary {
   justify-content: center;
   align-items: flex-end;
   gap: var(--spacing-4, 1rem);
-  align-self: stretch;  
+  align-self: stretch;
+}
+
+.heroContentWrapper p {
+  text-wrap: balance;
+  margin: auto 0;
+  width:fit-content;
 }
