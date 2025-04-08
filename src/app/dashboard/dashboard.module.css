@@ -254,3 +254,32 @@ background: var(--base-muted-foreground, #495B62);
 .main-content {
   width: 100%;
 }
+
+.contact-button {
+  display: flex;
+height: var(--height-h-11, 2.75rem);
+padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
+justify-content: center;
+align-items: center;
+gap: var(--spacing-2, 0.5rem);
+border-radius: var(--border-radius-full, 624.9375rem);
+border: 1px solid var(--base-secondary, #001A52);
+background: var(--base-secondary, #001A52);
+color: var(--base-secondary-foreground, #FFF);
+font-feature-settings: 'liga' off, 'clig' off;
+
+/* body/leading-normal/medium */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 1rem);
+font-style: normal;
+font-weight: var(--font-weight-medium, 500);
+line-height: 150%; /* 1.5rem */
+letter-spacing: 0.0125rem;
+transition: background-color .3s, color .3s, border-color .3s;
+}
+
+.contact-button:hover {
+  background-color: var(--base-secondary-foreground, #fff);
+  color: var(--base-secondary, #001a52);
+  border: 1px solid var(--base-secondary, #001a52);
+}
