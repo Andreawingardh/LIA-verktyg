@@ -18,7 +18,8 @@ export const CardCompany = ({
   logoUrl,
 }) => {
   return (
-    <Link href={`/companies/${id}`} className="card-link">
+    <Link href = {`/companies/${id}`
+} className = "card-link" >
       <div className={`card-company ${statusProperty} ${className}`}>
         <div className="content">
           {showLogotype && (
