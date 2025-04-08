@@ -363,9 +363,4 @@ background: var(--base-secondary, #001A52);
   color: var(--base-primary, #E51236);
 }
 
-@media (min-width: 960px){
-  .container {
-    padding-top: 13vh;
-    padding-bottom: 0vh;
-  }
-}
+
