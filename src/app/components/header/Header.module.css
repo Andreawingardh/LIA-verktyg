@@ -150,7 +150,7 @@ align-self: stretch;
 
 .mobileNavOpen {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(64px);
   pointer-events: auto;
   visibility: visible;
 }

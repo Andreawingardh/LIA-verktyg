@@ -1,4 +1,4 @@
-.button {
+/* .button {
   display: flex;
   height: var(--height-h-11, 44px);
   padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
@@ -13,15 +13,15 @@
   color: var(--base-secondary-foreground, #fff);
   font-feature-settings: "liga" off, "clig" off;
 
-  /* body/leading-normal/medium */
+ 
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-base-font-size, 16px);
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
-  line-height: 150%; /* 24px */
+  line-height: 150%; 
   letter-spacing: 0.2px;
   border: none;
-}
+} */
 
 .light-button {
   display: flex;
@@ -37,7 +37,7 @@
   width: fit-content;
 }
 
-.button:hover {
+/* .button:hover {
   display: inline-flex;
   height: var(--height-h-11, 2.75rem);
   padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
@@ -49,7 +49,7 @@
   border-radius: var(--border-radius-full, 624.9375rem);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-background, #fff);
-}
+} */
 
 .no-frame {
   display: flex;

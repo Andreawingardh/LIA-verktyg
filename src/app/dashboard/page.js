@@ -10,6 +10,7 @@ import styles from "./dashboard.module.css";
 import AddPositionButton from "../components/profile/addPositionButton";
 import AddPositionOverlay from "../components/profile/addPositionOverlay";
 import PositionCard from "../components/cards/PositionCard";
+import {PositionsBanner} from "../components/cards/PositionsBanner";
 
 const formatWebsiteForDisplay = (url) => {
   if (!url) return "www.acmeagency.com";
@@ -197,6 +198,8 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+
+      {/* <PositionsBanner /> */}
 
       {/* Completion Confirmation Popup */}
       <CompletionConfirmationPopup
