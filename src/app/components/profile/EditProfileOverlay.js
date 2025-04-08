@@ -250,7 +250,6 @@ export default function EditProfileOverlay({
         const filePath = `company-logos/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
-feature/uploading-and-accessing-images
           .from('images')
           .upload(filePath, newLogo);
 
@@ -258,7 +257,6 @@ feature/uploading-and-accessing-images
 
         // Get public URL
         const { data } = supabase.storage
-feature/uploading-and-accessing-images
           .from('images')
           .getPublicUrl(filePath);
 
@@ -274,7 +272,6 @@ feature/uploading-and-accessing-images
         const filePath = `company-displays/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
-feature/uploading-and-accessing-images
           .from('images')
           .upload(filePath, newDisplayImage);
 
@@ -282,7 +279,7 @@ feature/uploading-and-accessing-images
 
         // Get public URL
         const { data } = supabase.storage
-feature/uploading-and-accessing-images
+
           .from('images')
           .getPublicUrl(filePath);
 
