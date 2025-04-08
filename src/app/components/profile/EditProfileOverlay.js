@@ -6,6 +6,9 @@ import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 import "../form/popup.css";
 
 const FORM_STORAGE_KEY = "company_edit_form_data";
+const MAX_DESCRIPTION_LENGTH = 120;
+const MAX_NAME_LENGTH = 25;
+const MAX_LOCATION_LENGTH = 25;
 
 export default function EditProfileOverlay({
   isOpen,
@@ -30,6 +33,12 @@ export default function EditProfileOverlay({
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [formId, setFormId] = useState("");
+  const [descriptionCharCount, setDescriptionCharCount] = useState(0);
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    email: "",
+    website: ""
+  });
 
   // Generate a unique form ID when the overlay opens
   useEffect(() => {
@@ -74,6 +83,7 @@ export default function EditProfileOverlay({
           try {
             const parsedData = JSON.parse(savedData);
             setCompanyData(parsedData.formData);
+            setDescriptionCharCount(parsedData.formData.description.length);
 
             if (parsedData.logoPreview) {
               setLogoPreview(parsedData.logoPreview);
@@ -139,6 +149,7 @@ export default function EditProfileOverlay({
           const parsedData = JSON.parse(savedData);
           console.log("Found saved draft data", parsedData);
           setCompanyData(parsedData.formData);
+          setDescriptionCharCount(parsedData.formData.description.length);
 
           if (parsedData.logoPreview) {
             setLogoPreview(parsedData.logoPreview);
@@ -183,6 +194,9 @@ export default function EditProfileOverlay({
       website: data.website || "",
       email: data.email || "",
     });
+    
+    // Set the description character count
+    setDescriptionCharCount(data.description ? data.description.length : 0);
 
     // Set logo preview if exists
     if (data.logo_url && data.logo_url !== "pending") {
@@ -197,10 +211,32 @@ export default function EditProfileOverlay({
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCompanyData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    
+    // Clear error for this field when typing
+    if (formErrors[name]) {
+      setFormErrors({
+        ...formErrors,
+        [name]: ""
+      });
+    }
+    
+    // If it's the description field, update the char count
+    if (name === "description") {
+      // Limit text to MAX_DESCRIPTION_LENGTH characters
+      if (value.length <= MAX_DESCRIPTION_LENGTH) {
+        setCompanyData((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+        setDescriptionCharCount(value.length);
+      }
+    } else {
+      // Handle all other fields
+      setCompanyData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleLogoChange = (e) => {
@@ -231,8 +267,51 @@ export default function EditProfileOverlay({
     }
   };
 
+  const validateForm = () => {
+    let isValid = true;
+    const errors = {
+      name: "",
+      email: "",
+      website: ""
+    };
+
+    // Validate company name
+    if (!companyData.name.trim()) {
+      errors.name = "Företagsnamn måste anges";
+      isValid = false;
+    }
+
+    // Validate email if provided
+    if (companyData.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(companyData.email)) {
+        errors.email = "Ange en giltig e-postadress";
+        isValid = false;
+      }
+    }
+
+    // Validate website if provided
+    if (companyData.website) {
+      try {
+        new URL(companyData.website);
+      } catch (e) {
+        errors.website = "Ange en giltig webbadress (t.ex. https://exempel.se)";
+        isValid = false;
+      }
+    }
+
+    setFormErrors(errors);
+    return isValid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate form before submission
+    if (!validateForm()) {
+      return;
+    }
+    
     setSaving(true);
     setError("");
     setSuccess("");
@@ -250,7 +329,6 @@ export default function EditProfileOverlay({
         const filePath = `company-logos/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
-feature/uploading-and-accessing-images
           .from('images')
           .upload(filePath, newLogo);
 
@@ -258,7 +336,6 @@ feature/uploading-and-accessing-images
 
         // Get public URL
         const { data } = supabase.storage
-feature/uploading-and-accessing-images
           .from('images')
           .getPublicUrl(filePath);
 
@@ -274,7 +351,6 @@ feature/uploading-and-accessing-images
         const filePath = `company-displays/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
-feature/uploading-and-accessing-images
           .from('images')
           .upload(filePath, newDisplayImage);
 
@@ -282,7 +358,6 @@ feature/uploading-and-accessing-images
 
         // Get public URL
         const { data } = supabase.storage
-feature/uploading-and-accessing-images
           .from('images')
           .getPublicUrl(filePath);
 
@@ -399,90 +474,96 @@ feature/uploading-and-accessing-images
         {loading ? (
           <div className="loading">Laddar företagsinformation...</div>
         ) : (
-          <form  className="formwrapper" onSubmit={handleSubmit}>
-              <div className="inputSingle">
-                <article className="inputHeader">
-                  <label className="popupTitle" htmlFor="company_name">
-                    Företagsnamn
-                  </label>
-                  <span className="asterix">*</span>
-                </article>
-                <input
-                  id="company_name"
-                  name="name"
-                  type="text"
-                  className="inputs"
-                  required
-                  value={companyData.name}
-                  onChange={handleInputChange}
-                  disabled={saving}
-                  placeholder="Ditt företagsnamn"
-                />
-              </div>
+          <form className="formwrapper" onSubmit={handleSubmit}>
+            <div className="inputSingle">
+              <article className="inputHeader">
+                <label className="popupTitle" htmlFor="company_name">
+                  Företagsnamn <span className="asterix">*</span>
+                </label>
+                
+              </article>
+              <input
+                id="company_name"
+                name="name"
+                type="text"
+                className={`inputs ${formErrors.name ? 'input-error' : ''}`}
+                required
+                value={companyData.name}
+                onChange={handleInputChange}
+                disabled={saving}
+                placeholder="Ditt företagsnamn"
+                maxLength={MAX_NAME_LENGTH}
+              />
+              {formErrors.name && <p className="error-message">{formErrors.name}</p>}
+            </div>
 
-              <div className="inputSingle">
-                <article className="inputHeader">
-                  <label className="popupTitle" htmlFor="location">
-                    Kontorsort
-                  </label>
-                </article>
-                <input
-                  id="location"
-                  name="location"
-                  type="text"
-                  className="inputs"
-                  required
-                  value={companyData.location}
-                  onChange={handleInputChange}
-                  disabled={saving}
-                  placeholder="Var finns ert kontor?"
-                />
-              </div>
+            <div className="inputSingle">
+              <article className="inputHeader">
+                <label className="popupTitle" htmlFor="location">
+                  Kontorsort <span className="asterix">*</span>
+                </label>
+              </article>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                className="inputs"
+                required
+                value={companyData.location}
+                onChange={handleInputChange}
+                disabled={saving}
+                placeholder="Var finns ert kontor?"
+                maxLength={MAX_LOCATION_LENGTH}
+              />
+            </div>
 
-              <div className="inputSingle">
-                <article className="inputHeader">
-                  <label className="popupTitle" htmlFor="website">
-                    Hemsida
-                  </label>
-                </article>
-                <input
-                  id="website"
-                  name="website"
-                  type="url"
-                  className="inputs"
-                  required
-                  value={companyData.website}
-                  onChange={handleInputChange}
-                  disabled={saving}
-                  placeholder="https://www.dittforetag.se"
-                />
-              </div>
+            <div className="inputSingle">
+              <article className="inputHeader">
+                <label className="popupTitle" htmlFor="website">
+                  Hemsida <span className="asterix">*</span>
+                </label>
+              </article>
+              <input
+                id="website"
+                name="website"
+                type="url"
+                className={`inputs ${formErrors.website ? 'input-error' : ''}`}
+                required
+                value={companyData.website}
+                onChange={handleInputChange}
+                disabled={saving}
+                placeholder="https://www.dittforetag.se"
+              />
+              {formErrors.website && <p className="error-message">{formErrors.website}</p>}
+            </div>
 
-              <div className="inputSingle">
-                <article className="inputHeader">
-                  <label className="popupTitle" htmlFor="contact_email">
-                    Kontaktmail
-                  </label>
-                </article>
-                <input
-                  id="contact_email"
-                  name="email"
-                  type="email"
-                  className="inputs"
-                  required
-                  value={companyData.email}
-                  onChange={handleInputChange}
-                  disabled={saving}
-                  placeholder="kontakt@dittforetag.se"
-                />
-              </div>
+            <div className="inputSingle">
+              <article className="inputHeader">
+                <label className="popupTitle" htmlFor="contact_email">
+                  Kontaktmail
+                </label>
+              </article>
+              <input
+                id="contact_email"
+                name="email"
+                type="email"
+                className={`inputs ${formErrors.email ? 'input-error' : ''}`}
+                required
+                value={companyData.email}
+                onChange={handleInputChange}
+                disabled={saving}
+                placeholder="kontakt@dittforetag.se"
+              />
+              {formErrors.email && <p className="error-message">{formErrors.email}</p>}
+            </div>
 
-              <div className="inputSingle">
-                <article className="inputHeader">
-                  <label className="popupTitle" htmlFor="description">
-                    Företagsbeskrivning
-                  </label>
-                </article>
+            <div className="inputSingle">
+              <article className="inputHeader">
+                <label className="popupTitle" htmlFor="description">
+                  Företagsbeskrivning
+                </label>
+              </article>
+              <div className="description-container">
                 <textarea
                   id="description"
                   name="description"
@@ -493,75 +574,71 @@ feature/uploading-and-accessing-images
                   disabled={saving}
                   placeholder="Berätta om ert företag, er verksamhet och vad ni erbjuder"
                   rows={5}
+                  maxLength={MAX_DESCRIPTION_LENGTH}
                 />
-              </div>
-
-              <div className="inputSingle">
-                <article className="inputHeader">
-                  <label className="popupTitle" htmlFor="logo">
-                    Företagslogotyp
-                  </label>
-                </article>
-                <div className="file-input-container">
-                  <input
-                    id="logo"
-                    name="logo"
-                    type="file"
-                   
-                    onChange={handleLogoChange}
-                    disabled={saving}
-                    accept="image/*"
-                  />
-                  {logoPreview && (
-                    <div className="image-preview">
-                      <img
-                        src={logoPreview}
-                        alt="Företagslogotyp förhandsvisning"
-                      />
-                    </div>
-                  )}
+                <div className={`char-counter ${descriptionCharCount >= MAX_DESCRIPTION_LENGTH ? 'char-counter-max' : ''}`}>
+                  {descriptionCharCount}/{MAX_DESCRIPTION_LENGTH}
                 </div>
               </div>
+            </div>
 
-              <div className="inputSingle">
-                <article className="inputHeader">
-                  <label className="popupTitle" htmlFor="displayImage">
-                    Omslagsbild
-                  </label>
-                </article>
-                <div className="file-input-container">
-                
-                  <input
-                    id="displayImage"
-                    name="displayImage"
-                    type="file"
-                   
-                    onChange={handleDisplayImageChange}
-                    disabled={saving}
-                    accept="image/*"
-                  />
-                  
-                  {displayImagePreview && (
-                    <div className="image-preview">
-                      <img
-                        src={displayImagePreview}
-                        alt="Omslagsbild förhandsvisning"
-                      />
-                    </div>
-                  )}
-                </div>
+            <div className="inputSingle">
+              <article className="inputHeader">
+                <label className="popupTitle" htmlFor="logo">
+                  Företagslogotyp
+                </label>
+              </article>
+              <div className="file-input-container">
+                <input
+                  id="logo"
+                  name="logo"
+                  type="file"
+                  onChange={handleLogoChange}
+                  disabled={saving}
+                  accept="image/*"
+                />
+                {logoPreview && (
+                  <div className="image-preview">
+                    <img
+                      src={logoPreview}
+                      alt="Företagslogotyp förhandsvisning"
+                    />
+                  </div>
+                )}
               </div>
+            </div>
 
-              {error && <p className="error-message">{error}</p>}
-              {success && <p className="success-message">{success}</p>}
-         
+            <div className="inputSingle">
+              <article className="inputHeader">
+                <label className="popupTitle" htmlFor="displayImage">
+                  Omslagsbild
+                </label>
+              </article>
+              <div className="file-input-container">
+                <input
+                  id="displayImage"
+                  name="displayImage"
+                  type="file"
+                  onChange={handleDisplayImageChange}
+                  disabled={saving}
+                  accept="image/*"
+                />
+                {displayImagePreview && (
+                  <div className="image-preview">
+                    <img
+                      src={displayImagePreview}
+                      alt="Omslagsbild förhandsvisning"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
 
             <div className="button-group">
-              <button
-                type="submit"
-                disabled={saving}
-                className="primary-button"
-              >
+              <button type="submit" disabled={saving} className="primary-button">
                 {saving ? "Sparar..." : "Tillämpa ändringar"}
               </button>
 

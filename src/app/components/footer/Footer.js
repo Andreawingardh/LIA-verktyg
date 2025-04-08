@@ -400,13 +400,13 @@ const Footer = () => {
                     <a href="/kontakt">Kontakt</a>
                   </li>
                   <li>
-                    <a href="/medlemsvard">Medlemsvård</a>
+                    <a href="/mingelevent">Mingelevent</a>
                   </li>
                   <li>
                     <a href="/foretagssidan">Företagssidan</a>
                   </li>
                   <li>
-                    <a href="/sekretess">Sekretess/policy</a>
+                    <a href="/sekretess">Sekretesspolicy</a>
                   </li>
                 </ul>
               </nav>

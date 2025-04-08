@@ -57,7 +57,11 @@
 .mobileHeader {
   width: 100%;
   height: var(--width-w-16, 64px);
-  padding: 10px;
+  display: flex;
+height: var(--width-w-16, 64px);
+justify-content: center;
+align-items: center;
+align-self: stretch;
   background: var(--base-background, #fff);
   position: relative;
   z-index: 10;
@@ -69,7 +73,7 @@
 .mobileTop {
   display: flex;
   width: 100%;
-  padding: 0px var(--spacing-2, 8px);
+  padding: 0px var(--spacing-4, 16px);
   justify-content: space-between;
   align-items: center;
 }
@@ -239,7 +243,7 @@
 /* Desktop styling */
 .desktopWrapper {
   display: flex;
-  max-width: 1500px;
+  max-width: 1280px;
   width: 100%;
   padding: 0px var(--spacing-12, 48px);
   justify-content: space-between;
@@ -253,7 +257,7 @@
   height: var(--width-w-16, 64px);
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: relative;
   background: var(--base-background, #fff);
   box-shadow: 0px 32px 9px 0px rgba(0, 0, 0, 0),
     0px 20px 8px 0px rgba(0, 0, 0, 0.01), 0px 11px 7px 0px rgba(0, 0, 0, 0.05),

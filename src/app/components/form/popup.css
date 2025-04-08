@@ -240,31 +240,30 @@
   letter-spacing: 0.2px;
 }
 
-.descriptionInput {
-  display: flex;
-  resize: none;
-  min-height: 9rem;
-  padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
-  align-items: flex-start;
-  flex: 1 0 0;
-  align-self: stretch;
-  border-radius: var(--border-radius-lg, 10px);
-  border: 1px solid var(--base-input, #bfbfbf);
-  background: var(--base-background, #fff);
-  overflow: hidden;
-  color: var(--base-muted-foreground, #495b62);
-  font-feature-settings: "liga" off, "clig" off;
-  text-overflow: ellipsis;
-  white-space: wrap;
 
-  /* body/leading-normal/regular */
-  font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-base-font-size, 16px);
-  font-style: normal;
-  font-weight: var(--font-weight-normal, 400);
-  line-height: 150%; /* 24px */
-  letter-spacing: 0.2px;
-}
+  .description-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .descriptionInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    resize: none;
+    min-height: 100px;
+    transition: border-color 0.3s;
+  }
+  
+  .descriptionInput:focus {
+    outline: none;
+    border-color: #001a52;
+    box-shadow: 0 0 0 2px rgba(0, 26, 82, 0.1);
+  }
+
 
 .inputs {
   display: flex;
@@ -871,7 +870,7 @@
 
 /* Fade effect for collapsed skills */
 .skills-fade {
-  width: 310px;
+  width: 100%;
   height: var(--width-w-6, 24px);
   position: absolute;
   bottom: 0px;
