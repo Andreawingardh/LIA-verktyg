@@ -1,23 +1,21 @@
 "use client";
-import { supabase } from "@/utils/supabase/client";
+import { supabase } from "../../../utils/supabase/client";
 import { useState } from "react";
-import React from "react";
+import DeleteConfirmationOverlay from "../profile/DeletePositionOverlay";
 import "../form/popup.css";
 
 export default function RemovePositionButton({ position, onPositionUpdate }) {
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const handleDelete = async (e) => {
-    // Prevent event bubbling to parent elements
+  const handleDeleteClick = (e) => {
     e.stopPropagation();
     
-    if (!confirmDelete) {
-      setConfirmDelete(true);
-      return;
-    }
+    setIsDeleteOverlayOpen(true);
+  };
 
+  const handleDeleteConfirm = async () => {
     try {
       setIsSaving(true);
       console.log(`Deleting position ID: ${position.id}`);
@@ -44,27 +42,35 @@ export default function RemovePositionButton({ position, onPositionUpdate }) {
         onPositionUpdate(null); // Pass null to indicate deletion
       }
 
-      // Reset confirm state (even though the component will unmount)
-      setConfirmDelete(false);
+      // Close the confirmation overlay after deletion
+      setIsDeleteOverlayOpen(false);
     } catch (error) {
       console.error("Error deleting position:", error);
       alert("Ett fel uppstod när positionen skulle tas bort: " + error.message);
-      // Reset confirm state on error
-      setConfirmDelete(false);
     } finally {
       setIsSaving(false);
     }
   };
 
   return (
-    <button
-      type="button"
-      className="secondary-button deleteButton"
-      onClick={handleDelete}
-      disabled={isSaving}
-    >
-      {isSaving ? "Tar bort..." : confirmDelete ? "Bekräfta borttagning" : "Ta bort position"}
-      {successMessage && <span className="success-message">{successMessage}</span>}
-    </button>
+    <>
+      <button
+        type="button"
+        className="secondary-button deleteButton"
+        onClick={handleDeleteClick}
+        disabled={isSaving}
+      >
+        {isSaving ? "Tar bort..." : "Ta bort position"}
+        {successMessage && <span className="success-message">{successMessage}</span>}
+      </button>
+
+      <DeleteConfirmationOverlay
+        isOpen={isDeleteOverlayOpen}
+        onClose={() => setIsDeleteOverlayOpen(false)}
+        onConfirm={handleDeleteConfirm}
+        positionTitle={position.title}
+        isDeleting={isSaving}
+      />
+    </>
   );
 }
