@@ -127,7 +127,8 @@ export default function PositionCard() {
 
   return (
     <div className="positions-section">
-      <h3>LIA-Positioner</h3>
+      <p className="title">Öppna LIA-platser</p>
+      <p className="subTitle">Våra lediga platser inför LIA-perioden i november.</p>
 
       {positions.length > 0 ? (
         <div className="positions-grid">

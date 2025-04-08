@@ -6,10 +6,34 @@ import { useSupabaseAuth } from "../../hook/useSupabaseAuth";
 import { supabase } from "../../utils/supabase/client";
 import EditProfileButton from "../components/profile/EditProfileButton";
 import CompletionConfirmationPopup from "../components/form/CompletionConfirmationPopup";
-import "./dashboard.css";
+import styles from "./dashboard.module.css";
 import AddPositionButton from "../components/profile/addPositionButton";
-import PositionCard from "../components/cards/PositionCard";
 import AddPositionOverlay from "../components/profile/addPositionOverlay";
+import PositionCard from "../components/cards/PositionCard";
+
+const formatWebsiteForDisplay = (url) => {
+  if (!url) return "www.acmeagency.com";
+  
+  try {
+    // Create URL object to parse the url
+    const urlObj = new URL(url);
+    // Get hostname part without protocol
+    let hostname = urlObj.hostname;
+    
+    // Add www. prefix if it doesn't already have it
+    if (!hostname.startsWith('www.')) {
+      hostname = 'www.' + hostname;
+    }
+    
+    return hostname;
+  } catch (e) {
+    // If it's not a valid URL, ensure it has www. prefix
+    if (!url.startsWith('www.') && !url.startsWith('http')) {
+      return 'www.' + url;
+    }
+    return url;
+  }
+};
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -19,14 +43,13 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
-  const [showAddPostionOverlay, setShowAddPositionOverlay] = useState(false);
+  const [showAddPositionOverlay, setShowAddPositionOverlay] = useState(false);
 
   useEffect(() => {
     if (user && !authLoading) {
       fetchCompanyProfile();
       fetchPositions();
-      
-      
+
       const shouldShowPopup = localStorage.getItem("showCompletionPopup");
       if (shouldShowPopup === "true") {
         setShowCompletionPopup(true);
@@ -39,7 +62,7 @@ export default function DashboardPage() {
 
   const fetchCompanyProfile = async () => {
     try {
-      const { data, error: fetchError } = await supabase
+      const { data, fetchError } = await supabase
         .from("companies")
         .select("*")
         .eq("user_id", user.id)
@@ -57,7 +80,7 @@ export default function DashboardPage() {
 
   const fetchPositions = async () => {
     try {
-      const { data, error: fetchError } = await supabase
+      const { data, fetchError } = await supabase
         .from("positions")
         .select("*")
         .eq("user_id", user.id);
@@ -70,13 +93,8 @@ export default function DashboardPage() {
     }
   };
 
-  const refreshPositions = () => {
-    fetchPositions();
-  };
-
   const handleAddLiaPosition = () => {
     setShowCompletionPopup(false);
-    
     setShowAddPositionOverlay(true);
   };
 
@@ -85,98 +103,111 @@ export default function DashboardPage() {
   }
 
   return (
-    <main>
-      <div className="container dashboard-container">
-        <h1>Företagsprofil Dashboard</h1>
-
-        {error ? (
-          <p className="error-message">{error}</p>
-        ) : companyProfile ? (
-          <div className="profile-card">
-            <div className="profile-header">
-              {companyProfile.display_image_url &&
-                companyProfile.display_image_url !== "pending" && (
-                  <div className="cover-image">
-                    <img
-                      src={companyProfile.display_image_url}
-                      alt="Omslagsbild"
-                    />
-                  </div>
-                )}
-
-              <div className="profile-info">
-                {companyProfile.logo_url &&
-                  companyProfile.logo_url !== "pending" && (
-                    <div className="company-logo">
-                      <img
-                        src={companyProfile.logo_url}
-                        alt={`${companyProfile.name} logotyp`}
-                      />
-                    </div>
-                    )}
-                <div className="company-details">
-                  <h2>{companyProfile.name}</h2>
-                  <p className="location">{companyProfile.location}</p>
-                </div>
-              </div>
+    <main className={styles["main-content"]}>
+      {/* Company Header Banner */}
+      {companyProfile &&
+        companyProfile.display_image_url &&
+        companyProfile.display_image_url !== "pending" && (
+          <div className={styles["cover-image"]}>
+            <div className={styles.coverWrapper}>
+              <img src={companyProfile.display_image_url} alt="Omslagsbild" />
             </div>
+          </div>
+        )}
 
-            <div className="profile-content">
-              <div className="description">
-                <h3>Om företaget</h3>
-                <p>{companyProfile.description}</p>
-              </div>
+      <div className={styles["dashboard-container"]}>
+        <div className={styles.contentWrapper}>
+          {error ? (
+            <p className="error-message">{error}</p>
+          ) : companyProfile ? (
+            <>
+              {/* Company Profile Section */}
+              <div className={styles.profileWrapper}>
+                <div className={styles["profile-content"]}>
+                  <div className={styles["profile-header"]}>
+                    {companyProfile.logo_url &&
+                    companyProfile.logo_url !== "pending" ? (
+                      <div className={styles["company-logo"]}>
+                        <img
+                          src={companyProfile.logo_url}
+                          alt={`${companyProfile.name} logotyp`}
+                        />
+                      </div>
+                    ) : (
+                      <div className={styles["company-logo"]}>
+                        <div>
+                          {companyProfile.name
+                            ? companyProfile.name.charAt(0)
+                            : "A"}
+                        </div>
+                      </div>
+                    )}
+                    <div className={styles["company-details"]}>
+                      <h2>{companyProfile.name || "Acme Agency"}</h2>
+                    </div>
+                  </div>
 
-              <div className="contact-info">
-                <h3>Kontaktinformation</h3>
-                <p>
-                  <strong>Hemsida:</strong>{" "}
+                  <p className={styles.location}>
+                    {companyProfile.location || "Göteborg"}
+                  </p>
+
+                  <div className={styles.description}>
+                    <p>
+                      {companyProfile.description ||
+                        "Acme Inc är en designbyrå sedan 10 år tillbaka. Vi arbetar med främst med kommunikation och varumärkesutveckling. Vi söker främst praktikanter som fokuserar på rörligt. Som praktikant hos oss får man inte bara frilöst, utan även jobba skarpt mot kund och mycket frihet."}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Website Button*/}
+                <button type="button" className={styles.website}>
                   <a
                     href={companyProfile.website}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {companyProfile.website}
+                    {formatWebsiteForDisplay(companyProfile.website)}
                   </a>
-                </p>
-                <p>
-                  <strong>E-post:</strong>{" "}
-                  <a href={`mailto:${companyProfile.email}`}>
-                    {companyProfile.email}
-                  </a>
-                </p>
-                <div className="profile-actions">
+                </button>
+
+                {/* Edit Profile Button */}
+                <div className={styles["profile-actions"]}>
                   <EditProfileButton
                     companyId={companyProfile.id}
                     onProfileUpdate={fetchCompanyProfile}
-                  />
+                    className="primary-button"
+                  >
+                    Redigera profil
+                  </EditProfileButton>
                 </div>
+              </div>
 
+              {/* Position Cards Section */}
+              <div className={styles["positions-section"]}>
                 <PositionCard />
               </div>
+            </>
+          ) : (
+            <div className={styles["no-profile"]}>
+              <p>Du har inte skapat någon företagsprofil ännu.</p>
+              <a href="/company/register" className="primary-button">
+                Skapa Företagsprofil
+              </a>
             </div>
-          </div>
-        ) : (
-          <div className="no-profile">
-            <p>Du har inte skapat någon företagsprofil ännu.</p>
-            <a href="/company/register" className="primary-button">
-              Skapa Företagsprofil
-            </a>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-      
+
       {/* Completion Confirmation Popup */}
-      <CompletionConfirmationPopup 
-        isOpen={showCompletionPopup} 
+      <CompletionConfirmationPopup
+        isOpen={showCompletionPopup}
         onClose={() => setShowCompletionPopup(false)}
         onAddLiaPosition={handleAddLiaPosition}
       />
 
-
       {/* Add Position Overlay */}
       <AddPositionOverlay
-        isOpen={showAddPostionOverlay} 
+        isOpen={showAddPositionOverlay}
         onClose={() => setShowAddPositionOverlay(false)}
         onAddLiaPosition={handleAddLiaPosition}
       />

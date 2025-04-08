@@ -208,7 +208,7 @@ function BaseInfoForm() {
     <div className="container">
       <form className="contentWrapper" onSubmit={handleSubmit}>
         <header className="contentHeader">
-          <button type="button" className="goBackButton" onClick={handleGoBack}>
+          {/* <button type="button" className="goBackButton" onClick={handleGoBack}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -224,7 +224,7 @@ function BaseInfoForm() {
               />
             </svg>
             Gå tillbaka
-          </button>
+          </button> */}
           <h2 className="title">Skapa företagsprofil</h2>
           <ProgressIndicator currentStep="baseInfo" />
         </header>
