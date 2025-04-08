@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/app/components/cards/PositionsBanner.module.css";
 import { supabase } from "@/utils/supabase/client";
 import { Button } from "../button/Button";
@@ -10,8 +10,8 @@ import Link from "next/link";
 import LoginPopup from "../form/LoginPopup";
 
 export const PositionsBanner = () => {
-    const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
-    const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [companiesData, setCompaniesData] = useState([]);
   const [fetchData, setFetchData] = useState(true);
 
@@ -20,16 +20,14 @@ export const PositionsBanner = () => {
     setShowLoginPopup(false);
   };
 
-    
   const handleShowLogin = () => {
     setShowRegistrationPopup(false);
     setShowLoginPopup(true);
   };
+
   async function fetchCompanies() {
     try {
       const { data, error } = await supabase.from("companies").select();
-
-      console.log(data);
 
       if (error) throw new Error();
 
@@ -42,10 +40,12 @@ export const PositionsBanner = () => {
       console.error(e);
     }
   }
-  if (fetchData) {
-    fetchCompanies();
-  }
-  console.log({ companiesData });
+
+  useEffect(() => {
+    if (fetchData) {
+      fetchCompanies();
+    }
+  }, [fetchData]);
 
   return (
     <section className={styles.positionsBanner}>
@@ -54,22 +54,28 @@ export const PositionsBanner = () => {
       <div className={styles.rollingBannerContent}>
         <div className={styles.rollingBannerImageWrapper}>
           {companiesData.map((company) => (
-            <img key={company.id} src={company.logo_url} />
+            <img
+              key={`first-${company.id}`}
+              src={company.logo_url}
+              alt={company.name || "Company logo"}
+            />
           ))}
           {companiesData.map((company) => (
-            <img key={company.id} src={company.logo_url} />
+            <img
+              key={`second-${company.id}`}
+              src={company.logo_url}
+              alt={company.name || "Company logo"}
+            />
           ))}
         </div>
       </div>
 
-
-          <Button
-              text="Skapa företagsprofil"
+      <Button
+        text="Skapa företagsprofil"
         className="light-button"
         onClick={() => setShowRegistrationPopup(true)}
-      >
-  
-      </Button>
+      />
+
       <Link href="/companies">
         <Button
           className="no-frame"
@@ -91,27 +97,25 @@ export const PositionsBanner = () => {
               />
             </svg>
           }
-        ></Button>
-          </Link>
-          
-                {/* Registration Popup */}
-                {showRegistrationPopup && (
-                  <RegistrationPopup
-                    isOpen={showRegistrationPopup}
-                    onClose={() => setShowRegistrationPopup(false)}
-                    onShowLogin={handleShowLogin}
-                  />
-          )}
-          
-                {showLoginPopup && (
-                  <LoginPopup
-                    isOpen={showLoginPopup}
-                    onClose={() => setShowLoginPopup(false)}
-                    onShowRegistration={handleShowRegistration}
-                  />
-                )}
-      </section>
-      
-      
+        />
+      </Link>
+
+      {/* Registration Popup */}
+      {showRegistrationPopup && (
+        <RegistrationPopup
+          isOpen={showRegistrationPopup}
+          onClose={() => setShowRegistrationPopup(false)}
+          onShowLogin={handleShowLogin}
+        />
+      )}
+
+      {showLoginPopup && (
+        <LoginPopup
+          isOpen={showLoginPopup}
+          onClose={() => setShowLoginPopup(false)}
+          onShowRegistration={handleShowRegistration}
+        />
+      )}
+    </section>
   );
 };

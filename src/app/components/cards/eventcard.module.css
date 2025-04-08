@@ -14,8 +14,8 @@
 .mainInformation {
   /* Layout mobile */
   display: flex;
-  padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem) var(--spacing-0, 0rem)
-    var(--spacing-4, 1rem);
+  /* padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem) var(--spacing-0, 0rem)
+    var(--spacing-4, 1rem); */
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-6, 1.5rem);
@@ -27,14 +27,14 @@
     padding-right: var(--spacing-12, 3rem);
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--spacing-6, 1.5rem);
     flex: 1 0 0;
   }
 }
 
-.mainDesktop {
-  @media screen and (min-width: 1024px) {
+@media (min-width: 1024px) {
+  .mainWrapper {
     display: flex;
     max-width: 80rem;
     padding: var(--spacing-16, 4rem) var(--spacing-12, 3rem)
@@ -44,12 +44,110 @@
     gap: var(--spacing-6, 1.5rem);
     align-self: stretch;
   }
+
+  .mainInformation h3 {
+    color: var(--base-foreground, #0f1314);
+    font-feature-settings: "liga" off, "clig" off;
+
+    /* heading-2/leading-normal/medium */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-3x-large-font-size, 2.44125rem);
+    font-style: normal;
+    font-weight: var(--font-weight-medium, 500);
+    line-height: 120%; /* 2.9295rem */
+    letter-spacing: -0.025rem;
+  }
+
+  .mainInformation p {
+    color: var(--base-accent-foreground, #0f1314);
+    font-feature-settings: "liga" off, "clig" off;
+
+    /* body/leading-normal/medium */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-base-font-size, 1rem);
+    font-style: normal;
+    font-weight: var(--font-weight-medium, 500);
+    line-height: 150%; /* 1.5rem */
+    letter-spacing: 0.0125rem;
+  }
+
+  .eventWrapper {
+    display: flex;
+    padding: var(--spacing-8, 2rem) var(--spacing-12, 3rem);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-6, 1.5rem);
+    align-self: stretch;
+  }
+
+  .formWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    align-self: stretch;
+  }
+
+  .inputSingle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2, 0.5rem);
+    align-self: stretch;
+  }
+
+  .inputSingle label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 0.5rem);
+    flex: 1 0 0;
+  }
+
+  .inputSingle input {
+    display: flex;
+    height: var(--height-h-11, 2.75rem);
+    padding: var(--spacing-1, 0.25rem) var(--spacing-3, 0.75rem);
+    align-items: center;
+    gap: var(--spacing-1, 0.25rem);
+    align-self: stretch;
+    border-radius: var(--border-radius-lg, 0.625rem);
+    border: 1px solid var(--base-foreground, #0f1314);
+    background: var(--base-background, #fff);
+    overflow: hidden;
+    color: var(--base-input, #bfbfbf);
+    font-feature-settings: "liga" off, "clig" off;
+    text-overflow: ellipsis;
+
+    /* body/leading-none/regular */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-base-font-size, 1rem);
+    font-style: normal;
+    font-weight: var(--font-weight-normal, 400);
+    line-height: 100%; /* 1rem */
+    letter-spacing: 0.0125rem;
+  }
 }
+
+.asterix {
+  color: var(--base-destructive-foreground, #b40509);
+}
+
+/* .mainDesktop {
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    max-width: 80rem;
+    padding: var(--spacing-16, 4rem) var(--spacing-12, 3rem) var(--spacing-24, 6rem) var(--spacing-12, 3rem);
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--spacing-6, 1.5rem);
+    align-self: stretch;
+    width: 100%;
+  }
+} */
 
 .eventForm {
   /* Layout mobile */
   display: flex;
-  padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-6, 1.5rem);
@@ -59,17 +157,94 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-6, 1.5rem);
+    gap: var(--spacing-8, 2rem);
     flex: 1 0 0;
   }
 }
+.eventWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+}
 
+@media (max-width: 1024px){
+  .mainWrapper {
+    display: flex;
+    padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-6, 1.5rem);
+    align-self: stretch;
+  }
+
+}
+
+
+.mainInformation p {
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+}
+
+.inputSingle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2, 0.5rem);
+  align-self: stretch;
+}
+
+
+
+.eventForm {
+  display: flex;
+  width: 22.375rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-8, 2rem);
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  align-self: stretch;
+}
+
+.eventForm input {
+  display: flex;
+  height: var(--height-h-11, 2.75rem);
+  padding: var(--spacing-1, 0.25rem) var(--spacing-3, 0.75rem);
+  align-items: center;
+  gap: var(--spacing-1, 0.25rem);
+  align-self: stretch;
+  border-radius: var(--border-radius-lg, 0.625rem);
+  border: 1px solid var(--base-foreground, #0f1314);
+  background: var(--base-background, #fff);
+  overflow: hidden;
+color: var(--base-input, #BFBFBF);
+font-feature-settings: 'liga' off, 'clig' off;
+text-overflow: ellipsis;
+
+/* body/leading-none/regular */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 1rem);
+font-style: normal;
+font-weight: var(--font-weight-normal, 400);
+line-height: 100%; /* 1rem */
+letter-spacing: 0.0125rem;
+}
 .eventForm label {
   /* Layout mobile */
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  align-self: stretch;
 
   /* Typography */
 
@@ -83,21 +258,6 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: 100%; /* 1rem */
   letter-spacing: 0.0125rem;
-}
-
-.eventForm input {
-  /* Layout mobile */
-  display: flex;
-  height: var(--height-h-11, 2.75rem);
-  padding: var(--spacing-1, 0.25rem) var(--spacing-3, 0.75rem);
-  align-items: center;
-  gap: var(--spacing-1, 0.25rem);
-  align-self: stretch;
-
-  /* Style */
-  border-radius: var(--border-radius-lg, 0.625rem);
-  border: 1px solid var(--base-foreground, #0f1314);
-  background: var(--base-background, #fff);
 }
 
 .checkbox {
@@ -118,3 +278,5 @@
   flex-direction: row;
   gap: 1rem;
 }
+
+
