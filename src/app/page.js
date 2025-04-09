@@ -12,8 +12,10 @@ import EditProfileOverlay from "./components/profile/EditProfileOverlay";
 import { Button } from "./components/button/Button";
 import { useRouter } from "next/navigation";
 import { CardCompany } from "./components/cards/CompanyCard";
+import { useRef } from "react";
 
 export default function Home() {
+  const landingRef = useRef(null);
   const router = useRouter();
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
@@ -52,10 +54,20 @@ export default function Home() {
     router.push("/event");
   }
 
+  function goToCompanyPage() {
+    router.push("/companies");
+  }
+
+  const scrollToLanding = () => {
+    landingRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section className={styles.page}>
       <section className={styles.landingPageHero}>
+        <div className={styles.spacer}></div>
         <div className={styles.heroContentWrapper}>
+          <div className={styles.header}>
           <div className={styles.ellipseMobile}></div>
           <div className={styles.ellipseDesktop}></div>
           <img src="/images/yrgo-logo-mobile.svg" className={styles.yrgoLogo} />
@@ -63,23 +75,31 @@ export default function Home() {
           <div className={styles.subheadingMobile}>
             <p>23 april • 13:00–15:00</p>
             <p>Visual Arena, Göteborg</p>
+            </div>
+            </div>
+          <div className={styles.footer}>
+            <p>
+              Välkommen till en avslappnad mingelstund med Yrgos digital
+              designers och webbutvecklare. Upptäck din nästa kollega i en
+              lättsam och personlig miljö.
+            </p>
+            <Button
+              text="Anmäl dig nu"
+              className={styles.eventButton}
+              onClick={goToEvent}
+            />
           </div>
-          <p>
-            Välkommen till en avslappnad mingelstund med Yrgos digital designers
-            och webbutvecklare. Upptäck din nästa kollega i en lättsam och
-            personlig miljö.
-          </p>
-          <Button
-            text="Anmäl dig nu"
-            className={styles.eventButton}
-            onClick={goToEvent}
-          />
         </div>
         <div className={styles.busyContentWrapper}>
-          Upptagen 23 april? <Button text="Scrolla ner" />
+          Upptagen 23 april?{" "}
+          <Button
+            className={styles.scrollButton}
+            onClick={scrollToLanding}
+            text="Scrolla ner"
+          />
         </div>
       </section>
-      <section className={styles.mainContentWrapper}>
+      <section className={styles.mainContentWrapper} ref={landingRef}>
         <div className={styles.ctaText}>
           <h3>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h3>
           <p>
@@ -95,39 +115,47 @@ export default function Home() {
         </div>
         <div className={styles.companyList}>
           <CardCompany
-                logoUrl=' /images/grebban.svg'
-                applyNowClassName="card-company-2"
-                className="card-company-instance"
-                company="Grebban"
-                headerClassName="design-component-instance-node"
-                location="Göteborg"
-                statusProperty="internship-matching"
-                id='/'
-                showApply={true}
-                showLogotype={true}></CardCompany>
+            logoUrl=" /images/grebban.svg"
+            applyNowClassName="card-company-2"
+            className="card-company-instance"
+            company="Grebban"
+            headerClassName="design-component-instance-node"
+            location="Göteborg"
+            statusProperty="internship-matching"
+            id="/"
+            showApply={true}
+            showLogotype={true}
+          ></CardCompany>
           <CardCompany
-                logoUrl=' /images/hiq.svg'
-                applyNowClassName="card-company-2"
-                className="card-company-instance"
-                company="HiQ"
-                headerClassName="design-component-instance-node"
-                location="Göteborg"
-                statusProperty="internship-matching"
-                id='/'
-                showApply={true}
-                showLogotype={true}></CardCompany>
+            logoUrl=" /images/hiq.svg"
+            applyNowClassName="card-company-2"
+            className="card-company-instance"
+            company="HiQ"
+            headerClassName="design-component-instance-node"
+            location="Göteborg"
+            statusProperty="internship-matching"
+            id="/"
+            showApply={true}
+            showLogotype={true}
+          ></CardCompany>
           <CardCompany
-                logoUrl=' /images/simmalugnt.svg'
-                applyNowClassName="card-company-2"
-                className="card-company-instance"
-                company="Simma Lugnt"
-                headerClassName="design-component-instance-node"
-                location="Göteborg"
-                statusProperty="internship-matching"
-                id='/'
-                showApply={true}
-                showLogotype={true}></CardCompany>
-          <Button className="no-frame" text="Till företagslistan"  style={{ textDecoration: 'underline' }}></Button>
+            logoUrl=" /images/simmalugnt.svg"
+            applyNowClassName="card-company-2"
+            className="card-company-instance"
+            company="Simma Lugnt"
+            headerClassName="design-component-instance-node"
+            location="Göteborg"
+            statusProperty="internship-matching"
+            id="/"
+            showApply={true}
+            showLogotype={true}
+          ></CardCompany>
+          <Button
+            className="no-frame"
+            text="Till företagslistan"
+            style={{ textDecoration: "underline" }}
+            onClick={goToCompanyPage}
+          ></Button>
         </div>
       </section>
 

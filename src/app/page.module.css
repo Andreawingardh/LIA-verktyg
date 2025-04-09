@@ -163,19 +163,14 @@ a.secondary {
   max-width: 24.375rem;
   height: 52rem;
   max-width: 80rem;
-  padding: var(--spacing-3, 0.75rem) var(--spacing-4, 1rem);
+  /* padding: var(--spacing-3, 0.75rem) var(--spacing-4, 1rem); */
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
   @media screen and (min-width: 460px) {
-    display: flex;
-    height: 80vh;
-    max-width: 80rem;
-    padding: var(--spacing-3, 0.75rem) var(--spacing-12, 3rem);
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    /* padding: var(--spacing-3, 0.75rem) var(--spacing-12, 2rem); */
+    gap: var(--spacing-8, 2rem);
   }
 }
 
@@ -257,7 +252,7 @@ a.secondary {
   height: 1.5rem;
   flex-shrink: 0;
 
-  @media screen and (min-width: 960px) {
+  @media screen and (min-width: 460px) {
     display: flex;
     width: 12.25rem;
     height: 3rem;
@@ -271,11 +266,16 @@ a.secondary {
   color: var(--base-secondary, #001a52);
   text-align: center;
   font-family: Unna;
-  font-size: 4.5rem;
+  font-size: clamp(1.802rem, 1.3855rem + 2.0829vw, 3.0518rem);
   font-style: italic;
   font-weight: 700;
   line-height: 130%; /* 5.85rem */
   letter-spacing: -0.09rem;
+  width: 100%;
+
+  @media screen and (min-width: 460px) {
+    font-size: 9.875rem;
+  }
 }
 
 .subheadingMobile {
@@ -283,7 +283,7 @@ a.secondary {
   align-self: stretch;
 
   color: var(--base-secondary, #001a52);
-  text-align: center;
+
   font-feature-settings: "liga" off, "clig" off;
 
   /* large/leading-normal/medium */
@@ -299,6 +299,23 @@ a.secondary {
     gap: 2rem;
     margin: 0 auto;
   }
+}
+
+.subheadingMobile p {
+  text-align: center;
+  width: 100%;
+}
+
+.scrollButton {
+  display: flex;
+  height: var(--height-h-11, 2.75rem);
+  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 0.5rem);
+  border-radius: var(--border-radius-full, 624.9375rem);
+  background: var(--colors-base-transparent, rgba(255, 255, 255, 0));
+  border: none;
 }
 
 .eventButton {
@@ -328,6 +345,16 @@ a.secondary {
   align-items: flex-start;
   gap: var(--spacing-8, 2rem);
   align-self: stretch;
+
+  /* Desktop */
+  @media screen and (min-width: 460px) {
+    display: flex;
+    padding: var(--spacing-12, 3rem);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-8, 2rem);
+    flex: 1 0 0;
+  }
 }
 
 .mainContentWrapper {
@@ -338,6 +365,16 @@ a.secondary {
   align-items: center;
   gap: var(--spacing-12, 3rem);
   align-self: stretch;
+
+  /* Desktop */
+  @media screen and (min-width: 460px) {
+    flex-direction: row;
+    padding: var(--spacing-24, 6rem) var(--spacing-12, 3rem);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-12, 3rem);
+    align-self: stretch;
+  }
 }
 
 .createProfileButton {
@@ -368,10 +405,57 @@ a.secondary {
   align-items: flex-end;
   gap: var(--spacing-4, 1rem);
   align-self: stretch;
+
+  /* Desktop */
+
+  @media screen and (min-width: 460px) {
+    display: flex;
+    padding: 0rem var(--spacing-12, 3rem);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: var(--spacing-4, 1rem);
+    flex: 1 0 0;
+  }
 }
 
 .heroContentWrapper p {
   text-wrap: balance;
   margin: auto 0;
-  width:fit-content;
+  text-align: center;
+
+  /* Desktop */
+  @media screen and (min-width: 460px) {
+    display: flex;
+    max-width: 48.875rem;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-8, 2rem);
+  }
+}
+
+.spacer {
+  width: 0.0625rem;
+  height: var(--width-w-4, 1rem);
+  flex-shrink: 0;
+}
+
+.footer {
+  display: flex;
+
+  max-width: 28.75rem;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-10, 2.5rem);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4, 1rem);
+}
+
+.ctaText h3 {
+  color: #0f1314;
 }
