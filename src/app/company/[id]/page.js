@@ -2,7 +2,7 @@
 import { supabase } from "@/utils/supabase/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import PublicDashboardPage from '@/components/publicdashboard/PublicDashboardPage';
+import PublicDashboardPage from '@/app/components/publicdashboard/PublicDashboardPage';
 
 export default function CompanyDetailPage() {
   const [companyData, setCompanyData] = useState(null);
