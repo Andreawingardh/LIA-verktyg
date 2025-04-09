@@ -7,7 +7,7 @@ import { Button } from "../button/Button";
 import "@/app/globals.css";
 import styles from "@/app/components/cards/eventcard.module.css";
 import { supabase } from "@/utils/supabase/client";
-import "@/app/components/button/button.css";
+import  "@/app/components/button/button.css";
 import {
   EmailShareButton,
   FacebookMessengerShareButton,
@@ -146,7 +146,7 @@ export const EventCard = ({ IsSubmitted }) => {
                 </div>
                 </section>
               <div className={styles.confirmButton}>
-                <Button className="button" text="Jag vill gå på eventet!" />
+                <Button className="buttonEvent" text="Jag vill gå på eventet!" />
                 </div>
               {!submitStatus.success && <div> {submitStatus.message}</div>}
             </form>
