@@ -21,43 +21,54 @@ export default function Companies() {
   const [skillsData, setSkillsData] = useState([]);
   const [selectedTable, setSelectedTable] = useState([]);
   const [selectedSkills, setSkills] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [skillsExpanded, setSkillsExpanded] = useState(false);
   const [softwareExpanded, setSoftwareExpanded] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data, error } = await supabase.from("companies").select("*");
-
-        if (error) {
-          setError(error);
-          return;
-        }
-
-        setCompaniesData(data || []);
-      } catch (e) {
-        setError(e);
-        console.error(e);
-      }
-    }
-
     fetchData();
-  }, []); // Empty dependency array means this runs once on component mount
+  }, []);
+
+  async function fetchData() {
+    try {
+      const { data, error } = await supabase.from("companies").select("*");
+
+      if (error) {
+        setError(error);
+        return;
+      }
+
+      setCompaniesData(data || []);
+    } catch (e) {
+      setError(e);
+      console.error(e);
+    }
+  }
 
   /*These functions handle search and filtering */
   async function handleSearch(e) {
+    setLoading(true)
     e.preventDefault();
-    const searchValues = e.target.elements[0].value;
+    const searchValues = e.target.elements[0].value.trim();
     const { data, error } = await supabase
       .from("companies")
       .select()
       .textSearch("name", searchValues);
     console.log(data);
     setCompaniesData(data);
+    setLoading(false)
+
   }
+
+  const handleSearchInputChange = async (e) => {
+    // If the input is empty, fetch all companies
+    if (!e.target.value.trim()) {
+      fetchData();
+    }
+
+  };
 
   async function handleTitleChange(e) {
     e.preventDefault();
@@ -145,9 +156,6 @@ export default function Companies() {
     setIsVisible((prev) => !prev);
   };
 
-  const handleRefresh = () => {
-    router.refresh(); // Only works in App Router (app/)
-  };
 
   const cancelFilter = () => {
     setSkills([]);
@@ -175,7 +183,7 @@ export default function Companies() {
           <h1>Hitta din nya LIA-plats</h1>
           <p>Filtrera och hitta matchande LIA-platser från anslutna företag.</p>
           <form className="input-wrapper" onSubmit={handleSearch}>
-            <input placeholder="Sök efter företag" name="input-search" />
+            <input placeholder="Sök efter företag" name="input-search" onChange={handleSearchInputChange}/>
             <Button
               text="Sök"
               className="primary-button"
@@ -425,7 +433,8 @@ export default function Companies() {
 
         {/* LIST OF COMPANIES */}
         <section className="companies-list">
-          <h1>Företag med matchande positioner</h1>
+        {filteredCompanies.length > 0 && <h1>Företag med matchande positioner</h1>}
+         
           {filteredCompanies.map((company) => (
             <div key={company.id} className="card-company matching">
               <CardCompany
@@ -453,7 +462,8 @@ export default function Companies() {
             </Link> */}
             </div>
           ))}
-          <h2>Alla företag</h2>
+          {companiesData && <h2>Alla företag</h2>}
+          {loading && <div>Loading...</div>}
           {companiesData.map((company) => (
             <div key={company.id}>
               <CardCompany
