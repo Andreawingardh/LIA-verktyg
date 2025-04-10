@@ -11,6 +11,7 @@ import { Button } from "../components/button/Button";
 import "@/app/components/form/popup.css";
 import "@/app/components/button/button.css";
 import "@/app/components/form/popup.css";
+import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfileBanner";
 
 export default function Companies() {
   const router = useRouter();
@@ -488,6 +489,7 @@ export default function Companies() {
           ))}
         </section>
       </section>
+      <CreateCompanyProfileBanner />
     </>
   );
 }
