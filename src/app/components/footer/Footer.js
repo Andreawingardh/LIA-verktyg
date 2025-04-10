@@ -54,8 +54,6 @@ const Footer = () => {
 
   return (
     <footer className={styles.footer} role="contentinfo">
-     
-
       {/* Registration Popup */}
       {showRegistrationPopup && (
         <RegistrationPopup
@@ -379,16 +377,16 @@ const Footer = () => {
                     Navigera sidan
                   </h2>
                   <li>
-                    <a href="/contact">Kontakt</a>
+                    <Link href="/contact">Kontakt</Link>
                   </li>
                   <li>
-                    <a href="/event">Mingelevent</a>
+                    <Link href="/event">Mingelevent</Link>
                   </li>
                   <li>
-                    <a href="/companies">Företagssidan</a>
+                    <Link href="/companies">Företagssidan</Link>
                   </li>
                   <li>
-                    <a href="/privacy-policy">Sekretesspolicy</a>
+                    <Link href="/privacy-policy">Sekretesspolicy</Link>
                   </li>
                 </ul>
               </nav>
