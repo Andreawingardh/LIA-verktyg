@@ -1,11 +1,28 @@
 import styles from "@/app/components/footer/Footer.module.css";
 import { useSupabaseAuth } from "@/hook/useSupabaseAuth";
+import LoginPopup from "../form/LoginPopup";
+import RegistrationPopup from "../form/RegistrationPopup";
+import { useState } from "react";
 
 export default function CreateCompanyProfileBanner() {
   const { user, loading, logout } = useSupabaseAuth();
 
+  const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+  const handleShowLogin = () => {
+    setShowRegistrationPopup(false);
+    setShowLoginPopup(true);
+  };
+
+  const handleShowRegistration = () => {
+    setShowRegistrationPopup(true);
+    setShowLoginPopup(false);
+  };
+
   return (
     <>
+    
       {!user && (
         <section className={styles.ctaSection} aria-labelledby="cta-heading">
           <div className={styles.container}>
@@ -26,6 +43,24 @@ export default function CreateCompanyProfileBanner() {
             </div>
           </div>
         </section>
+          )}
+          
+            {/* Registration Popup */}
+      {showRegistrationPopup && (
+        <RegistrationPopup
+          isOpen={showRegistrationPopup}
+          onClose={() => setShowRegistrationPopup(false)}
+          onShowLogin={handleShowLogin}
+        />
+      )}
+
+      {/* Login Popup */}
+      {showLoginPopup && (
+        <LoginPopup
+          isOpen={showLoginPopup}
+          onClose={() => setShowLoginPopup(false)}
+          onShowRegistration={handleShowRegistration}
+        />
       )}
     </>
   );
