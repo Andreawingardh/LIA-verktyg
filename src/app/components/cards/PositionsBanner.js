@@ -70,6 +70,7 @@ export const PositionsBanner = () => {
         </div>
       </div>
 
+
       <Button
         text="Skapa företagsprofil"
         className="light-button"

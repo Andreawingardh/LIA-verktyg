@@ -163,39 +163,29 @@ a.secondary {
   max-width: 24.375rem;
   height: 52rem;
   max-width: 80rem;
-  padding: var(--spacing-3, 0.75rem) var(--spacing-4, 1rem);
+  /* padding: var(--spacing-3, 0.75rem) var(--spacing-4, 1rem); */
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
   @media screen and (min-width: 460px) {
-    display: flex;
-    height: 80vh;
-    max-width: 80rem;
-    padding: var(--spacing-3, 0.75rem) var(--spacing-12, 3rem);
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    /* padding: var(--spacing-3, 0.75rem) var(--spacing-12, 2rem); */
+    gap: var(--spacing-8, 2rem);
+    
   }
 }
 
 .ellipseMobile {
   position: absolute;
-  left: -6.3125rem;
-  top: -4.5rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   overflow: hidden;
   z-index: -1;
-
-  /* Style mobile */
   width: 35rem;
   height: 35rem;
-  aspect-ratio: 1/1;
-
-  /* Layout mobile */
   border-radius: 35rem;
   background: var(--base-background, #fff);
-
-  /* shadow/xl-red */
   box-shadow: 0px 193px 54px 0px rgba(229, 18, 54, 0),
     0px 123px 49px 0px rgba(229, 18, 54, 0.03),
     0px 69px 42px 0px rgba(229, 18, 54, 0.1),
@@ -212,19 +202,15 @@ a.secondary {
 
   @media screen and (min-width: 460px) {
     display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 38.625rem;
     height: 38.625rem;
-    aspect-ratio: 1/1;
     z-index: -1;
-
-    position: absolute;
-    left: 5.125rem;
-    top: -3.71875rem;
-
     border-radius: 38.625rem;
     background: var(--base-background, #fff);
-
-    /* shadow/xl-red */
     box-shadow: 0px 193px 54px 0px rgba(229, 18, 54, 0),
       0px 123px 49px 0px rgba(229, 18, 54, 0.03),
       0px 69px 42px 0px rgba(229, 18, 54, 0.1),
@@ -242,6 +228,9 @@ a.secondary {
   align-self: stretch;
   position: relative;
 
+  padding: 2rem 1rem;
+  margin: 0 auto;
+
   @media screen and (min-width: 960px) {
     display: flex;
     max-width: 48.875rem;
@@ -249,6 +238,7 @@ a.secondary {
     align-items: center;
     gap: var(--spacing-8, 2rem);
     align-self: stretch;
+    padding: 3rem 2rem;
   }
 }
 
@@ -257,7 +247,7 @@ a.secondary {
   height: 1.5rem;
   flex-shrink: 0;
 
-  @media screen and (min-width: 960px) {
+  @media screen and (min-width: 460px) {
     display: flex;
     width: 12.25rem;
     height: 3rem;
@@ -271,11 +261,12 @@ a.secondary {
   color: var(--base-secondary, #001a52);
   text-align: center;
   font-family: Unna;
-  font-size: 4.5rem;
+  font-size: clamp(2.5rem, 12vw, 9.875rem);
   font-style: italic;
   font-weight: 700;
   line-height: 130%; /* 5.85rem */
   letter-spacing: -0.09rem;
+  width: fit-content;
 }
 
 .subheadingMobile {
@@ -283,7 +274,7 @@ a.secondary {
   align-self: stretch;
 
   color: var(--base-secondary, #001a52);
-  text-align: center;
+
   font-feature-settings: "liga" off, "clig" off;
 
   /* large/leading-normal/medium */
@@ -299,6 +290,23 @@ a.secondary {
     gap: 2rem;
     margin: 0 auto;
   }
+}
+
+.subheadingMobile p {
+  text-align: center;
+  width: 100%;
+}
+
+.scrollButton {
+  display: flex;
+  height: var(--height-h-11, 2.75rem);
+  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 0.5rem);
+  border-radius: var(--border-radius-full, 624.9375rem);
+  background: var(--colors-base-transparent, rgba(255, 255, 255, 0));
+  border: none;
 }
 
 .eventButton {
@@ -328,6 +336,16 @@ a.secondary {
   align-items: flex-start;
   gap: var(--spacing-8, 2rem);
   align-self: stretch;
+
+  /* Desktop */
+  @media screen and (min-width: 460px) {
+    display: flex;
+    padding: var(--spacing-12, 3rem);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-8, 2rem);
+    flex: 1 0 0;
+  }
 }
 
 .mainContentWrapper {
@@ -338,6 +356,16 @@ a.secondary {
   align-items: center;
   gap: var(--spacing-12, 3rem);
   align-self: stretch;
+
+  /* Desktop */
+  @media screen and (min-width: 460px) {
+    flex-direction: row;
+    padding: var(--spacing-24, 6rem) var(--spacing-12, 3rem);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-12, 3rem);
+    align-self: stretch;
+  }
 }
 
 .createProfileButton {
@@ -365,13 +393,66 @@ a.secondary {
   padding: 0rem var(--spacing-0, 0rem);
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   gap: var(--spacing-4, 1rem);
   align-self: stretch;
+
+  /* Desktop */
+
+  @media screen and (min-width: 460px) {
+    display: flex;
+    padding: 0rem var(--spacing-12, 3rem);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: var(--spacing-4, 1rem);
+    flex: 1 0 0;
+  }
+}
+
+.companyList button {
+  align-self: flex-end;
 }
 
 .heroContentWrapper p {
   text-wrap: balance;
   margin: auto 0;
-  width:fit-content;
+  text-align: center;
+
+
+  /* Desktop */
+  @media screen and (min-width: 460px) {
+    display: flex;
+    max-width: 48.875rem;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-8, 2rem);
+  }
+}
+
+.spacer {
+  width: 0.0625rem;
+  height: var(--width-w-4, 1rem);
+  flex-shrink: 0;
+}
+
+.footer {
+  display: flex;
+
+  max-width: 28.75rem;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-10, 2.5rem);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4, 1rem);
+  width:100%;
+}
+
+.ctaText h3 {
+  color: #0f1314;
 }
