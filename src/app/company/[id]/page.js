@@ -1,9 +1,8 @@
 "use client";
 import { supabase } from "@/utils/supabase/client";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import React from "react";
-import PublicDashboardPage from '../../components/publicdashboard/PublicDashboardPage';
+import PublicDashboardPage from '@/app/components/publicdashboard/PublicDashboardPage';
 
 export default function CompanyDetailPage() {
   const [companyData, setCompanyData] = useState(null);
@@ -12,40 +11,43 @@ export default function CompanyDetailPage() {
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const id = params.id;
-  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
       try {
         setLoading(true);
         
-        const { data: company, error } = await supabase
+        // Fetch company data
+        const { data: company, error: companyError } = await supabase
           .from("companies")
           .select("*")
           .eq("id", id)
           .single();
         
-        if (error) {
-          setError(error);
+        if (companyError) {
+          setError(companyError);
           setLoading(false);
           return;
         }
 
-        // If we successfully got company data, fetch positions
-        const { data: positions, error: listingsError } = await supabase
-          .from("positions")
-          .select('*')
-          .eq("user_id", company.user_id);
-        
-        if (listingsError) {
-          console.error("Error fetching positions:", listingsError);
-        }
-        
         setCompanyData(company);
-        setPositionsData(positions || []);
+        
+        // Fetch positions for this company
+        if (company && company.user_id) {
+          const { data: positions, error: positionsError } = await supabase
+            .from("positions")
+            .select('*')
+            .eq("user_id", company.user_id);
+          
+          if (positionsError) {
+            console.error("Error fetching positions:", positionsError);
+          } else {
+            setPositionsData(positions || []);
+          }
+        }
       } catch (e) {
         setError(e);
-        console.error(e);
+        console.error("Error fetching data:", e);
       } finally {
         setLoading(false);
       }
@@ -65,9 +67,9 @@ export default function CompanyDetailPage() {
   }
 
   return (
-    <PublicDashboardPage 
-      companyData={companyData} 
-      positionsData={positionsData} 
+    <PublicDashboardPage
+      companyData={companyData}
+      positionsData={positionsData}
     />
   );
 }

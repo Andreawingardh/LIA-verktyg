@@ -10,6 +10,8 @@ import styles from "./dashboard.module.css";
 import AddPositionButton from "../components/profile/addPositionButton";
 import AddPositionOverlay from "../components/profile/addPositionOverlay";
 import PositionCard from "../components/cards/PositionCard";
+import {PositionsBanner} from "../components/cards/PositionsBanner";
+import Link from "next/link";
 
 const formatWebsiteForDisplay = (url) => {
   if (!url) return "www.acmeagency.com";
@@ -190,13 +192,15 @@ export default function DashboardPage() {
           ) : (
             <div className={styles["no-profile"]}>
               <p>Du har inte skapat någon företagsprofil ännu.</p>
-              <a href="/company/register" className="primary-button">
+              <Link href="/company/register" className="primary-button">
                 Skapa Företagsprofil
-              </a>
+              </Link>
             </div>
           )}
         </div>
       </div>
+
+      {/* <PositionsBanner /> */}
 
       {/* Completion Confirmation Popup */}
       <CompletionConfirmationPopup
