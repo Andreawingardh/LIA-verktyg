@@ -64,6 +64,7 @@ export default function CreatePositionForm({ user, onClose }) {
         if (typeof onClose === "function") {
           onClose();
         }
+        window.location.reload();
       }, 0);
     } catch (error) {
       console.error("Error inserting data:", error);

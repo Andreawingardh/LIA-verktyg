@@ -31,18 +31,12 @@ export default function Companies() {
     async function fetchData() {
       try {
         const { data, error } = await supabase.from("companies").select("*");
-        // const { data: webbutvecklareSkills, error: webbutvecklareError } =
-        //   await supabase.from("skills_webbutvecklare").select();
-        // const { data: digitaldesignerSkills, error: digitaldesignerError } =
-        //   await supabase.from("skills_digitaldesigner").select();
+
         if (error) {
           setError(error);
           return;
         }
-        // setSkillsData({
-        //   webbutvecklare: webbutvecklareSkills,
-        //   digitaldesigner: digitaldesignerSkills,
-        // });
+
         setCompaniesData(data || []);
       } catch (e) {
         setError(e);
@@ -139,18 +133,7 @@ export default function Companies() {
       console.log({ matchingcompanies: matchingCompanies });
       if (companiesError) {
         console.error("Error fetching companies:", companiesError);
-        // } else {
-        //   // Combine positions with their corresponding companies
-        //   const combinedData = positions.flatMap(position =>
-        //     position.positions.map(pos => {
-        //       const company = companies.find(company => company.user_id === pos.user_id);
-        //       return {
-        //         ...pos,
-        //         company: company ? company : null, // Attach company data to position
-        //       };
-        //     }
-        // )
-        //   );
+
       }
       setFilteredCompanies(matchingCompanies);
       console.log(filteredCompanies);
