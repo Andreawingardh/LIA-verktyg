@@ -287,7 +287,7 @@ export default function Header({ metadata }) {
               <ul className={styles.mobileNavList}>
                 <li className={styles.mobileNavItem}>
                   <Link
-                    href="/"
+                    href="/event"
                     className={styles.mobileNavLink}
                     onClick={() => setIsMenuOpen(false)}
                   >

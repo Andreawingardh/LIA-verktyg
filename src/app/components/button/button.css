@@ -21,6 +21,7 @@
   letter-spacing: 0.2px;
   border: none;
   cursor: pointer;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .light-button {
@@ -36,6 +37,7 @@
   background: var(--base-background, #fff);
   width: fit-content;
   cursor: pointer;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .buttonEvent:hover {
@@ -72,4 +74,10 @@
   line-height: 150%; /* 1.5rem */
   letter-spacing: 0.0125rem;
   cursor: pointer;
+  padding: var(--spacing-2, 0.5rem) 0rem;
+  transition: background-color .3s, color .3s, border-color .3s;
+}
+
+.no-frame:hover {
+  background: var(--base-accent, #e6e6e6);
 }

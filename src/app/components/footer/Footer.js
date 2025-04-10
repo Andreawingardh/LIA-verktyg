@@ -397,16 +397,16 @@ const Footer = () => {
                     Navigera sidan
                   </h2>
                   <li>
-                    <a href="/kontakt">Kontakt</a>
+                    <a href="/contact">Kontakt</a>
                   </li>
                   <li>
-                    <a href="/mingelevent">Mingelevent</a>
+                    <a href="/event">Mingelevent</a>
                   </li>
                   <li>
-                    <a href="/foretagssidan">Företagssidan</a>
+                    <a href="/dashboard">Företagssidan</a>
                   </li>
                   <li>
-                    <a href="/sekretess">Sekretesspolicy</a>
+                    <a href="/privacy-policy">Sekretesspolicy</a>
                   </li>
                 </ul>
               </nav>
