@@ -6,7 +6,8 @@
   gap: 12px;
   padding: 12px;
   position: relative;
-  width: 358px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .card-company .content {
@@ -90,7 +91,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-self: stretch;
+  width: 100%;
 }
 
 .card-company .div-wrapper {
@@ -98,7 +99,8 @@
   display: flex;
   gap: 12px;
   position: relative;
-  width: 289px;
+  width: auto;
+  flex: 1;
 }
 
 .card-company .div {
@@ -116,7 +118,7 @@
   overflow: hidden;
   position: relative;
   text-overflow: ellipsis;
-  width: 289px;
+  width: auto;
 }
 
 .card-company .apply-now {
@@ -125,8 +127,41 @@
   flex: 0 0 auto;
   gap: 8px;
   justify-content: center;
-  margin-left: -80px;
   position: relative;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.text > div {
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+ 
+  .card-company .text {
+    width: 100%;
+    flex: 1;
+  }
+
+  .card-company .frame {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  .card-company .apply-now {
+    position: relative;
+    right: 0;
+    justify-self: flex-end;
+  }
+
+
+  .card-company .div-wrapper,
+  .card-company .div {
+    width: auto;
+    max-width: 70%;
+  }
 }
 
 .card-company .rectangle {
@@ -172,6 +207,11 @@
 
 .card-company.internship-matching .content {
   border-radius: 12px;
+}
+
+.card-link {
+  display: block;
+  width: 100%;
 }
 
 /* .card-company.matching {

@@ -49,7 +49,7 @@ export default function Companies() {
 
   /*These functions handle search and filtering */
   async function handleSearch(e) {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     const searchValues = e.target.elements[0].value.trim();
     const { data, error } = await supabase
@@ -58,8 +58,7 @@ export default function Companies() {
       .textSearch("name", searchValues);
     console.log(data);
     setCompaniesData(data);
-    setLoading(false)
-
+    setLoading(false);
   }
 
   const handleSearchInputChange = async (e) => {
@@ -67,7 +66,6 @@ export default function Companies() {
     if (!e.target.value.trim()) {
       fetchData();
     }
-
   };
 
   async function handleTitleChange(e) {
@@ -156,7 +154,6 @@ export default function Companies() {
     setIsVisible((prev) => !prev);
   };
 
-
   const cancelFilter = () => {
     setSkills([]);
 
@@ -175,15 +172,23 @@ export default function Companies() {
 
   return (
     <>
+      
       <div className="cover-wrapper">
-        <img />
+        <div className="image-wrapper">
+          <img />
+        </div>
       </div>
+      <div className="main-wrapper">
       <section className="content-wrapper">
         <section className="search-bar-and-filter-wrapper">
-          <h1>Hitta din nya LIA-plats</h1>
+          <h4>Hitta din nya LIA-plats</h4>
           <p>Filtrera och hitta matchande LIA-platser från anslutna företag.</p>
           <form className="input-wrapper" onSubmit={handleSearch}>
-            <input placeholder="Sök efter företag" name="input-search" onChange={handleSearchInputChange}/>
+            <input
+              placeholder="Sök efter företag"
+              name="input-search"
+              onChange={handleSearchInputChange}
+            />
             <Button
               text="Sök"
               className="primary-button"
@@ -433,8 +438,10 @@ export default function Companies() {
 
         {/* LIST OF COMPANIES */}
         <section className="companies-list">
-        {filteredCompanies.length > 0 && <h1>Företag med matchande positioner</h1>}
-         
+          {filteredCompanies.length > 0 && (
+            <h1>Företag med matchande positioner</h1>
+          )}
+
           {filteredCompanies.map((company) => (
             <div key={company.id} className="card-company matching">
               <CardCompany
@@ -486,7 +493,8 @@ export default function Companies() {
             </div>
           ))}
         </section>
-      </section>
+        </section>
+        </div>
       <CreateCompanyProfileBanner />
     </>
   );

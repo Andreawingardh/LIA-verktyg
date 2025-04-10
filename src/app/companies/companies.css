@@ -1,5 +1,29 @@
-.content-wrapper {
+.main-wrapper {
+  display: flex;
+  padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.cover-wrapper {
   /* Layout mobile */
+  display: flex;
+  padding: var(--spacing-8, 2rem) 0rem;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+
+  @media screen and (min-width: 1024px) {
+    /* padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+    flex-direction: row; */
+  }
+}
+
+.content-wrapper {
   display: flex;
   max-width: 80rem;
   padding: 0rem var(--spacing-4, 1rem);
@@ -7,16 +31,53 @@
   align-items: flex-start;
   gap: var(--spacing-6, 1.5rem);
   flex: 1 0 0;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  max-width: 80rem;
 
   @media screen and (min-width: 1024px) {
-    padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
-    justify-content: center;
+    display: flex;
+    max-width: 80rem;
+    padding: 0rem var(--spacing-12, 3rem);
     align-items: flex-start;
-    align-self: stretch;
+    gap: var(--spacing-6, 1.5rem);
+    flex: 1 0 0;
     flex-direction: row;
   }
+}
+
+.image-wrapper {
+  display: flex;
+  max-width: 80rem;
+  padding: 0rem var(--spacing-4, 1rem);
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.card-company {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* Style for the company info section (left side) */
+.card-company-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+/* Style for the apply button container (right side) */
+.card-company-2 {
+  margin-left: auto; /* Push to the right */
+}
+
+/* If you're using a specific button class */
+.apply-button {
+  white-space: nowrap;
 }
 
 .filter-settings-wrapper {
@@ -48,8 +109,25 @@
   align-items: center;
   gap: var(--spacing-4, 1rem);
   align-self: stretch;
+  width: 100%;
+
+  @media screen and (min-width: 1024px) {
+    flex: 1 0 0;
+    align-items: stretch;
+    width: 100%;
+  }
   /* Style */
 }
+
+.companies-list > div {
+  width: 100%;
+}
+
+.card-company-instance {
+  width: 100%;
+}
+
+
 
 .tags-container {
   /* Layout mobile */
@@ -64,11 +142,8 @@
 
 .input-wrapper {
   display: flex;
-  flex-direction: row;
-  align-items: space-between;
-  gap: var(--spacing-2, 0.5rem);
-  flex: 1 0 0;
-  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
   align-self: stretch;
 }
 
@@ -90,7 +165,7 @@ input {
 
 h4 {
   /* Mobile layout */
-  flex: 1 0 0;
+  /* flex: 1 0 0; */
 
   /* Typography */
   color: var(--base-foreground, #0f1314);
@@ -103,15 +178,19 @@ h4 {
   font-weight: var(--font-weight-medium, 500);
   line-height: 140%; /* 1.77188rem */
   letter-spacing: -0.00625rem;
-}
 
-.cover-wrapper {
-  /* Layout-mobile */
-  display: flex;
-  padding: var(--spacing-8, 2rem) 0rem;
-  flex-direction: column;
-  align-items: center;
-  align-self: stretch;
+  @media screen and (min-width: 1024px) {
+    color: var(--base-foreground, #0f1314);
+    font-feature-settings: "liga" off, "clig" off;
+
+    /* heading-4/leading-normal/medium */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-xlarge-font-size, 1.5625rem);
+    font-style: normal;
+    font-weight: var(--font-weight-medium, 500);
+    line-height: 140%; /* 2.1875rem */
+    letter-spacing: -0.00625rem;
+  }
 }
 
 .cover-wrapper img {
@@ -121,7 +200,7 @@ h4 {
   aspect-ratio: 358/104.32;
 
   /* Style desktop */
-  @media screen and (min-width: 960px) {
+  @media screen and (min-width: 1024px) {
     height: 21.5625rem;
     align-self: stretch;
     aspect-ratio: 1184/345;
@@ -202,12 +281,11 @@ h4 {
 
 .search-bar-and-filter-wrapper {
   display: flex;
-  padding: var(--spacing-6, 1.5rem);
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--spacing-8, 2rem);
+  gap: 1rem;
 
-  @media screen and (min-width: 960px) {
+  @media screen and (min-width: 1024px) {
     display: flex;
     width: 29.6875rem;
     flex-direction: column;
