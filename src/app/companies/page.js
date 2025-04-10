@@ -133,7 +133,6 @@ export default function Companies() {
       console.log({ matchingcompanies: matchingCompanies });
       if (companiesError) {
         console.error("Error fetching companies:", companiesError);
-
       }
       setFilteredCompanies(matchingCompanies);
       console.log(filteredCompanies);
@@ -151,9 +150,15 @@ export default function Companies() {
   };
 
   const cancelFilter = () => {
-    setSkills([""]);
+    setSkills([]);
+
+    setFilteredCompanies([]);
+
+    setSelectedTable([]);
+
     setIsVisible(false);
-    handleRefresh();
+
+    router.refresh();
   };
 
   if (error) {
