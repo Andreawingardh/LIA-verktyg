@@ -196,13 +196,12 @@ h4 {
 .cover-wrapper img {
   /* Style mobile */
   height: 6.51975rem;
-  align-self: stretch;
+  object-fit: cover;
   aspect-ratio: 358/104.32;
 
   /* Style desktop */
   @media screen and (min-width: 1024px) {
     height: 21.5625rem;
-    align-self: stretch;
     aspect-ratio: 1184/345;
   }
 }

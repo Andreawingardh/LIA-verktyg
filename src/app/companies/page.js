@@ -175,7 +175,7 @@ export default function Companies() {
       
       <div className="cover-wrapper">
         <div className="image-wrapper">
-          <img />
+          <img src="/images/eventpage-hero-image.png" />
         </div>
       </div>
       <div className="main-wrapper">
