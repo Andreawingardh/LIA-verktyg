@@ -161,7 +161,7 @@ a.secondary {
   /* Layout mobile */
   display: flex;
   max-width: 24.375rem;
-  height: 52rem;
+  height: 43rem;
   max-width: 80rem;
   /* padding: var(--spacing-3, 0.75rem) var(--spacing-4, 1rem); */
   flex-direction: column;
