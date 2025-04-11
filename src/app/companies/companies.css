@@ -1,0 +1,294 @@
+.main-wrapper {
+  display: flex;
+  padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.cover-wrapper {
+  /* Layout mobile */
+  display: flex;
+  padding: var(--spacing-8, 2rem) 0rem;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+
+  @media screen and (min-width: 1024px) {
+    /* padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+    flex-direction: row; */
+  }
+}
+
+.content-wrapper {
+  display: flex;
+  max-width: 80rem;
+  padding: 0rem var(--spacing-4, 1rem);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-6, 1.5rem);
+  flex: 1 0 0;
+  width: 100%;
+  max-width: 80rem;
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    max-width: 80rem;
+    padding: 0rem var(--spacing-12, 3rem);
+    align-items: flex-start;
+    gap: var(--spacing-6, 1.5rem);
+    flex: 1 0 0;
+    flex-direction: row;
+  }
+}
+
+.image-wrapper {
+  display: flex;
+  max-width: 80rem;
+  padding: 0rem var(--spacing-4, 1rem);
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.card-company {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* Style for the company info section (left side) */
+.card-company-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+/* Style for the apply button container (right side) */
+.card-company-2 {
+  margin-left: auto; /* Push to the right */
+}
+
+/* If you're using a specific button class */
+.apply-button {
+  white-space: nowrap;
+}
+
+.filter-settings-wrapper {
+  /* Layout mobile */
+  display: flex;
+  padding: var(--spacing-6, 1.5rem);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-8, 2rem);
+  align-self: stretch;
+
+  /* Style */
+  border-radius: var(--border-radius-xl, 0.75rem);
+  border: 1px solid var(--base-border, #b3c1c7);
+  background: var(--base-background, #fff);
+
+  /* shadow/lg */
+  box-shadow: 0px 32px 9px 0px rgba(0, 0, 0, 0),
+    0px 20px 8px 0px rgba(0, 0, 0, 0.01), 0px 11px 7px 0px rgba(0, 0, 0, 0.05),
+    0px 5px 5px 0px rgba(0, 0, 0, 0.09), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+}
+
+.companies-list {
+  /* Layout mobile */
+  display: flex;
+  padding: 0rem var(--spacing-0, 0rem);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-4, 1rem);
+  align-self: stretch;
+  width: 100%;
+
+  @media screen and (min-width: 1024px) {
+    flex: 1 0 0;
+    align-items: stretch;
+    width: 100%;
+  }
+  /* Style */
+}
+
+.companies-list > div {
+  width: 100%;
+}
+
+.card-company-instance {
+  width: 100%;
+}
+
+
+
+.tags-container {
+  /* Layout mobile */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3, 0.75rem);
+  align-self: stretch;
+
+  /* Style */
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+}
+
+input {
+  /* Layout mobile */
+  display: flex;
+  height: var(--height-h-11, 2.75rem);
+  padding: var(--spacing-1, 0.25rem) var(--spacing-3, 0.75rem);
+  align-items: center;
+  gap: var(--spacing-1, 0.25rem);
+  align-self: stretch;
+  width: 100%;
+
+  /* Style */
+  border-radius: var(--border-radius-lg, 0.625rem);
+  border: 1px solid var(--base-input, #bfbfbf);
+  background: var(--base-background, #fff);
+}
+
+h4 {
+  /* Mobile layout */
+  /* flex: 1 0 0; */
+
+  /* Typography */
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* heading-4/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-xlarge-font-size, 1.26563rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 140%; /* 1.77188rem */
+  letter-spacing: -0.00625rem;
+
+  @media screen and (min-width: 1024px) {
+    color: var(--base-foreground, #0f1314);
+    font-feature-settings: "liga" off, "clig" off;
+
+    /* heading-4/leading-normal/medium */
+    font-family: var(--typography-font-family-font-sans, Inter);
+    font-size: var(--typography-base-sizes-xlarge-font-size, 1.5625rem);
+    font-style: normal;
+    font-weight: var(--font-weight-medium, 500);
+    line-height: 140%; /* 2.1875rem */
+    letter-spacing: -0.00625rem;
+  }
+}
+
+.cover-wrapper img {
+  /* Style mobile */
+  height: 6.51975rem;
+  object-fit: cover;
+  aspect-ratio: 358/104.32;
+
+  /* Style desktop */
+  @media screen and (min-width: 1024px) {
+    height: 21.5625rem;
+    aspect-ratio: 1184/345;
+  }
+}
+
+.search-bar-and-filter-wrapper .light-button {
+  width: 100%;
+}
+
+.activeButton,
+.activeTab {
+  display: flex;
+  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: var(--border-radius-md, 6px);
+  background: var(--base-background, #fff);
+  border: none;
+
+  color: var(--base-foreground, #0f1314);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.title-button:hover {
+  background-color: #c8ccd1;
+  cursor: pointer;
+}
+
+.title-button {
+  display: flex;
+  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+  border: none;
+}
+
+.activeTitleButton,
+.activeTab {
+  display: flex;
+  padding: var(--spacing-1, 4px) var(--spacing-3, 12px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: var(--border-radius-md, 6px);
+  background: var(--base-background, #fff);
+  border: none;
+
+  color: var(--base-foreground, #0f1314);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.search-bar-and-filter-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    width: 29.6875rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

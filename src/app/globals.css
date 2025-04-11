@@ -1,14 +1,51 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --base-foreground: #0f1314;
+  --base-background: #fff;
+  --base-muted-foreground: #495b62;
+  --base-input: #bfbfbf;
+  --base-link: #00287e;
+  --base-secondary: #001a52;
+  --base-secondary-foreground: #fff;
+  --colors-base-transparent: #fff0;
+  --typography-font-family-font-sans: Inter;
+  --typography-base-sizes-base-font-size: 1rem;
+  --typography-base-sizes-base-line-height: 1.5rem;
+  --typography-base-sizes-xlarge-font-size: 1.25rem;
+  --typography-base-sizes-large-line-height: 1.75rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --height-h-11: 2.75rem;
+  --width-w-80: 20rem;
+  --border-radius-lg: 0.625rem;
+  --border-radius-xl: 0.75rem;
+  --border-radius-full: 1.375rem;
+
+  /* Responsive fonts */
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: clamp(1.2656rem, 1.1667rem + 0.4948vw, 1.5625rem);
+  --font-size-2xl: clamp(1.4238rem, 1.2474rem + 0.8822vw, 1.9531rem);
+  --font-size-3xl: clamp(1.6018rem, 1.3219rem + 1.3993vw, 2.4414rem);
+  --font-size-4xl: clamp(1.802rem, 1.3855rem + 2.0829vw, 3.0518rem);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 html,
 body {
@@ -19,9 +56,12 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--typography-font-family-font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 * {
@@ -35,8 +75,12 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */
+
+
+
+

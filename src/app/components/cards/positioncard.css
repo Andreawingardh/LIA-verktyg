@@ -1,0 +1,332 @@
+.position-card {
+  display: flex;
+  padding: var(--spacing-4, 16px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-6, 24px);
+  position: relative;
+  cursor: pointer;
+  border-radius: var(--border-radius-xl, 12px);
+  background: var(--base-card, #f0f2f4);
+}
+
+.positions-section
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.positions-grid {
+  gap: var(--spacing-4, 16px);
+  display: flex;
+  flex-direction: column;
+}
+
+.subTitle {
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  margin-bottom: 16px;
+}
+
+.title {
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* large/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-large-font-size, 18px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 27px */
+  letter-spacing: 0.15px;
+  margin-bottom: 8px;
+}
+
+.subHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  flex: 1 0 0;
+}
+
+.headerCard svg {
+  display: flex;
+  width: var(--height-h-11, 44px);
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+}
+
+.headerTitle {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  align-self: stretch;
+  color: var(--base-card-foreground, #283236);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* heading-4/leading-none/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-xlarge-font-size, 20.25px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 100%; /* 20.25px */
+  letter-spacing: -0.1px;
+}
+
+/* Position the dropdown arrow in the top right corner */
+.position-card .dropdown-arrow {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3, 12px);
+  align-self: stretch;
+  width: 100%;
+  gap: var(--spacing-6, 24px);
+}
+
+/* Handle arrow rotation animation */
+.position-card .dropdown-arrow svg {
+  transition: transform 0.3s ease;
+}
+
+.position-card .dropdown-arrow.expanded svg {
+  transform: rotate(180deg);
+}
+
+.headerCard {
+  display: flex;
+  height: 46px;
+  align-items: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+}
+
+.openPositions {
+  margin: 0;
+  align-self: stretch;
+  overflow: hidden;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+  text-overflow: ellipsis;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.position-skills {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+  overflow: hidden;
+  color: var(--base-muted-foreground, #495b62);
+  text-overflow: ellipsis;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 16.8px */
+}
+
+.position-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+}
+
+.skillsGrid {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.skills-title {
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-none/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 100%; /* 16px */
+  letter-spacing: 0.2px;
+}
+
+.skillsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3, 12px);
+  align-self: stretch;
+}
+
+.secondary-button {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-background, #fff);
+  width: 100%;
+}
+
+.position-actions {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  border: none;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  border-radius: var(--border-radius-full, 9999px);
+  background: var(--base-background, #fff);
+  width: 100%;
+}
+
+.button-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+}
+
+.deleteButton {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
+  border-radius: var(--border-radius-full, 9999px);
+  border: 1px solid var(--base-destructive-foreground, #b40509);
+  background: var(--base-destructive, #ffeeef);
+
+  color: var(--base-destructive-foreground, #b40509);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  transition: background-color .3s, color .3s, border-color .3s;
+}
+
+.deleteButton.confirm {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.deleteButton.confirm:hover {
+  background-color: #b71c1c;
+}
+
+.selectedSkillsButton {
+  display: flex;
+  height: var(--width-w-9, 36px);
+  padding: 0px var(--spacing-3, 12px) 0px var(--spacing-2, 8px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 9999px);
+  background: var(--base-background, #fff);
+  border: none;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+}
+
+.add-position-container {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.add-position-button {
+  display: flex;
+  height: var(--height-h-11, 44px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  border-radius: var(--border-radius-full, 22px);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-secondary, #001a52);
+  color: var(--base-secondary-foreground, #fff);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  border: 1px solid var(--base-secondary, #001a52);
+  transition: background-color .3s, color .3s, border-color .3s;
+}
+
+.add-position-button:hover path,
+.add-position-button:hover {
+  cursor: pointer;
+  color: var(--base-secondary, #001a52);
+  border: none;
+  fill: var(--base-secondary, #001a52);
+  background: var(--base-background, #fff);
+  border: 1px solid var(--base-secondary, #001a52);
+}
