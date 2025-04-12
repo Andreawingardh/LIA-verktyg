@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../utils/supabase/client";
 import "./popup.css";
@@ -10,10 +10,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [passwordTouched, setPasswordTouched] = useState(false);
-  const [emailTouched, setEmailTouched] = useState(false);
-  const [showPasswordRequirements, setShowPasswordRequirements] =
-    useState(false);
   const [loading, setLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
@@ -26,16 +22,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     hasNumber: false,
     hasSpecial: false,
   };
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      validateForm();
-    }, 100);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [email, password]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -84,6 +70,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
 
     setErrors(newErrors);
     setIsFormValid(formIsValid);
+    return formIsValid;
   };
 
   const handleLoginClick = () => {
@@ -93,11 +80,84 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     }
   };
 
+  const validateEmail = () => {
+    if (email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setErrors(prev => ({
+          ...prev,
+          email: "Mail följer inte rätt format. Exempel:"
+        }));
+        return false;
+      } else {
+        // Clear email error if valid
+        setErrors(prev => {
+          const { email, ...rest } = prev;
+          return rest;
+        });
+        return true;
+      }
+    }
+    return true;
+  };
+
+  const validatePassword = () => {
+    if (password) {
+      const missingRequirements = [];
+      let isValid = true;
+
+      if (password.length < passwordRequirements.minLength) {
+        missingRequirements.push("minLength");
+        isValid = false;
+      }
+
+      if (!/[A-Z]/.test(password)) {
+        missingRequirements.push("uppercase");
+        isValid = false;
+      }
+
+      if (!/[a-z]/.test(password)) {
+        missingRequirements.push("lowercase");
+        isValid = false;
+      }
+
+      if (!/\d/.test(password)) {
+        missingRequirements.push("number");
+        isValid = false;
+      }
+
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        missingRequirements.push("special");
+        isValid = false;
+      }
+
+      if (!isValid) {
+        setErrors(prev => ({
+          ...prev,
+          password: "Lösenordet uppfyller inte kraven",
+          passwordRequirements: missingRequirements
+        }));
+        return false;
+      } else {
+        // Clear password error if valid
+        setErrors(prev => {
+          const { password, passwordRequirements, ...rest } = prev;
+          return rest;
+        });
+        return true;
+      }
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    validateForm();
-    if (!isFormValid || redirecting) {
+    // Validate both fields on submit
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    
+    if (!isEmailValid || !isPasswordValid || redirecting) {
       return;
     }
 
@@ -128,7 +188,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
           error.message.includes("Password")
         ) {
           setErrors({ ...errors, password: error.message });
-          validateForm();
         } else if (
           error.message.includes("too many requests") ||
           error.message.includes("rate limit")
@@ -157,7 +216,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
         router.push("/company/baseInfo");
       }, 100);
     } catch (err) {
-      console.error("Registration error:", err);
       if (!errors.email && !errors.password) {
         setErrors({
           ...errors,
@@ -210,17 +268,12 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               id="email"
               name="email"
               type="email"
-              className="inputs"
+              className={`inputs ${errors.email ? "input-error" : ""}`}
               required
               placeholder="Skriv din inloggningsmail"
               value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (errors.email) {
-                  const { email, ...rest } = errors;
-                  setErrors(rest);
-                }
-              }}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={validateEmail}
               disabled={loading}
             />
 
@@ -244,18 +297,12 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               id="password"
               name="password"
               type="password"
-              className="inputs"
+              className={`inputs ${errors.password ? "input-error" : ""}`}
               required
               placeholder="Skriv ett starkt lösenord"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                // Clear password error when user types
-                if (errors.password) {
-                  const { password, ...rest } = errors;
-                  setErrors(rest);
-                }
-              }}
+              onChange={(e) => setPassword(e.target.value)}
+              onBlur={validatePassword}
               disabled={loading}
             />
           </div>
@@ -295,8 +342,9 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               <label className="gdpr-text " htmlFor="checkbox">
                 Jag godkänner{" "}
                 <a className="gdpr" href="">
-                  sekretesspolicy
+                  sekretesspolicy 
                 </a>
+                <span className="asterix"> *</span>
               </label>
             </div>
           </div>
@@ -307,8 +355,8 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             <button
               type="submit"
               id="createButton"
-              disabled={loading || !isFormValid || redirecting}
-              className={!isFormValid ? "button-disabled" : ""}
+              disabled={loading || redirecting}
+              className={Object.keys(errors).length > 0 ? "button-disabled" : ""}
             >
               {loading ? "Skapar konto..." : "Skapa Företagskonto"}
             </button>
