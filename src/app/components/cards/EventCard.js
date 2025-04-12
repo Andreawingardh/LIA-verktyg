@@ -90,7 +90,6 @@ export const EventCard = ({ IsSubmitted }) => {
 
       if (data) {
         setSubmitStatus({ success: true });
-        console.log(data);
       }
     } catch (e) {
       console.error(e);

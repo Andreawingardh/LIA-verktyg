@@ -26,38 +26,32 @@ export default function EditPositionForm({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [skillsExpanded, setSkillsExpanded] = useState(false);
-  const [softwareExpanded, setSoftwareExpanded] = useState(false); 
+  const [softwareExpanded, setSoftwareExpanded] = useState(false);
   const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   const initializedRef = useRef(false);
 
-  useEffect(() => {
-    console.log("Current state - selectedMainSkills:", selectedMainSkills);
-  }, [selectedMainSkills]);
+  useEffect(() => {}, [selectedMainSkills]);
+
+  useEffect(() => {}, [selectedSoftware]);
 
   useEffect(() => {
-    console.log("Current state - selectedSoftware:", selectedSoftware);
-  }, [selectedSoftware]);
- 
-  useEffect(() => {
     if (position && position.id && !initializedRef.current) {
-      console.log("Loading position data:", position);
       initializedRef.current = true;
-      
+
       setFormData({
         id: position.id,
         user_id: position.user_id,
         title: position.title,
         spots: position.spots || 1,
       });
-   
+
       const tableName = getTableNameFromTitle(position.title);
-      console.log("Determined table name:", tableName);
 
       setSelectedTable(tableName);
-      
+
       if (tableName) {
         loadPositionData(tableName);
       } else {
@@ -69,22 +63,19 @@ export default function EditPositionForm({
       }
     }
   }, [position]);
- 
+
   const getTableNameFromTitle = (title) => {
     if (title === "Webbutvecklare") return "webbutvecklare";
     if (title === "Digital designer") return "digitaldesigner";
     return "";
   };
-  
+
   const loadPositionData = async (tableName) => {
     try {
       setLoading(true);
-      console.log(
-        `Loading position data for position ID ${position.id} from table ${tableName}`
-      );
-     
+
       await loadSkillsOptions(tableName);
-     
+
       const { data: positionSkills, error: skillsError } = await supabase
         .from(`${tableName}_skill_position`)
         .select(
@@ -100,11 +91,6 @@ export default function EditPositionForm({
         throw skillsError;
       }
 
-      console.log(
-        `Fetched ${positionSkills?.length || 0} position skills:`,
-        positionSkills
-      );
-      
       const mainSkills = [];
       const software = [];
 
@@ -123,9 +109,6 @@ export default function EditPositionForm({
         });
       }
 
-      console.log("Parsed main skills:", mainSkills);
-      console.log("Parsed software:", software);
-
       setSelectedMainSkills(mainSkills);
       setSelectedSoftware(software);
     } catch (err) {
@@ -138,8 +121,6 @@ export default function EditPositionForm({
 
   const loadSkillsOptions = async (tableName) => {
     try {
-      console.log(`Loading skills options from skills_${tableName}`);
-
       const { data: skillData, error: skillsError } = await supabase
         .from(`skills_${tableName}`)
         .select("*")
@@ -159,12 +140,6 @@ export default function EditPositionForm({
         console.error("Error fetching software:", softwareError);
         throw softwareError;
       }
-
-      console.log(
-        `Fetched ${skillData?.length || 0} skills and ${
-          softwareData?.length || 0
-        } software options`
-      );
 
       setSkillsOptions(skillData || []);
       setSoftwareOptions(softwareData || []);
@@ -194,9 +169,6 @@ export default function EditPositionForm({
 
     try {
       setIsSaving(true);
-      console.log("Submitting position update with data:", formData);
-      console.log("Selected skills:", selectedMainSkills);
-      console.log("Selected software:", selectedSoftware);
 
       const transaction = async () => {
         const { data: updateData, error: updateError } = await supabase
@@ -213,8 +185,6 @@ export default function EditPositionForm({
           throw updateError;
         }
 
-        console.log("Position record updated successfully:", updateData);
-
         const { error: deleteError } = await supabase
           .from(`${selectedTable}_skill_position`)
           .delete()
@@ -224,8 +194,6 @@ export default function EditPositionForm({
           console.error("Error deleting existing skills:", deleteError);
           throw deleteError;
         }
-
-        console.log("Deleted existing skill associations");
 
         const { data: remainingSkills, error: verifyError } = await supabase
           .from(`${selectedTable}_skill_position`)
@@ -242,7 +210,6 @@ export default function EditPositionForm({
             remainingSkills
           );
         } else {
-          console.log("Verified all existing skill associations were deleted");
         }
 
         const limitedMainSkills = selectedMainSkills.slice(0, 3);
@@ -254,11 +221,6 @@ export default function EditPositionForm({
             skills_id: skill.id,
           }));
 
-          console.log(
-            `Inserting ${skillsToInsert.length} skills:`,
-            skillsToInsert
-          );
-
           const { data: insertedSkills, error: skillsError } = await supabase
             .from(`${selectedTable}_skill_position`)
             .insert(skillsToInsert)
@@ -268,8 +230,6 @@ export default function EditPositionForm({
             console.error("Error inserting skills:", skillsError);
             throw skillsError;
           }
-
-          console.log("Skills inserted successfully:", insertedSkills);
 
           const { data: finalSkills, error: verifyInsertError } = await supabase
             .from(`${selectedTable}_skill_position`)
@@ -287,14 +247,11 @@ export default function EditPositionForm({
               verifyInsertError
             );
           } else {
-            console.log("Verified skills were inserted:", finalSkills);
-
             if (finalSkills.length !== skillsToInsert.length) {
               console.warn("Not all skills were inserted correctly");
             }
           }
         } else {
-          console.log("No skills to insert");
         }
 
         return { success: true, position: updateData[0] };
@@ -306,8 +263,6 @@ export default function EditPositionForm({
         setSuccessMessage("Positionen har uppdaterats");
 
         if (onPositionUpdate && typeof onPositionUpdate === "function") {
-          console.log("Calling onPositionUpdate callback with updated data");
-
           onPositionUpdate({
             ...position,
             ...formData,
@@ -341,7 +296,6 @@ export default function EditPositionForm({
   const handleDeleteConfirm = async () => {
     try {
       setIsSaving(true);
-      console.log(`Deleting position ID: ${position.id}`);
 
       const { data, error } = await supabase.rpc(
         "delete_position_in_all_tables",
@@ -353,11 +307,9 @@ export default function EditPositionForm({
         throw error;
       }
 
-      console.log("Position and related entries deleted successfully");
       setSuccessMessage("Positionen har tagits bort");
 
       if (onPositionUpdate && typeof onPositionUpdate === "function") {
-        console.log("Calling onPositionUpdate callback after deletion");
         onPositionUpdate(null);
       }
 
@@ -378,7 +330,6 @@ export default function EditPositionForm({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Field change: ${name} = ${value}`);
 
     setFormData((prevState) => ({
       ...prevState,
@@ -391,8 +342,6 @@ export default function EditPositionForm({
     const newTitle = e.target.value;
     const newTableName = e.target.name;
 
-    console.log(`Changing title to: ${newTitle}, table name: ${newTableName}`);
-
     setFormData((prevState) => ({
       ...prevState,
       title: newTitle,
@@ -401,11 +350,9 @@ export default function EditPositionForm({
     setSelectedTable(newTableName);
 
     try {
-
       await loadSkillsOptions(newTableName);
 
       if (position.title !== newTitle) {
-        console.log("Role changed, resetting selected skills");
         setSelectedMainSkills([]);
         setSelectedSoftware([]);
       }
@@ -423,18 +370,12 @@ export default function EditPositionForm({
 
       if (isAlreadySelected) {
         const newSkills = prevSkills.filter((s) => s.id !== skill.id);
-        console.log(
-          `Removed skill: ${skill.skills_name}, New skills:`,
-          newSkills
-        );
+
         return newSkills;
       } else {
         if (prevSkills.length < 3) {
           const newSkills = [...prevSkills, skill];
-          console.log(
-            `Added skill: ${skill.skills_name}, New skills:`,
-            newSkills
-          );
+
           return newSkills;
         } else {
           alert("Du kan välja max 3 huvudkunskaper");
@@ -449,17 +390,11 @@ export default function EditPositionForm({
 
       if (isAlreadySelected) {
         const newSoftware = prevSoftware.filter((s) => s.id !== software.id);
-        console.log(
-          `Removed software: ${software.skills_name}, New software:`,
-          newSoftware
-        );
+
         return newSoftware;
       } else {
         const newSoftware = [...prevSoftware, software];
-        console.log(
-          `Added software: ${software.skills_name}, New software:`,
-          newSoftware
-        );
+
         return newSoftware;
       }
     });
@@ -502,7 +437,9 @@ export default function EditPositionForm({
             <button
               type="button"
               className={
-                formData.title === "Digital designer" ? "activeButton" : "button"
+                formData.title === "Digital designer"
+                  ? "activeButton"
+                  : "button"
               }
               name="digitaldesigner"
               value="Digital designer"
@@ -539,7 +476,9 @@ export default function EditPositionForm({
           <div className="skillsSection">
             <section className="skillsHeader">
               <h3 className="skills-title">Huvudkunskaper</h3>
-              <span className="skillsPicked">{selectedMainSkills.length}/3</span>
+              <span className="skillsPicked">
+                {selectedMainSkills.length}/3
+              </span>
             </section>
             <div
               className={`skills-container ${skillsExpanded ? "expanded" : ""}`}
@@ -617,7 +556,9 @@ export default function EditPositionForm({
           <div className="skillsSection">
             <h3 className="skills-title">Verktyg</h3>
             <div
-              className={`skills-container ${softwareExpanded ? "expanded" : ""}`}
+              className={`skills-container ${
+                softwareExpanded ? "expanded" : ""
+              }`}
             >
               <div className="skillsGrid">
                 {softwareOptions.map((software) => (
@@ -675,7 +616,9 @@ export default function EditPositionForm({
               <button
                 type="button"
                 onClick={() => setSoftwareExpanded(!softwareExpanded)}
-                className={`show-more-btn ${softwareExpanded ? "expanded" : ""}`}
+                className={`show-more-btn ${
+                  softwareExpanded ? "expanded" : ""
+                }`}
               >
                 {softwareExpanded ? "Visa färre" : "Visa flera"}
               </button>

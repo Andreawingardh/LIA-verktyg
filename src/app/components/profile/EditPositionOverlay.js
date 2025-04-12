@@ -18,19 +18,17 @@ export default function EditPositionOverlay({
 
   useEffect(() => {
     if (position) {
-      console.log("Position prop updated in overlay:", position);
       setCurrentPosition(position);
     }
   }, [position, isOpen]);
 
   // Handle position updates from the form
   const handlePositionUpdate = async (updatedPosition) => {
-    console.log("Position update received in overlay:", updatedPosition);
+   
 
     // If position was deleted (null), close the overlay
     if (updatedPosition === null) {
       if (onPositionUpdate) {
-        console.log("Propagating position deletion to parent");
         onPositionUpdate();
       }
       return;
@@ -41,7 +39,6 @@ export default function EditPositionOverlay({
 
     // Either use the updated position data directly or trigger a refresh in parent
     if (onPositionUpdate) {
-      console.log("Propagating position update to parent");
       onPositionUpdate(updatedPosition);
     }
   };
@@ -51,7 +48,6 @@ export default function EditPositionOverlay({
     if (refreshTrigger > 0 && position?.id) {
       const loadPositionData = async () => {
         try {
-          console.log("Reloading position data from database");
           const { data, error } = await supabase
             .from("positions")
             .select("*")
@@ -61,7 +57,7 @@ export default function EditPositionOverlay({
           if (error) {
             console.error("Error reloading position:", error);
           } else if (data) {
-            console.log("Position data reloaded:", data);
+           
             setCurrentPosition(data);
           }
         } catch (err) {
@@ -73,13 +69,6 @@ export default function EditPositionOverlay({
     }
   }, [refreshTrigger, position?.id]);
 
-  useEffect(() => {
-    if (isOpen) {
-      console.log("Overlay remains open despite position update.");
-    } else {
-      console.log("Overlay closed unexpectedly!");
-    }
-  }, [position, isOpen]);
 
   return (
     <div

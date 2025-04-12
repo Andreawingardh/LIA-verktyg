@@ -8,8 +8,6 @@ export function useSupabaseAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    console.log("Auth hook initialized");
     const getInitialSession = async () => {
       try {
         const {
@@ -36,15 +34,14 @@ export function useSupabaseAuth() {
     };
   }, []);
 
-  const logout = async () => { 
+  const logout = async () => {
     try {
       await supabase.auth.signOut();
-      console.log("User logged out");
       setUser(null);
-    }catch (error) {
+    } catch (error) {
       console.error("Error logging out:", error);
     }
-  }
+  };
 
   return { user, loading, logout };
 }

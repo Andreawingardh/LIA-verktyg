@@ -51,7 +51,6 @@ function ContactForm() {
       const location = localStorage.getItem("companyLocation");
       const email = localStorage.getItem("registrationEmail");
 
-      console.log("Contact Page Init: ", { registrationStep, description, location, email });
 
       if ((user || email) && description && location) {
         if (registrationStep !== "contact") {
@@ -65,7 +64,7 @@ function ContactForm() {
         setLoading(false);
       } else if (!description || !location) {
         // If we're missing description or location, go back to description page
-        console.log("Redirecting to description due to missing data");
+
         router.push("/company/description");
       } else {
         setLoading(false);

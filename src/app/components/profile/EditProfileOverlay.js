@@ -93,7 +93,6 @@ export default function EditProfileOverlay({
               setDisplayImagePreview(parsedData.displayImagePreview);
             }
 
-            console.log("Restored form data after tab switch");
           } catch (err) {
             console.error("Error parsing saved form data", err);
           }
@@ -116,7 +115,6 @@ export default function EditProfileOverlay({
   }, [isOpen, companyId, user]);
 
   useEffect(() => {
-    console.log("Company data updated:", companyData);
   }, [companyData]);
 
   const fetchCompanyData = async () => {
@@ -147,7 +145,6 @@ export default function EditProfileOverlay({
         // We have saved draft data, use it
         try {
           const parsedData = JSON.parse(savedData);
-          console.log("Found saved draft data", parsedData);
           setCompanyData(parsedData.formData);
           setDescriptionCharCount(parsedData.formData.description.length);
 
@@ -186,7 +183,6 @@ export default function EditProfileOverlay({
 
   // Helper function to populate the form with fetched data
   const populateFormWithFetchedData = (data) => {
-    console.log("Populating form with fetched data", data);
     setCompanyData({
       name: data.name || "",
       description: data.description || "",
@@ -411,7 +407,6 @@ export default function EditProfileOverlay({
 
       // Call the callback function with the updated data
       if (typeof onProfileUpdate === "function") {
-        console.log("Calling onProfileUpdate with new data:", updateData);
         onProfileUpdate(updateData);
       }
 

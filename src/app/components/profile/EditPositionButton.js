@@ -12,13 +12,11 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
   // Update local state when position prop changes
   useEffect(() => {
     if (position) {
-      console.log("Position updated in EditPositionButton:", position);
       setCurrentPosition(position);
     }
   }, [position]);
 
   const handleOpenOverlay = () => {
-    console.log("Edit button clicked, overlay should open");
     setIsOverlayOpen(true);
   };
 
@@ -26,8 +24,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
   const refreshPositionData = async () => {
     if (position && position.id) {
       try {
-        console.log("Refreshing position data from database");
-
         // First fetch the basic position data
         const { data: positionData, error: positionError } = await supabase
           .from("positions")
@@ -44,8 +40,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
           console.error("Position not found in database");
           return;
         }
-
-        console.log("Fetched position data:", positionData);
 
         // Determine table name for skills
         const tableName =
@@ -76,8 +70,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
           return;
         }
 
-        console.log("Fetched skills data:", skillsData);
-
         // Parse skills into main skills and software
         const mainSkills = [];
         const software = [];
@@ -101,8 +93,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
           mainSkills,
           software,
         };
-
-        console.log("Complete refreshed position:", updatedPosition);
 
         // Update local state
         setCurrentPosition(updatedPosition);
@@ -136,7 +126,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
   };
 
   const closeOverlay = () => {
-    console.log("Closing position edit overlay");
     setIsOverlayOpen(false);
 
     // Always refresh data after closing overlay
@@ -147,8 +136,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
 
   // Handle updates from the overlay
   const handlePositionUpdate = (updatedPosition) => {
-    console.log("Position update received in button:", updatedPosition);
-
     if (updatedPosition) {
       setCurrentPosition(updatedPosition);
     }

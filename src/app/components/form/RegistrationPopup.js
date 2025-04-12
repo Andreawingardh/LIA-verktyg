@@ -12,7 +12,8 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const [errors, setErrors] = useState({});
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
-  const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
+  const [showPasswordRequirements, setShowPasswordRequirements] =
+    useState(false);
   const [loading, setLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
@@ -23,27 +24,24 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     hasUppercase: false,
     hasLowercase: false,
     hasNumber: false,
-    hasSpecial: false
+    hasSpecial: false,
   };
 
- 
   useEffect(() => {
     const handler = setTimeout(() => {
       validateForm();
-    }, 100); 
-    
+    }, 100);
+
     return () => {
       clearTimeout(handler);
     };
   }, [email, password]);
 
-  
   const validateForm = () => {
     const newErrors = {};
     let formIsValid = true;
     const missingRequirements = [];
 
-   
     if (email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
@@ -52,35 +50,29 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
       }
     }
 
-   
     if (password) {
-     
       if (password.length < passwordRequirements.minLength) {
-        missingRequirements.push('minLength');
+        missingRequirements.push("minLength");
         formIsValid = false;
       }
-      
-     
+
       if (!/[A-Z]/.test(password)) {
-        missingRequirements.push('uppercase');
+        missingRequirements.push("uppercase");
         formIsValid = false;
       }
-      
-      
+
       if (!/[a-z]/.test(password)) {
-        missingRequirements.push('lowercase');
+        missingRequirements.push("lowercase");
         formIsValid = false;
       }
-      
-      
+
       if (!/\d/.test(password)) {
-        missingRequirements.push('number');
+        missingRequirements.push("number");
         formIsValid = false;
       }
-      
-     
+
       if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-        missingRequirements.push('special');
+        missingRequirements.push("special");
         formIsValid = false;
       }
 
@@ -103,37 +95,50 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    
+
     validateForm();
     if (!isFormValid || redirecting) {
       return;
     }
-    
+
     setLoading(true);
 
     try {
-      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
       });
 
       if (error) {
-        
-        console.log("Supabase registration error:", error);
-        
-        if (error.message.includes("already registered") || error.message.includes("already in use")) {
-          setErrors({...errors, email: "E-postadress används redan av ett annat konto"});
-        } else if (error.message.includes("email") || error.message.includes("Email")) {
-          setErrors({...errors, email: error.message});
-        } else if (error.message.includes("password") || error.message.includes("Password")) {
-          setErrors({...errors, password: error.message});
+        if (
+          error.message.includes("already registered") ||
+          error.message.includes("already in use")
+        ) {
+          setErrors({
+            ...errors,
+            email: "E-postadress används redan av ett annat konto",
+          });
+        } else if (
+          error.message.includes("email") ||
+          error.message.includes("Email")
+        ) {
+          setErrors({ ...errors, email: error.message });
+        } else if (
+          error.message.includes("password") ||
+          error.message.includes("Password")
+        ) {
+          setErrors({ ...errors, password: error.message });
           validateForm();
-        } else if (error.message.includes("too many requests") || error.message.includes("rate limit")) {
-          setErrors({...errors, general: "För många försök. Vänligen försök igen senare."});
+        } else if (
+          error.message.includes("too many requests") ||
+          error.message.includes("rate limit")
+        ) {
+          setErrors({
+            ...errors,
+            general: "För många försök. Vänligen försök igen senare.",
+          });
         } else {
-          setErrors({...errors, general: error.message});
+          setErrors({ ...errors, general: error.message });
         }
         setLoading(false);
         return;
@@ -146,19 +151,17 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
       localStorage.setItem("registrationPassword", password);
       localStorage.setItem("registrationStep", "baseInfo");
 
-      
       onClose();
-      
+
       setTimeout(() => {
         router.push("/company/baseInfo");
       }, 100);
-      
     } catch (err) {
       console.error("Registration error:", err);
       if (!errors.email && !errors.password) {
         setErrors({
-          ...errors, 
-          general: err.message || "Ett fel uppstod vid registrering"
+          ...errors,
+          general: err.message || "Ett fel uppstod vid registrering",
         });
       }
       setLoading(false);
@@ -178,7 +181,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
         <div className="popup-header">
           <h2>Skapa Företagskonto</h2>
           <button className="close-btn" onClick={onClose}>
-          <svg
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -197,15 +200,17 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
         </div>
 
         <form className="formwrapper" onSubmit={handleSubmit}>
-        <div className='inputSingle'>
-        <article className='inputHeader'>
-              <label className="popupTitle" htmlFor="email">E-post</label>
-              </article>
+          <div className="inputSingle">
+            <article className="inputHeader">
+              <label className="popupTitle" htmlFor="email">
+                E-post
+              </label>
+            </article>
             <input
               id="email"
               name="email"
-                type="email"
-                className="inputs"
+              type="email"
+              className="inputs"
               required
               placeholder="Skriv din inloggningsmail"
               value={email}
@@ -218,7 +223,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               }}
               disabled={loading}
             />
-            
+
             {errors.email && (
               <div className="email-error-container">
                 <p className="error-message">{errors.email}</p>
@@ -229,15 +234,17 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             )}
           </div>
 
-          <div className='inputSingle'>
-            <article className='inputHeader'>
-              <label className="popupTitle" htmlFor="password">Lösenord</label>
-              </article>
+          <div className="inputSingle">
+            <article className="inputHeader">
+              <label className="popupTitle" htmlFor="password">
+                Lösenord
+              </label>
+            </article>
             <input
               id="password"
               name="password"
-                type="password"
-                className="inputs"
+              type="password"
+              className="inputs"
               required
               placeholder="Skriv ett starkt lösenord"
               value={password}
@@ -250,64 +257,73 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
                 }
               }}
               disabled={loading}
-              
             />
-            
-            </div>
+          </div>
 
           <div className="password-requirements-container">
-           
             {errors.password && errors.passwordRequirements && (
               <>
-                <p className="password-requirements-heading">Lösenordet behöver innehålla:</p>
+                <p className="password-requirements-heading">
+                  Lösenordet behöver innehålla:
+                </p>
                 <ul className="password-requirements">
-                  {errors.passwordRequirements.includes('minLength') && (
-                    <li className="requirement-error">Minst {passwordRequirements.minLength} karaktärer</li>
+                  {errors.passwordRequirements.includes("minLength") && (
+                    <li className="requirement-error">
+                      Minst {passwordRequirements.minLength} karaktärer
+                    </li>
                   )}
-                  {errors.passwordRequirements.includes('uppercase') && (
-                    <li className="requirement-error">Minst 1 stor bokstav (A, B, C)</li>
+                  {errors.passwordRequirements.includes("uppercase") && (
+                    <li className="requirement-error">
+                      Minst 1 stor bokstav (A, B, C)
+                    </li>
                   )}
-                  {errors.passwordRequirements.includes('number') && (
-                    <li className="requirement-error">Minst 1 nummer (1, 2, 3)</li>
+                  {errors.passwordRequirements.includes("number") && (
+                    <li className="requirement-error">
+                      Minst 1 nummer (1, 2, 3)
+                    </li>
                   )}
-                  {errors.passwordRequirements.includes('special') && (
-                    <li className="requirement-error">Minst 1 symbol (!, *, #)</li>
+                  {errors.passwordRequirements.includes("special") && (
+                    <li className="requirement-error">
+                      Minst 1 symbol (!, *, #)
+                    </li>
                   )}
                 </ul>
               </>
-
             )}
-           <div className="checkbox-group">
-            <input id="checkbox" name="checkbox" type="checkbox" required />
-            <label className="gdpr-text "htmlFor="checkbox">Jag godkänner <a className="gdpr" href="">sekretesspolicy</a></label>
-            
-          </div>
-            
+            <div className="checkbox-group">
+              <input id="checkbox" name="checkbox" type="checkbox" required />
+              <label className="gdpr-text " htmlFor="checkbox">
+                Jag godkänner{" "}
+                <a className="gdpr" href="">
+                  sekretesspolicy
+                </a>
+              </label>
+            </div>
           </div>
 
           {errors.general && <p className="error-message">{errors.general}</p>}
 
           <footer className="button-group">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               id="createButton"
               disabled={loading || !isFormValid || redirecting}
               className={!isFormValid ? "button-disabled" : ""}
             >
               {loading ? "Skapar konto..." : "Skapa Företagskonto"}
             </button>
-         
-          <div className="auth-buttons">
-            <button
-              type="button"
-              className="register-btn"
-              onClick={handleLoginClick}
-              disabled={loading}
-            >
-              Logga in istället
-            </button>
+
+            <div className="auth-buttons">
+              <button
+                type="button"
+                className="register-btn"
+                onClick={handleLoginClick}
+                disabled={loading}
+              >
+                Logga in istället
+              </button>
             </div>
-            </footer>
+          </footer>
         </form>
       </div>
     </div>
