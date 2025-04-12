@@ -291,9 +291,6 @@
   border-radius: var(--border-radius-full, 9999px);
   background: var(--colors-base-transparent, rgba(255, 255, 255, 0));
   border: none;
-}
-
-.brandLink a {
   color: var(--base-link, #00287e);
   font-feature-settings: "liga" off, "clig" off;
   font-family: var(--typography-font-family-font-sans, Inter);
@@ -303,9 +300,12 @@
   line-height: 150%;
   letter-spacing: 0.2px;
   text-decoration: underline;
+  cursor: pointer;
 }
 
-.brandLink a:hover,
+
+
+.brandLink:hover,
 .memberLink:hover path,
 .memberLink:hover {
   color: #0143d3;
