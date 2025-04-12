@@ -63,7 +63,7 @@
 
     /* heading-3/leading-normal/medium */
     font-family: var(--typography-font-family-font-sans, Inter);
-    font-size: var(--typography-base-sizes-2x-large-font-size, 1.95313rem);
+    font-size: var( --font-size-2xl);
     font-style: normal;
     font-weight: var(--font-weight-medium, 500);
     line-height: 130%; /* 2.53906rem */
@@ -87,7 +87,7 @@
 
   /* heading-3/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-2x-large-font-size, 1.42375rem);
+  font-size: var( --font-size-2xl);
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
   line-height: 130%; /* 1.85088rem */
@@ -122,7 +122,7 @@ align-self: stretch;
 }
 
 
-
+@media (max-width: 1024px) {
 .headerWrapper {
   display: flex;
   padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
@@ -131,6 +131,7 @@ align-self: stretch;
   gap: var(--spacing-6, 1.5rem);
   align-self: stretch;
   background: var(--base-primary, #e51236);
+}
 }
 
 p.large {

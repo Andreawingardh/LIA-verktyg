@@ -10,28 +10,28 @@ import styles from "./dashboard.module.css";
 import AddPositionButton from "../components/profile/addPositionButton";
 import AddPositionOverlay from "../components/profile/addPositionOverlay";
 import PositionCard from "../components/cards/PositionCard";
-import {PositionsBanner} from "../components/cards/PositionsBanner";
+import { PositionsBanner } from "../components/cards/PositionsBanner";
 import Link from "next/link";
 
 const formatWebsiteForDisplay = (url) => {
   if (!url) return "www.acmeagency.com";
-  
+
   try {
     // Create URL object to parse the url
     const urlObj = new URL(url);
     // Get hostname part without protocol
     let hostname = urlObj.hostname;
-    
+
     // Add www. prefix if it doesn't already have it
-    if (!hostname.startsWith('www.')) {
-      hostname = 'www.' + hostname;
+    if (!hostname.startsWith("www.")) {
+      hostname = "www." + hostname;
     }
-    
+
     return hostname;
   } catch (e) {
     // If it's not a valid URL, ensure it has www. prefix
-    if (!url.startsWith('www.') && !url.startsWith('http')) {
-      return 'www.' + url;
+    if (!url.startsWith("www.") && !url.startsWith("http")) {
+      return "www." + url;
     }
     return url;
   }
@@ -200,8 +200,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* <PositionsBanner /> */}
-
       {/* Completion Confirmation Popup */}
       <CompletionConfirmationPopup
         isOpen={showCompletionPopup}
@@ -215,6 +213,9 @@ export default function DashboardPage() {
         onClose={() => setShowAddPositionOverlay(false)}
         onAddLiaPosition={handleAddLiaPosition}
       />
+
+      {/* <PositionsBanner /> */}
+      <PositionsBanner />
     </main>
   );
 }

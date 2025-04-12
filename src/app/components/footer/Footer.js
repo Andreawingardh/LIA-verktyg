@@ -174,8 +174,9 @@ const Footer = () => {
                 För dig som vill skaffa dig ett yrke. För dig som vill byta yrke
                 och för dig som vill fördjupa dig i ett yrke.
               </p>
-              <button className={styles.brandLink}>
-                <a href="">Gå till yrgo.se</a>
+              <button className={styles.brandLink}
+              onClick={() => window.location.href = "https://www.yrgo.se"}>
+                Gå till yrgo.se
               </button>
               <small className={styles.copyright}>© 2025 Yrgo</small>
             </div>

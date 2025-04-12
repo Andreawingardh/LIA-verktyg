@@ -171,7 +171,6 @@ a.secondary {
   @media screen and (min-width: 460px) {
     /* padding: var(--spacing-3, 0.75rem) var(--spacing-12, 2rem); */
     gap: var(--spacing-8, 2rem);
-    
   }
 }
 
@@ -320,6 +319,15 @@ a.secondary {
   background: var(--base-primary, #e51236);
   border: none;
   color: #fff;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.eventButton:hover {
+  border-radius: var(--border-radius-full, 624.9375rem);
+border: 1px solid var(--base-primary-foreground, #FFF);
+background: var(--base-primary-foreground, #FFF);
+color: var(--base-primary, #E51236);
 }
 
 .busyContentWrapper {
@@ -379,6 +387,8 @@ a.secondary {
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-secondary, #001a52);
   color: #fff;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
 }
 
 .createProfileButton:hover {
@@ -419,7 +429,6 @@ a.secondary {
   margin: auto 0;
   text-align: center;
 
-
   /* Desktop */
   @media screen and (min-width: 460px) {
     display: flex;
@@ -450,7 +459,7 @@ a.secondary {
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-4, 1rem);
-  width:100%;
+  width: 100%;
 }
 
 .ctaText h3 {

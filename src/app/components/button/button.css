@@ -19,7 +19,6 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%;
   letter-spacing: 0.2px;
-  border: none;
   cursor: pointer;
   transition: background-color .3s, color .3s, border-color .3s;
 }
@@ -41,15 +40,7 @@
 }
 
 .buttonEvent:hover {
-  display: inline-flex;
-  height: var(--height-h-11, 2.75rem);
-  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2, 0.5rem);
-  flex-shrink: 0;
   color: #001a52;
-  border-radius: var(--border-radius-full, 624.9375rem);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-background, #fff);
 }

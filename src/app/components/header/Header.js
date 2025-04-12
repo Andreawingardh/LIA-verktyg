@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "@/utils/supabase/client";
 import { logout } from "../../login/actions";
 import LoginPopup from "../form/LoginPopup";
@@ -16,12 +16,19 @@ export default function Header({ metadata }) {
   const [loading, setLoading] = useState(true);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
 
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Monitor route changes to close menu
+  useEffect(() => {
+    closeMenu();
+  }, [pathname]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -82,15 +89,17 @@ export default function Header({ metadata }) {
               if (e.shiftKey && document.activeElement === firstElement) {
                 e.preventDefault();
                 lastElement.focus();
-              }
-              else if (!e.shiftKey && document.activeElement === lastElement) {
+              } else if (
+                !e.shiftKey &&
+                document.activeElement === lastElement
+              ) {
                 e.preventDefault();
                 firstElement.focus();
               }
             }
 
             if (e.key === "Escape") {
-              setIsMenuOpen(false);
+              closeMenu();
               menuButtonRef.current?.focus();
             }
           };
@@ -112,7 +121,7 @@ export default function Header({ metadata }) {
     setShowRegistrationPopup(false);
     setShowLoginPopup(true);
     if (isMobile) {
-      setIsMenuOpen(false);
+      closeMenu();
     }
   };
 
@@ -122,13 +131,13 @@ export default function Header({ metadata }) {
       setShowLoginPopup(false);
     }, 50);
     if (isMobile) {
-      setIsMenuOpen(false);
+      closeMenu();
     }
   };
 
   const handleLogout = async () => {
     if (isMobile) {
-      setIsMenuOpen(false);
+      closeMenu();
     }
 
     try {
@@ -141,12 +150,27 @@ export default function Header({ metadata }) {
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    if (isMenuOpen) {
+      closeMenu();
+    } else {
+      setIsMenuOpen(true);
+      setIsClosing(false);
+    }
+  };
+
+  const closeMenu = () => {
+    if (isMenuOpen) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsMenuOpen(false);
+        setIsClosing(false);
+      }, 400); 
+    }
   };
 
   const handleProfileButtonClick = () => {
     if (isMobile) {
-      setIsMenuOpen(false);
+      closeMenu();
     }
 
     if (user) {
@@ -154,6 +178,16 @@ export default function Header({ metadata }) {
     } else {
       handleShowRegistration();
     }
+  };
+
+  const handleNavLinkClick = () => {
+    closeMenu();
+  };
+
+  const getMenuClassName = () => {
+    if (!isMenuOpen) return styles.mobileNavClosed;
+    if (isClosing) return `${styles.mobileNavOpen} ${styles.mobileNavClosing}`;
+    return styles.mobileNavOpen;
   };
 
   const InternifyLogo = () => (
@@ -214,6 +248,7 @@ export default function Header({ metadata }) {
                   className={styles.linkWrapper}
                   href="/"
                   aria-label="Internify Home"
+                  onClick={handleNavLinkClick}
                 >
                   <span className={styles.logoText} aria-hidden="true">
                     <InternifyLogo />
@@ -277,9 +312,7 @@ export default function Header({ metadata }) {
 
             <nav
               id="mobile-menu"
-              className={`${styles.mobileNav} ${
-                isMenuOpen ? styles.mobileNavOpen : styles.mobileNavClosed
-              }`}
+              className={`${styles.mobileNav} ${getMenuClassName()}`}
               aria-label="Mobile Navigation"
               aria-hidden={!isMenuOpen}
               ref={menuRef}
@@ -289,7 +322,7 @@ export default function Header({ metadata }) {
                   <Link
                     href="/event"
                     className={styles.mobileNavLink}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={handleNavLinkClick}
                   >
                     <span>Mingelevent</span>
                     <span className={styles.arrow} aria-hidden="true">
@@ -314,7 +347,7 @@ export default function Header({ metadata }) {
                   <Link
                     href="/companies"
                     className={styles.mobileNavLink}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={handleNavLinkClick}
                   >
                     <span>Företagslistan</span>
                     <span className={styles.arrow} aria-hidden="true">
