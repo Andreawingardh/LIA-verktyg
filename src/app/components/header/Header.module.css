@@ -58,10 +58,10 @@
   width: 100%;
   height: var(--width-w-16, 64px);
   display: flex;
-height: var(--width-w-16, 64px);
-justify-content: center;
-align-items: center;
-align-self: stretch;
+  height: var(--width-w-16, 64px);
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
   background: var(--base-background, #fff);
   position: relative;
   z-index: 10;
@@ -155,6 +155,13 @@ align-self: stretch;
   visibility: visible;
 }
 
+.mobileNavClosing {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+  visibility: visible;
+}
+
 .mobileNavList {
   display: flex;
   padding: 0px var(--spacing-4, 16px);
@@ -196,6 +203,7 @@ align-self: stretch;
   width: 100%;
   padding: var(--spacing-2, 8px);
   border-radius: 4px;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .mobileNavLink:hover {
@@ -332,6 +340,7 @@ align-self: stretch;
   letter-spacing: 0.2px;
   text-decoration: none;
   position: relative;
+  transition: background-color .3s, color .3s, border-color .3s;
 }
 
 .desktopNavLink:focus-visible {
