@@ -5,6 +5,7 @@ import { supabase } from "../../../utils/supabase/client";
 import styles from "../../dashboard/dashboard.module.css";
 import "../cards/positioncard.css";
 import Link from "next/link";
+import { PositionsBanner } from "../cards/PositionsBanner";
 
 const formatWebsiteForDisplay = (url) => {
   if (!url) return "www.acmeagency.com";
@@ -223,8 +224,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                       Kontakta företaget
                     </a>
                   </div>
-                  )}
-                  
+                )}
               </div>
 
               {/* Position Cards Section */}
@@ -243,6 +243,8 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
           )}
         </div>
       </div>
+       {/* <PositionsBanner /> */}
+       <PositionsBanner />
     </main>
   );
 }
@@ -412,6 +414,9 @@ function PublicPositionCards({
           Det finns inga tillgängliga positioner för detta företag.
         </p>
       )}
+
+     
     </div>
+    
   );
 }
