@@ -243,8 +243,8 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
           )}
         </div>
       </div>
-       {/* <PositionsBanner /> */}
-       <PositionsBanner />
+      {/* <PositionsBanner /> */}
+      <PositionsBanner />
     </main>
   );
 }
@@ -414,9 +414,6 @@ function PublicPositionCards({
           Det finns inga tillgängliga positioner för detta företag.
         </p>
       )}
-
-     
     </div>
-    
   );
 }

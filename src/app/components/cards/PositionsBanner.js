@@ -14,6 +14,24 @@ export const PositionsBanner = () => {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [companiesData, setCompaniesData] = useState([]);
   const [fetchData, setFetchData] = useState(true);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+ 
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const { data } = await supabase.auth.getUser();
+        setUser(data.user);
+      } catch (error) {
+        console.error("Error checking user:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
 
   const handleShowRegistration = () => {
     setShowRegistrationPopup(true);
@@ -71,11 +89,13 @@ export const PositionsBanner = () => {
           </div>
         </div>
 
-        <Button
-          text="Skapa företagsprofil"
-          className="light-button"
-          onClick={() => setShowRegistrationPopup(true)}
-        />
+        {!isLoading && !user && (
+          <Button
+            text="Skapa företagsprofil"
+            className="light-button"
+            onClick={() => setShowRegistrationPopup(true)}
+          />
+        )}
 
         <Link href="/companies">
           <Button
