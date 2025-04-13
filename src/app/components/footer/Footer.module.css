@@ -123,12 +123,18 @@
 }
 
 .line {
-  min-width: 22.375rem;
   height: 0.0625rem;
   position: relative;
   background: var(--base-border, #b3c1c7);
   width: 100%;
 }
+
+@media (max-width: 960px) {
+  .lineWrapper {
+    width: 92%; 
+  }
+}
+
 
 .teamList {
   display: flex;
