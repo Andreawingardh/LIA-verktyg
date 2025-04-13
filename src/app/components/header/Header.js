@@ -7,13 +7,17 @@ import { supabase } from "@/utils/supabase/client";
 import { logout } from "../../login/actions";
 import LoginPopup from "../form/LoginPopup";
 import RegistrationPopup from "../form/RegistrationPopup";
+import CancelConfirmationPopup from "../form/CancelConfirmationPopup";
 import styles from "./Header.module.css";
 
 export default function Header({ metadata }) {
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showCancelPopup, setShowCancelPopup] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isInRegistrationFlow, setIsInRegistrationFlow] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -25,7 +29,32 @@ export default function Header({ metadata }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  // Monitor route changes to close menu
+
+  useEffect(() => {
+    const registrationStep = localStorage.getItem("registrationStep");
+    const registrationPages = ["/company/baseInfo", "/company/description", "/company/contact"];
+    
+   
+    setIsInRegistrationFlow(
+      registrationPages.includes(pathname) && 
+      (registrationStep === "baseInfo" || registrationStep === "description" || registrationStep === "contact")
+    );
+  }, [pathname]);
+
+
+  useEffect(() => {
+    if (showCancelPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showCancelPopup]);
+
+
   useEffect(() => {
     closeMenu();
   }, [pathname]);
@@ -118,6 +147,12 @@ export default function Header({ metadata }) {
   }, [isMenuOpen]);
 
   const handleShowLogin = () => {
+    if (isInRegistrationFlow) {
+      setPendingNavigation(() => handleShowLogin);
+      setShowCancelPopup(true);
+      return;
+    }
+    
     setShowRegistrationPopup(false);
     setShowLoginPopup(true);
     if (isMobile) {
@@ -126,6 +161,12 @@ export default function Header({ metadata }) {
   };
 
   const handleShowRegistration = () => {
+    if (isInRegistrationFlow) {
+      setPendingNavigation(() => handleShowRegistration);
+      setShowCancelPopup(true);
+      return;
+    }
+    
     setShowRegistrationPopup(true);
     setTimeout(() => {
       setShowLoginPopup(false);
@@ -136,6 +177,12 @@ export default function Header({ metadata }) {
   };
 
   const handleLogout = async () => {
+    if (isInRegistrationFlow) {
+      setPendingNavigation(() => handleLogout);
+      setShowCancelPopup(true);
+      return;
+    }
+    
     if (isMobile) {
       closeMenu();
     }
@@ -169,6 +216,12 @@ export default function Header({ metadata }) {
   };
 
   const handleProfileButtonClick = () => {
+    if (isInRegistrationFlow) {
+      setPendingNavigation(() => handleProfileButtonClick);
+      setShowCancelPopup(true);
+      return;
+    }
+    
     if (isMobile) {
       closeMenu();
     }
@@ -180,8 +233,41 @@ export default function Header({ metadata }) {
     }
   };
 
-  const handleNavLinkClick = () => {
+  const handleNavLinkClick = (e, path) => {
+    if (isInRegistrationFlow) {
+      e.preventDefault();
+      setPendingNavigation(() => () => router.push(path));
+      setShowCancelPopup(true);
+      return;
+    }
+    
     closeMenu();
+  };
+
+  const handleCancelConfirm = () => {
+    // Clear registration data and execute pending navigation
+    localStorage.removeItem("registrationStep");
+    localStorage.removeItem("registrationEmail");
+    localStorage.removeItem("registrationPassword");
+    localStorage.removeItem("companyName");
+    localStorage.removeItem("companyDescription");
+    localStorage.removeItem("companyLocation");
+    localStorage.removeItem("hasLogo");
+    localStorage.removeItem("hasDisplayImage");
+    localStorage.removeItem("logoUrl");
+    localStorage.removeItem("displayImageUrl");
+    
+    setShowCancelPopup(false);
+    
+    if (pendingNavigation) {
+      pendingNavigation();
+      setPendingNavigation(null);
+    }
+  };
+
+  const handleCancelClose = () => {
+    setShowCancelPopup(false);
+    setPendingNavigation(null);
   };
 
   const getMenuClassName = () => {
@@ -248,7 +334,7 @@ export default function Header({ metadata }) {
                   className={styles.linkWrapper}
                   href="/"
                   aria-label="Internify Home"
-                  onClick={handleNavLinkClick}
+                  onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/")}
                 >
                   <span className={styles.logoText} aria-hidden="true">
                     <InternifyLogo />
@@ -322,7 +408,7 @@ export default function Header({ metadata }) {
                   <Link
                     href="/event"
                     className={styles.mobileNavLink}
-                    onClick={handleNavLinkClick}
+                    onClick={(e) => handleNavLinkClick(e, "/event")}
                   >
                     <span>Mingelevent</span>
                     <span className={styles.arrow} aria-hidden="true">
@@ -347,7 +433,7 @@ export default function Header({ metadata }) {
                   <Link
                     href="/companies"
                     className={styles.mobileNavLink}
-                    onClick={handleNavLinkClick}
+                    onClick={(e) => handleNavLinkClick(e, "/companies")}
                   >
                     <span>Företagslistan</span>
                     <span className={styles.arrow} aria-hidden="true">
@@ -430,6 +516,7 @@ export default function Header({ metadata }) {
                   className={styles.desktopLogo}
                   href="/"
                   aria-label="Internify Home"
+                  onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/")}
                 >
                   <span className={styles.desktopLogoText} aria-hidden="true">
                     <InternifyLogo />
@@ -440,12 +527,20 @@ export default function Header({ metadata }) {
                 <nav className={styles.desktopNav} aria-label="Main Navigation">
                   <ul className={styles.desktopNavList}>
                     <li className={styles.desktopNavItem}>
-                      <Link href="/event" className={styles.desktopNavLink}>
+                      <Link 
+                        href="/event" 
+                        className={styles.desktopNavLink}
+                        onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/event")}
+                      >
                         Mingelevent
                       </Link>
                     </li>
                     <li className={styles.desktopNavItem}>
-                      <Link href="/companies" className={styles.desktopNavLink}>
+                      <Link 
+                        href="/companies" 
+                        className={styles.desktopNavLink}
+                        onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/companies")}
+                      >
                         Företagslistan
                       </Link>
                     </li>
@@ -521,6 +616,13 @@ export default function Header({ metadata }) {
           onShowLogin={handleShowLogin}
         />
       )}
+
+      {/* Cancel Confirmation Popup */}
+      <CancelConfirmationPopup
+        isOpen={showCancelPopup}
+        onClose={handleCancelClose}
+        onConfirm={handleCancelConfirm}
+      />
     </header>
   );
 }
