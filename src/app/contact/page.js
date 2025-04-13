@@ -37,7 +37,7 @@ export default function Contact() {
                 />
               </svg>
             }
-            className="light-button no-frame"
+            className="go-back-button"
           />
 
           <article>

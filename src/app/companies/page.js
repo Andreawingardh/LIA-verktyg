@@ -212,16 +212,16 @@ export default function Companies() {
             </form>
 
             <Button
-              className="light-button"
+              className="light-filter-button"
               onClick={toggleFilter}
-              text={isVisible ? "Stäng filtrering" : "Öppna filtrering"}
+              text={isVisible ? "Stäng filtrering" : "Filtrera efter positioner"}
               hasIcon={true}
               rightIcon={
                 isVisible ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="1.5rem"
-                    height="1.5rem"
+                    width="1rem"
+                    height="1rem"
                     viewBox="0 0 24 24"
                     fill="none"
                   >
@@ -235,8 +235,8 @@ export default function Companies() {
                 ) : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="1.5rem"
-                    height="1.5rem"
+                    width="1rem"
+                    height="1rem"
                     viewBox="0 0 24 24"
                     fill="none"
                   >
@@ -437,13 +437,13 @@ export default function Companies() {
           {/* LIST OF COMPANIES */}
           <section className="companies-list">
             {filteredCompanies.length > 0 && (
-              <h1>Företag med matchande positioner</h1>
+              <h1 className="matching-companies">Företag med matchande positioner</h1>
             )}
 
             {filteredCompanies.map((company) => (
-              <div key={company.id} className="card-company matching">
+              <div key={company.id}>
                 <CardCompany
-                  logoUrl={company.logoUrl}
+                  logoUrl={company.logo_url}
                   applyNowClassName="card-company-2"
                   className="card-company-instance"
                   company={company.name}
@@ -467,7 +467,7 @@ export default function Companies() {
             </Link> */}
               </div>
             ))}
-            {companiesData && <h2>Alla företag</h2>}
+            {companiesData && <h2 className="all-companies">Alla företag</h2>}
             {loading && <div>Loading...</div>}
             {companiesData.map((company) => (
               <div key={company.id}>

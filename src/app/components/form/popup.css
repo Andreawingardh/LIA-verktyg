@@ -827,12 +827,14 @@
 
 .submitButton:hover,
 .primary-button:hover,
+.primary-button:hover path,
 #createButton:hover {
   cursor: pointer;
   border-radius: var(--border-radius-full, 9999px);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-background, #fff);
   color: var(--base-secondary, #001a52);
+  fill: var(--base-secondary, #001a52)
 }
 
 .footer-positions {
@@ -1048,35 +1050,35 @@
   }
 }
 
-.inputs:focus {
+.inputs:focus-visible {
   border-radius: var(--border-radius-xl, 0.75rem);
   border: 2px solid var(--base-outline, #0F1314);
   outline: none; 
 }
 
 
-button:focus,
-#checkbox:focus {
+button:focus-visible,
+#checkbox:focus-visible {
   border-radius: var(--border-radius-full, 624.9375rem);
   border: 2px solid var(--base-primary, #E51236);
   outline: none;
 }
 
-.register-btn:focus {
+.register-btn:focus-visible {
   border-radius: var(--border-radius-full, 624.9375rem);
   border: 2px solid var(--base-primary, #E51236);
   outline: none;
   background-color: transparent; 
 }
 
-#createButton:focus {
+#createButton:focus-visible {
   border-radius: var(--border-radius-full, 624.9375rem);
   border: 2px solid var(--base-primary, #E51236);
   outline: none;
 }
 
 
-.input-error:focus {
+.input-error:focus-visible {
   border-color: #f44336 !important;
 }
 

@@ -341,7 +341,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               <input id="checkbox" name="checkbox" type="checkbox" required />
               <label className="gdpr-text " htmlFor="checkbox">
                 Jag godkänner{" "}
-                <a className="gdpr" href="">
+                <a className="gdpr" href="/privacy-policy">
                   sekretesspolicy 
                 </a>
                 <span className="asterix"> *</span>

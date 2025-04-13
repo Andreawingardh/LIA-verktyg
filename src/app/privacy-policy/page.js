@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
               />
             </svg>
           }
-          className="no-frame"
+          className="go-back-button"
         />
         <section className={styles.textWrapper}>
           <h3>Sekretesspolicy</h3>
