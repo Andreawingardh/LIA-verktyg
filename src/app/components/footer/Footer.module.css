@@ -75,13 +75,12 @@
 }
 
 .ctaButton:hover {
-  background: var(--base-secondary, #001A52);
-  color: var(--base-secondary-foreground, #FFF);
+  background: var(--base-secondary, #001a52);
+  color: var(--base-secondary-foreground, #fff);
 }
 
 .ctaButton:focus {
-  outline: 2px solid var(--base-primary, #E51236);
-  
+  outline: 2px solid var(--base-primary, #e51236);
 }
 
 /* Team Section Styles */
@@ -118,16 +117,17 @@
 .lineWrapper {
   display: flex;
   justify-content: center;
-  max-width: 80rem;
-  position: absolute;
+  max-width: 74rem;
+  position: relative;
+  width: 80%;
 }
 
 .line {
   min-width: 22.375rem;
-height: 0.0625rem;
-position: relative;
-background: var(--base-border, #B3C1C7);
-
+  height: 0.0625rem;
+  position: relative;
+  background: var(--base-border, #b3c1c7);
+  width: 100%;
 }
 
 .teamList {
@@ -155,7 +155,8 @@ background: var(--base-border, #B3C1C7);
 .memberCard {
   display: flex;
   min-width: var(--width-w-64, 256px);
-  padding: var(--spacing-4, 16px) var(--spacing-4, 16px) var(--spacing-2, 8px) var(--spacing-4, 16px);
+  padding: var(--spacing-4, 16px) var(--spacing-4, 16px) var(--spacing-2, 8px)
+    var(--spacing-4, 16px);
   align-items: flex-start;
   gap: var(--spacing-3, 12px);
   flex: 1 0 0;
@@ -317,8 +318,6 @@ background: var(--base-border, #B3C1C7);
   text-decoration: underline;
   cursor: pointer;
 }
-
-
 
 .brandLink:hover,
 .memberLink:hover path,
@@ -522,11 +521,11 @@ background: var(--base-border, #B3C1C7);
     gap: var(--spacing-6, 24px);
     width: 100%;
   }
-  
+
   .siteInfoLayout {
     flex-direction: row;
   }
-  
+
   .brandInfo {
     padding-right: var(--spacing-12, 48px);
   }
@@ -549,7 +548,7 @@ background: var(--base-border, #B3C1C7);
     max-width: 100%;
     padding-right: 0;
   }
-  
+
   .siteInfoSection {
     max-width: 100%;
     width: 100%;
@@ -565,15 +564,16 @@ background: var(--base-border, #B3C1C7);
   .memberCard {
     margin-inline: auto;
   }
-  
+
   .footerNavigation {
     width: 100%;
   }
-  
-  .socialNav, .siteNav {
+
+  .socialNav,
+  .siteNav {
     width: 100%;
   }
-  
+
   .siteInfoSection {
     padding: 0px var(--spacing-4, 16px);
     width: 100%;
