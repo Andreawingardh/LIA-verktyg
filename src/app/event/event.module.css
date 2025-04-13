@@ -16,7 +16,7 @@
   } */
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   .headerWrapper {
     display: flex;
     padding: var(--spacing-8, 2rem) var(--spacing-12, 3rem);
@@ -103,25 +103,22 @@
   align-self: stretch;
 }
 
-.heroImage {
+.headerWrapper img {
   /* Layout mobile */
-  min-height: 16.78125rem;
-  align-self: stretch;
-  aspect-ratio: 358/268.5;
+  min-height: 6.51975rem;
+  object-fit: cover;
+  aspect-ratio: 358 / 104.32;
+  border-radius: var(--border-radius-xl, .75rem);
+  width: 100%;
 
-  background: url("/images/eventpage-hero-image.png") lightgray 50% / cover
-    no-repeat;
-
-  border-radius: var(--border-radius-xl, 0.75rem);
-
-  @media screen and (min-width: 1024px) {
-    max-height: 28.35938rem;
-    flex: 1 0 0;
-    aspect-ratio: 605/453.75;
+  @media screen and (min-width: 960px) {
+    height: 21.5625rem;
+    aspect-ratio: 1184 / 345;
+    max-width: 38rem;
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 960px) {
   .headerWrapper {
     display: flex;
     padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);

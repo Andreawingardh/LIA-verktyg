@@ -325,9 +325,9 @@ a.secondary {
 
 .eventButton:hover {
   border-radius: var(--border-radius-full, 624.9375rem);
-border: 1px solid var(--base-primary-foreground, #FFF);
-background: var(--base-primary-foreground, #FFF);
-color: var(--base-primary, #E51236);
+  border: 1px solid var(--base-primary-foreground, #fff);
+  background: var(--base-primary-foreground, #fff);
+  color: var(--base-primary, #e51236);
 }
 
 .busyContentWrapper {
@@ -386,7 +386,16 @@ color: var(--base-primary, #E51236);
   border-radius: var(--border-radius-full, 624.9375rem);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-secondary, #001a52);
-  color: #fff;
+  color: var(--base-secondary-foreground, #fff);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
   cursor: pointer;
 }

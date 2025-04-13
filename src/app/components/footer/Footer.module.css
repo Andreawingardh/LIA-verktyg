@@ -108,11 +108,26 @@
   text-align: center;
   font-feature-settings: "liga" off, "clig" off;
   font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-2x-large-font-size, 22.78px);
+  font-size: var(--font-size-2xl);
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
   line-height: 130%;
   letter-spacing: -0.2px;
+}
+
+.lineWrapper {
+  display: flex;
+  justify-content: center;
+  max-width: 80rem;
+  position: absolute;
+}
+
+.line {
+  min-width: 22.375rem;
+height: 0.0625rem;
+position: relative;
+background: var(--base-border, #B3C1C7);
+
 }
 
 .teamList {

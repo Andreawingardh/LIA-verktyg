@@ -9,7 +9,7 @@ export default function Positions() {
       
       <div className={styles.headerWrapper}>
         <section className={styles.hero}>
-          <img className={styles.heroImage} />
+          <img className={styles.heroImage} src="/images/eventpage-hero-image.png" />
           <div className={styles.heroContent}>
             <h3 className={styles.textHeader}>
               Välkommen på LIA-event!
