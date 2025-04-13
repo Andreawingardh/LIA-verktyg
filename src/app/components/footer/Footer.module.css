@@ -243,6 +243,16 @@
   flex-direction: column;
   align-items: flex-start;
   flex: 1 0 0;
+  
+}
+
+.descWrapper {
+  display: flex;
+height: var(--width-w-12, 3rem);
+flex-direction: column;
+justify-content: space-between;
+align-items: flex-start;
+align-self: stretch;
 }
 
 /* Site Info Section Styles */

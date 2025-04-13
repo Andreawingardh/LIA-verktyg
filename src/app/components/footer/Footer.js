@@ -99,8 +99,10 @@ const Footer = () => {
                       />
                     </div>
                     <div className={styles.memberInfo}>
+                      <div className={styles.descWrapper}>
                       <h3 className={styles.memberName}>{student.name}</h3>
-                      <p className={styles.memberRole}>{student.role}</p>
+                        <p className={styles.memberRole}>{student.role}</p>
+                        </div>
                       <Link
                         href={student.profileUrl}
                         className={styles.memberLink}
