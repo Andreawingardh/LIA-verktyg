@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import "./companycard.css";
 import Link from "next/link";
-import { Button } from "../button/Button";
+import { Button } from "../buttons/Button";
 import "@/app/globals.css";
 import styles from "@/app/components/cards/eventcard.module.css";
 import { supabase } from "@/utils/supabase/client";
-import "@/app/components/button/button.css";
+import "@/app/components/buttons/button.css";
 import {
   EmailShareButton,
   FacebookMessengerShareButton,

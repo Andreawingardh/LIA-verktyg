@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "@/app/components/cards/PositionsBanner.module.css";
 import { supabase } from "@/utils/supabase/client";
-import { Button } from "../button/Button";
-import "@/app/components/button/button.css";
+import { Button } from "../buttons/Button";
+import "@/app/components/buttons/button.css";
 import RegistrationPopup from "../form/RegistrationPopup";
 import Link from "next/link";
 import LoginPopup from "../form/LoginPopup";

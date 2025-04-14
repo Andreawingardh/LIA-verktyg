@@ -7,9 +7,9 @@ import { CardCompany } from "../components/cards/CompanyCard";
 import "./companies.css";
 import { useRouter } from "next/navigation";
 import "@/app/components/form/popup.css";
-import { Button } from "../components/button/Button";
+import { Button } from "../components/buttons/Button";
 import "@/app/components/form/popup.css";
-import "@/app/components/button/button.css";
+import "@/app/components/buttons/button.css";
 import "@/app/components/form/popup.css";
 import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfileBanner";
 

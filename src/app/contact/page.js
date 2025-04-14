@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import "@/app/globals.css";
 import styles from "./contact.module.css";
-import { Button } from "../components/button/Button";
+import { Button } from "../components/buttons/Button";
 import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfileBanner";
 
 export default function Contact() {
