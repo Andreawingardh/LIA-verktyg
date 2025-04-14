@@ -21,7 +21,6 @@
 }
 
 .card-company .logotype {
-  background-color: #495b62;
   height: 32px;
   position: relative;
   width: 32px;
@@ -35,6 +34,7 @@
   flex-grow: 1;
   gap: 12px;
   position: relative;
+  min-width: 150px;
 }
 
 .card-company .header {
@@ -92,6 +92,19 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-top: 1rem;
+  overflow: hidden;
+color: var(--base-card-foreground, #283236);
+font-feature-settings: 'liga' off, 'clig' off;
+text-overflow: ellipsis;
+
+/* small/leading-normal/medium */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-small-font-size, 0.875rem);
+font-style: normal;
+font-weight: var(--font-weight-medium, 500);
+line-height: 150%; /* 1.3125rem */
+letter-spacing: 0.0125rem;
 }
 
 .card-company .div-wrapper {
@@ -103,6 +116,20 @@
   flex: 1;
 }
 
+.header {
+  overflow: hidden;
+color: var(--base-card-foreground, #283236);
+font-feature-settings: 'liga' off, 'clig' off;
+text-overflow: ellipsis;
+
+/* body/leading-normal/medium */
+font-family: var(--typography-font-family-font-sans, Inter);
+font-size: var(--typography-base-sizes-base-font-size, 1rem);
+font-style: normal;
+font-weight: var(--font-weight-medium, 500);
+line-height: 150%; /* 1.5rem */
+letter-spacing: 0.0125rem;
+}
 .card-company .div {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;

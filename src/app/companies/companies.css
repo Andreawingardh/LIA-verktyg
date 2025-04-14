@@ -14,7 +14,7 @@
   align-self: stretch;
   justify-content: center;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 960px) {
     /* padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
     justify-content: center;
     align-items: flex-start;
@@ -34,7 +34,7 @@
   width: 100%;
   max-width: 80rem;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     max-width: 80rem;
     padding: 0rem var(--spacing-12, 3rem);
@@ -45,6 +45,36 @@
   }
 }
 
+.companies-list{
+  display: flex;;
+}
+
+.all-companies {
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--font-size-base);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+}
+
+.matching-companies {
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--font-size-base);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+}
+
 .image-wrapper {
   display: flex;
   max-width: 80rem;
@@ -52,6 +82,11 @@
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
+  width: 100%;
+
+  @media screen and (min-width: 960px){
+    padding: 0rem var(--spacing-12, 3rem);
+  }
 }
 
 .card-company {
@@ -111,7 +146,7 @@
   align-self: stretch;
   width: 100%;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 960px) {
     flex: 1 0 0;
     align-items: stretch;
     width: 100%;
@@ -126,8 +161,6 @@
 .card-company-instance {
   width: 100%;
 }
-
-
 
 .tags-container {
   /* Layout mobile */
@@ -179,13 +212,13 @@ h4 {
   line-height: 140%; /* 1.77188rem */
   letter-spacing: -0.00625rem;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 960px) {
     color: var(--base-foreground, #0f1314);
     font-feature-settings: "liga" off, "clig" off;
 
     /* heading-4/leading-normal/medium */
     font-family: var(--typography-font-family-font-sans, Inter);
-    font-size: var(--typography-base-sizes-xlarge-font-size, 1.5625rem);
+    font-size: var( --font-size-xl);
     font-style: normal;
     font-weight: var(--font-weight-medium, 500);
     line-height: 140%; /* 2.1875rem */
@@ -195,15 +228,30 @@ h4 {
 
 .cover-wrapper img {
   /* Style mobile */
-  height: 6.51975rem;
+  min-height: 6.51975rem;
   object-fit: cover;
   aspect-ratio: 358/104.32;
-
+  border-radius: var(--border-radius-xl, 0.75rem);
+  width: 100%;
+  
   /* Style desktop */
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 960px) {
     height: 21.5625rem;
     aspect-ratio: 1184/345;
   }
+}
+
+.search-bar-and-filter-wrapper p {
+  color: var(--base-muted-foreground, #495B62);
+  font-feature-settings: 'liga' off, 'clig' off;
+  
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
 }
 
 .search-bar-and-filter-wrapper .light-button {
@@ -284,7 +332,7 @@ h4 {
   align-items: flex-start;
   gap: 1rem;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     width: 29.6875rem;
     flex-direction: column;

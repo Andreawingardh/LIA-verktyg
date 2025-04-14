@@ -18,7 +18,6 @@ export default function RemovePositionButton({ position, onPositionUpdate }) {
   const handleDeleteConfirm = async () => {
     try {
       setIsSaving(true);
-      console.log(`Deleting position ID: ${position.id}`);
 
       // Call the RPC function with the correct name and parameter
       const { data, error } = await supabase.rpc(
@@ -27,18 +26,17 @@ export default function RemovePositionButton({ position, onPositionUpdate }) {
       );
 
       if (error) {
-        console.error("Error deleting position:", error);
         throw error;
       }
 
-      console.log("Position and related entries deleted successfully");
+  
 
       // Show success message
       setSuccessMessage("Positionen har tagits bort");
 
       // Notify parent component
       if (onPositionUpdate && typeof onPositionUpdate === "function") {
-        console.log("Calling onPositionUpdate callback after deletion");
+
         onPositionUpdate(null); // Pass null to indicate deletion
       }
 

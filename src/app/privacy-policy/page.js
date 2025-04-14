@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./privacypolicy.module.css";
 import "@/app/globals.css";
 import { useRouter } from "next/navigation";
-import { Button } from "../components/button/Button";
+import { Button } from "../components/buttons/Button";
 import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfileBanner";
 
 export default function PrivacyPolicy() {
@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
               />
             </svg>
           }
-          className="no-frame"
+          className="go-back-button"
         />
         <section className={styles.textWrapper}>
           <h3>Sekretesspolicy</h3>

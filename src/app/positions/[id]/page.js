@@ -24,7 +24,6 @@ export default function PositionDetailPage() {
           setError(error);
           return;
         }
-        console.log(position.name);
         setPositionData(position || []);
       } catch (e) {
         setError(e);
@@ -34,7 +33,7 @@ export default function PositionDetailPage() {
 
     fetchData();
   }, []);
-  console.log(positionData);
+ 
 
   if (error) {
     return <div>Error loading companies: {error.message}</div>;

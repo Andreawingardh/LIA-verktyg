@@ -1,5 +1,5 @@
 .page {
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     max-width: 80rem;
     flex-direction: column;
@@ -168,10 +168,9 @@ a.secondary {
   justify-content: space-between;
   align-items: center;
 
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     /* padding: var(--spacing-3, 0.75rem) var(--spacing-12, 2rem); */
     gap: var(--spacing-8, 2rem);
-    
   }
 }
 
@@ -192,7 +191,7 @@ a.secondary {
     0px 31px 31px 0px rgba(229, 18, 54, 0.17),
     0px 8px 17px 0px rgba(229, 18, 54, 0.2);
 
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: none;
   }
 }
@@ -200,7 +199,7 @@ a.secondary {
 .ellipseDesktop {
   display: none;
 
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: block;
     position: absolute;
     left: 50%;
@@ -247,7 +246,7 @@ a.secondary {
   height: 1.5rem;
   flex-shrink: 0;
 
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     width: 12.25rem;
     height: 3rem;
@@ -285,7 +284,7 @@ a.secondary {
   line-height: 150%; /* 1.6875rem */
   letter-spacing: 0.00938rem;
 
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     gap: 2rem;
     margin: 0 auto;
@@ -320,6 +319,15 @@ a.secondary {
   background: var(--base-primary, #e51236);
   border: none;
   color: #fff;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.eventButton:hover {
+  border-radius: var(--border-radius-full, 624.9375rem);
+  border: 1px solid var(--base-primary-foreground, #fff);
+  background: var(--base-primary-foreground, #fff);
+  color: var(--base-primary, #e51236);
 }
 
 .busyContentWrapper {
@@ -338,7 +346,7 @@ a.secondary {
   align-self: stretch;
 
   /* Desktop */
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     padding: var(--spacing-12, 3rem);
     flex-direction: column;
@@ -358,7 +366,7 @@ a.secondary {
   align-self: stretch;
 
   /* Desktop */
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     flex-direction: row;
     padding: var(--spacing-24, 6rem) var(--spacing-12, 3rem);
     justify-content: center;
@@ -378,7 +386,18 @@ a.secondary {
   border-radius: var(--border-radius-full, 624.9375rem);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-secondary, #001a52);
-  color: #fff;
+  color: var(--base-secondary-foreground, #fff);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
 }
 
 .createProfileButton:hover {
@@ -399,7 +418,7 @@ a.secondary {
 
   /* Desktop */
 
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     padding: 0rem var(--spacing-12, 3rem);
     flex-direction: column;
@@ -419,9 +438,8 @@ a.secondary {
   margin: auto 0;
   text-align: center;
 
-
   /* Desktop */
-  @media screen and (min-width: 460px) {
+  @media screen and (min-width: 960px) {
     display: flex;
     max-width: 48.875rem;
     flex-direction: column;
@@ -450,7 +468,7 @@ a.secondary {
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-4, 1rem);
-  width:100%;
+  width: 100%;
 }
 
 .ctaText h3 {

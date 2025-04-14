@@ -37,11 +37,8 @@ export default function CreatePositionForm({ user, onClose }) {
 
       if (insertError) throw insertError;
 
-      console.log("Position inserted successfully", insertData);
-
       // Assuming insertData is an array with the inserted row
       const positionId = insertData[0].id;
-      console.log(positionId);
 
       // Prepare skills data for insertion (combine both arrays)
       const allSelectedSkills = [...selectedMainSkills, ...selectedSoftware];
@@ -57,8 +54,6 @@ export default function CreatePositionForm({ user, onClose }) {
         .insert(skillsToInsert);
 
       if (skillsError) throw skillsError;
-
-      console.log("Skills inserted successfully");
 
       setTimeout(() => {
         if (typeof onClose === "function") {
@@ -87,7 +82,6 @@ export default function CreatePositionForm({ user, onClose }) {
     }));
     setSelectedTable(e.target.name);
     try {
-
       const { data: skillData, error: skillsError } = await supabase
         .from("skills_" + e.target.name)
         .select("*")
@@ -101,7 +95,7 @@ export default function CreatePositionForm({ user, onClose }) {
       if (skillsError || softwareError) {
         throw skillsError || softwareError;
       }
-      console.log("Fetched data:", { skillData, softwareData });
+
       setSkillsOptions(skillData);
       setSoftwareOptions(softwareData);
       // Reset selected skills when changing title
@@ -185,7 +179,7 @@ export default function CreatePositionForm({ user, onClose }) {
         </section>
       </div>
 
-      <div className="formGroup">
+      {selectedTable && selectedTable.length > 0 && (<div className="formGroup">
         <label className="formLabel">Antal platser</label>
         <div className="tabGroup">
           {[1, 2, 3, 4, 5].map((number) => (
@@ -200,8 +194,8 @@ export default function CreatePositionForm({ user, onClose }) {
               {number}
             </button>
           ))}
-        </div>
-      </div>
+        </div> 
+      </div>)}
 
       {skillsOptions.length > 0 && (
         <div className="skillsSection">
@@ -293,7 +287,11 @@ export default function CreatePositionForm({ user, onClose }) {
                       : "skillButton"
                   }
                   onClick={() => handleSoftwareToggle(software)}
-                ><img src={`/images/software-icons/${software.skills_name}.svg`} alt={software.skills_name} />
+                >
+                  <img
+                    src={`/images/software-icons/${software.skills_name}.svg`}
+                    alt={software.skills_name}
+                  />
                   {software.skills_name}
                   {isSoftwareSelected(software.id) ? (
                     <svg

@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import "./companycard.css";
 import Link from "next/link";
-import { Button } from "../button/Button";
+import { Button } from "../buttons/Button";
 import "@/app/globals.css";
 import styles from "@/app/components/cards/eventcard.module.css";
 import { supabase } from "@/utils/supabase/client";
-import  "@/app/components/button/button.css";
+import "@/app/components/buttons/button.css";
 import {
   EmailShareButton,
   FacebookMessengerShareButton,
@@ -90,7 +90,6 @@ export const EventCard = ({ IsSubmitted }) => {
 
       if (data) {
         setSubmitStatus({ success: true });
-        console.log(data);
       }
     } catch (e) {
       console.error(e);
@@ -130,7 +129,7 @@ export const EventCard = ({ IsSubmitted }) => {
                 </div>
                 <div className={styles.inputSingle}>
                   <label>
-                    Input<span className={styles.asterix}> *</span>
+                    E-post<span className={styles.asterix}> *</span>
                   </label>
                   <input
                     name="email"
@@ -139,15 +138,21 @@ export const EventCard = ({ IsSubmitted }) => {
                     required
                   />
                 </div>
-                
+
                 <div className={styles.checkbox}>
                   <input type="checkbox" required />
-                  Jag godkänner <a href="/privacy-policy">sekretesspolicyn.</a> <span className={styles.asterix}> *</span>
+                  Jag godkänner <a href="/privacy-policy">
+                    sekretesspolicy
+                  </a>{" "}
+                  <span className={styles.asterix}> *</span>
                 </div>
-                </section>
+              </section>
               <div className={styles.confirmButton}>
-                <Button className="buttonEvent" text="Jag vill gå på eventet!" />
-                </div>
+                <Button
+                  className="buttonEvent"
+                  text="Jag vill gå på eventet!"
+                />
+              </div>
               {!submitStatus.success && <div> {submitStatus.message}</div>}
             </form>
           )}

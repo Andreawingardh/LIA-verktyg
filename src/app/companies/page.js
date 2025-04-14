@@ -7,9 +7,9 @@ import { CardCompany } from "../components/cards/CompanyCard";
 import "./companies.css";
 import { useRouter } from "next/navigation";
 import "@/app/components/form/popup.css";
-import { Button } from "../components/button/Button";
+import { Button } from "../components/buttons/Button";
 import "@/app/components/form/popup.css";
-import "@/app/components/button/button.css";
+import "@/app/components/buttons/button.css";
 import "@/app/components/form/popup.css";
 import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfileBanner";
 
@@ -69,6 +69,7 @@ export default function Companies() {
       console.log(e);
       setError(e);
     }
+
   }
 
   const handleSearchInputChange = async (e) => {
@@ -94,7 +95,7 @@ export default function Companies() {
         // Throw the actual errors
         throw skillsError;
       }
-      console.log("Fetched data:", { skillData });
+
       setSkillsData(skillData);
       setLoading(false);
     } catch (err) {
@@ -134,7 +135,6 @@ export default function Companies() {
       .select("positions(*)") // Fetch positions related to the skill
       .in("skills_id", skillIds); // Assuming 'skill_id' is the column in the linking table
 
-    console.log({ matchingpositions: positions });
     if (positionsError) {
       console.error("Error fetching positions:", positionsError);
     } else {
@@ -149,12 +149,10 @@ export default function Companies() {
         .select("*")
         .in("user_id", userIds); // Fetch companies where user_id matches
 
-      console.log({ matchingcompanies: matchingCompanies });
       if (companiesError) {
         console.error("Error fetching companies:", companiesError);
       }
       setFilteredCompanies(matchingCompanies);
-      console.log(filteredCompanies);
     }
   }
 
@@ -225,16 +223,17 @@ export default function Companies() {
             </form>
 
             <Button
-              className="light-button"
+
+              className="light-filter-button"
               onClick={toggleFilter}
-              text={isVisible ? "Stäng filtrering" : "Öppna filtrering"}
+              text={isVisible ? "Stäng filtrering" : "Filtrera efter positioner"}
               hasIcon={true}
               rightIcon={
                 isVisible ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="1.5rem"
-                    height="1.5rem"
+                    width="1rem"
+                    height="1rem"
                     viewBox="0 0 24 24"
                     fill="none"
                   >
@@ -248,8 +247,8 @@ export default function Companies() {
                 ) : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="1.5rem"
-                    height="1.5rem"
+                    width="1rem"
+                    height="1rem"
                     viewBox="0 0 24 24"
                     fill="none"
                   >
@@ -449,13 +448,16 @@ export default function Companies() {
 
           {/* LIST OF COMPANIES */}
           <section className="companies-list">
+
             {error && <div>{error}</div>}
+
             {filteredCompanies.length > 0 && (
-              <h1>Företag med matchande positioner</h1>
+              <h1 className="matching-companies">Företag med matchande positioner</h1>
             )}
 
             {filteredCompanies.map((company) => (
-              <div key={company.id} className="card-company matching">
+              <div key={company.id}>
+
                 <CardCompany
                   logoUrl={company.logo_url}
                   applyNowClassName="card-company-2"
@@ -481,7 +483,9 @@ export default function Companies() {
             </Link> */}
               </div>
             ))}
-            {companiesData && <h2>Alla företag</h2>}
+
+            {companiesData && <h2 className="all-companies">Alla företag</h2>}
+
             {loading && <div>Loading...</div>}
             {companiesData.map((company) => (
               <div key={company.id}>

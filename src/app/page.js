@@ -9,7 +9,7 @@ import LoginPopup from "./components/form/LoginPopup";
 import { supabase } from "../utils/supabase/client";
 import { useSupabaseAuth } from "../hook/useSupabaseAuth";
 import EditProfileOverlay from "./components/profile/EditProfileOverlay";
-import { Button } from "./components/button/Button";
+import { Button } from "./components/buttons/Button";
 import { useRouter } from "next/navigation";
 import { CardCompany } from "./components/cards/CompanyCard";
 import { useRef } from "react";

@@ -102,6 +102,7 @@
   height: 100%;
   max-height: 345px;
   object-fit: cover;
+  border-radius: var(--border-radius-xl, 0.75rem);
 }
 
 /* Company logo and header */
@@ -118,7 +119,6 @@ height: var(--width-w-14, 56px);
 aspect-ratio: 1/1;
 border-radius: var(--border-radius-md, 6px);
 border: var(--border-width-border-4, 4px) solid var(--base-background, #FFF);
-background: var(--base-muted-foreground, #495B62);
 }
 
 .company-logo img {

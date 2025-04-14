@@ -1,26 +1,64 @@
 .positionsBanner {
   /* Layout Mobile */
   display: flex;
-  padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-6, 1.5rem);
-  align-self: stretch;
+  padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
+}
 
-  /* Layout desktop */
-  @media screen and (min-width: 960px) {
+.positionsBannerWrapper {
+  display: flex;
+  padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-6, 1.5rem);
+  align-self: stretch;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .positionsBannerWrapper {
+    padding: var(--spacing-8, 2rem) var(--spacing-12, 3rem);
+  }
+
+  .positionsBanner {
     height: 22rem;
     max-width: 80rem;
+    width: 100%;
     gap: var(--spacing-6, 1.5rem);
-    margin-left: auto;
-    margin-right: auto;
-    padding: var(--spacing-8, 2rem) var(--spacing-0, 0rem);
+    padding: 0px var(--spacing-12, 48px);
   }
 }
 
 .positionsBanner p {
   color: var(--base-foreground, #0f1314);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+}
+
+.positionsBanner h4 {
+  color: var(--base-muted-foreground, #495b62);
+  text-align: center;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* heading-4/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-xlarge-font-size, 1.26563rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 140%; /* 1.77188rem */
+  letter-spacing: -0.00625rem;
 }
 
 .rollingBannerContent {
@@ -31,8 +69,24 @@
   align-items: flex-start;
   overflow: hidden;
   position: relative;
-  
-  @media screen and (min-width: 960px) {
+
+  /* Add mask for fade effect */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+
+  @media screen and (min-width: 1024px) {
     width: 100%;
     height: 7rem;
   }
@@ -42,7 +96,6 @@
   /* Size mobile */
   width: 5rem;
   height: 5rem;
-  background-color: #0f1314;
   margin-right: 0.75rem;
 }
 
@@ -63,12 +116,42 @@
 .rollingBannerImageWrapper {
   display: flex;
   width: max-content;
+  max-width: 80rem;
   animation: roll 30s linear infinite;
+  position: relative;
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
-
 }
 
+.rollingBannerContent::before,
+.rollingBannerContent::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 15%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
 
+.rollingBannerContent::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
+  max-width: 2rem;
+}
+
+.rollingBannerContent::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
+  max-width: 2rem;
+}

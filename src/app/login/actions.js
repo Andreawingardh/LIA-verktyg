@@ -44,7 +44,7 @@ export async function login(formData) {
   });
 
   if (error) {
-    console.log("Login error details:", error.message);
+
     
     // Map Supabase error messages to user-friendly errors
     let errorMessage;
@@ -61,7 +61,7 @@ export async function login(formData) {
     redirect("/?error=" + encodeURIComponent(errorMessage));
   }
 
-  console.log("Login successful for:", authData.user.email);
+ 
 
   revalidatePath("/dashboard", "page");
   redirect("/dashboard");
@@ -104,7 +104,7 @@ export async function createAccount(formData) {
     });
 
     if (error) {
-      console.log("Signup error details:", error.message);
+      
       
       // Map error messages to user-friendly errors
       if (error.message.includes("already registered")) {
@@ -129,7 +129,6 @@ export async function signup(formData) {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    console.log("User not found:", userError?.message);
     redirect("/?error=" + encodeURIComponent("Du måste vara inloggad för att skapa en företagsprofil"));
   }
 
@@ -174,7 +173,6 @@ export async function signup(formData) {
       redirect("/?error=" + encodeURIComponent(insertError.message));
     }
 
-    console.log("Data inserted successfully", formData);
 
     // Reset form or show success message
   } catch (error) {

@@ -65,8 +65,6 @@ function BaseInfoForm() {
         .substring(2, 15)}.${fileExt}`;
       const filePath = `company-logos/${fileName}`; // Path in the storage bucket
 
-      console.log("Uploading to:", filePath);
-
       //Here the file is uploaded
       const { error: uploadError } = await supabase.storage
         .from("images") // Your storage bucket name
@@ -89,15 +87,12 @@ function BaseInfoForm() {
 
       //Here we get the success message
       setSuccess(`${type} uploaded successfully!`);
-      console.log("Uploaded file:", data.publicUrl);
 
       //Here we add the file into local storage
       if (type === "logo") {
         localStorage.setItem("logoUrl", data.publicUrl);
         setLogoUrl(data.publicUrl);
-        console.log(data.publicUrl);
       } else if (type === "display") {
-        console.log(data.publicUrl);
         localStorage.setItem("displayImageUrl", data.publicUrl);
         setDisplayImageUrl(data.publicUrl);
       }
@@ -172,21 +167,15 @@ function BaseInfoForm() {
       const file = e.target.files[0];
       setLogo(file);
       const fileUrl = await fileUpload(file, "logo");
-      console.log(fileUrl);
-      console.log(error);
     }
   };
 
   const handleDisplayImageChange = async (e) => {
-    console.log("handleDisplayImageChange triggered");
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setDisplayImage(file);
-      console.log("Selected file:", file);
 
       const fileUrl = await fileUpload(file, "display");
-      console.log("Returned URL:", fileUrl);
-      console.log("Upload Error:", error);
     } else {
       console.error("No file selected");
     }
@@ -251,17 +240,15 @@ function BaseInfoForm() {
             Logga
           </label>
 
-   
-            <input
-              id="logo"
-              name="logo"
-              type="file"
-              className="profileFileInputs"
-              onChange={handleLogoChange}
-              disabled={isSubmitting}
-            />
-            {logoUrl && <p className="success-message">Logga uppladdad</p>}
-          
+          <input
+            id="logo"
+            name="logo"
+            type="file"
+            className="profileFileInputs"
+            onChange={handleLogoChange}
+            disabled={isSubmitting}
+          />
+          {logoUrl && <p className="success-message">Logga uppladdad</p>}
         </article>
 
         <article className="inputSingle">
@@ -269,18 +256,17 @@ function BaseInfoForm() {
             Omslagsbild
           </label>
 
-          
-            <input
-              id="displayImage"
-              name="displayImage"
-              type="file"
-              className="profileFileInputs"
-              onChange={handleDisplayImageChange}
-              disabled={isSubmitting}
-            />
-            {displayImageUrl && (
-              <p className="success-message">Omslagsbild uppladdad</p>
-            )}
+          <input
+            id="displayImage"
+            name="displayImage"
+            type="file"
+            className="profileFileInputs"
+            onChange={handleDisplayImageChange}
+            disabled={isSubmitting}
+          />
+          {displayImageUrl && (
+            <p className="success-message">Omslagsbild uppladdad</p>
+          )}
         </article>
 
         {error && <p style={{ color: "red" }}>{error}</p>}

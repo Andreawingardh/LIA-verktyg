@@ -16,7 +16,7 @@
   } */
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   .headerWrapper {
     display: flex;
     padding: var(--spacing-8, 2rem) var(--spacing-12, 3rem);
@@ -63,7 +63,7 @@
 
     /* heading-3/leading-normal/medium */
     font-family: var(--typography-font-family-font-sans, Inter);
-    font-size: var(--typography-base-sizes-2x-large-font-size, 1.95313rem);
+    font-size: var(--font-size-2xl);
     font-style: normal;
     font-weight: var(--font-weight-medium, 500);
     line-height: 130%; /* 2.53906rem */
@@ -87,7 +87,7 @@
 
   /* heading-3/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-2x-large-font-size, 1.42375rem);
+  font-size: var(--font-size-2xl);
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
   line-height: 130%; /* 1.85088rem */
@@ -96,41 +96,38 @@
 
 .textHeader {
   display: flex;
-min-width: 20.625rem;
-flex-direction: column;
-align-items: flex-start;
-gap: 0.75rem;
-align-self: stretch;
+  min-width: 20.625rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  align-self: stretch;
 }
 
-
-
-.heroImage {
+.headerWrapper img {
   /* Layout mobile */
-  height: 16.78125rem;
-  align-self: stretch;
-  aspect-ratio: 358/268.5;
+  min-height: 6.51975rem;
+  object-fit: cover;
+  aspect-ratio: 358 / 104.32;
+  border-radius: var(--border-radius-xl, .75rem);
+  width: 100%;
 
-  background: url("/images/eventpage-hero-image.png") lightgray 50% / cover
-    no-repeat;
-
-  @media screen and (min-width: 1024px) {
-    height: 28.35938rem;
-    flex: 1 0 0;
-    aspect-ratio: 605/453.75;
+  @media screen and (min-width: 960px) {
+    height: 21.5625rem;
+    aspect-ratio: 1184 / 345;
+    max-width: 38rem;
   }
 }
 
-
-
-.headerWrapper {
-  display: flex;
-  padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-6, 1.5rem);
-  align-self: stretch;
-  background: var(--base-primary, #e51236);
+@media (max-width: 960px) {
+  .headerWrapper {
+    display: flex;
+    padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-6, 1.5rem);
+    align-self: stretch;
+    background: var(--base-primary, #e51236);
+  }
 }
 
 p.large {

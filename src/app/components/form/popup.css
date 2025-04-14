@@ -827,12 +827,14 @@
 
 .submitButton:hover,
 .primary-button:hover,
+.primary-button:hover path,
 #createButton:hover {
   cursor: pointer;
   border-radius: var(--border-radius-full, 9999px);
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-background, #fff);
   color: var(--base-secondary, #001a52);
+  fill: var(--base-secondary, #001a52)
 }
 
 .footer-positions {
@@ -982,6 +984,11 @@
   background-color: #b71c1c;
 }
 
+.input-error {
+  border-color: #f44336 !important;
+  background-color: rgba(244, 67, 54, 0.05) !important;
+}
+
 .loading {
   display: flex;
   justify-content: center;
@@ -1041,5 +1048,37 @@
     flex-direction: column;
     gap: 12px;
   }
+}
+
+.inputs:focus-visible {
+  border-radius: var(--border-radius-xl, 0.75rem);
+  border: 2px solid var(--base-outline, #0F1314);
+  outline: none; 
+}
+
+
+button:focus-visible,
+#checkbox:focus-visible {
+  border-radius: var(--border-radius-full, 624.9375rem);
+  border: 2px solid var(--base-primary, #E51236);
+  outline: none;
+}
+
+.register-btn:focus-visible {
+  border-radius: var(--border-radius-full, 624.9375rem);
+  border: 2px solid var(--base-primary, #E51236);
+  outline: none;
+  background-color: transparent; 
+}
+
+#createButton:focus-visible {
+  border-radius: var(--border-radius-full, 624.9375rem);
+  border: 2px solid var(--base-primary, #E51236);
+  outline: none;
+}
+
+
+.input-error:focus-visible {
+  border-color: #f44336 !important;
 }
 
