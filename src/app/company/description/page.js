@@ -21,7 +21,12 @@ function DescriptionForm() {
   const { user, loading: authLoading } = useSupabaseAuth();
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
-  const [error, setError] = useState("");
+  // Convert to object-based error handling
+  const [errors, setErrors] = useState({
+    description: "",
+    location: "", 
+    general: ""
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showCancelPopup, setShowCancelPopup] = useState(false);
@@ -74,7 +79,32 @@ function DescriptionForm() {
     // Only update if within character limit
     if (newValue.length <= MAX_DESCRIPTION_LENGTH) {
       setDescription(newValue);
+      // Clear error when user types
+      setErrors(prev => ({...prev, description: "", general: ""}));
     }
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { description: "", location: "", general: "" };
+
+    // Validate location (required field)
+    if (!location.trim()) {
+      newErrors.location = "Kontorsort är obligatoriskt";
+      isValid = false;
+    } else if (location.length < 2) {
+      newErrors.location = "Kontorsort är för kort";
+      isValid = false;
+    }
+
+    // Description is optional but we can validate min length if entered
+    if (description.trim() && description.length < 10) {
+      newErrors.description = "Beskrivningen är för kort (minst 10 tecken)";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e) => {
@@ -84,8 +114,13 @@ function DescriptionForm() {
       return;
     }
 
+    // Validate form first
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
-    setError("");
+    setErrors({ description: "", location: "", general: "" });
 
     try {
       localStorage.setItem("companyDescription", description);
@@ -101,7 +136,7 @@ function DescriptionForm() {
       }, 100);
     } catch (err) {
       console.error("Error in Description:", err);
-      setError("Ett fel uppstod när informationen skulle sparas");
+      setErrors(prev => ({...prev, general: "Ett fel uppstod när informationen skulle sparas"}));
       setIsSubmitting(false);
       setRedirecting(false);
     }
@@ -121,7 +156,7 @@ function DescriptionForm() {
 
   return (
     <div className="container">
-      <form className="contentWrapper" onSubmit={handleSubmit}>
+      <form className="contentWrapper" onSubmit={handleSubmit} noValidate>
         <header className="contentHeader">
           <button type="button" className="goBackButton" onClick={handleGoBack}>
             <svg
@@ -152,13 +187,18 @@ function DescriptionForm() {
             id="location"
             name="location"
             type="text"
-            className="profileInputs"
+            className={`profileInputs ${errors.location ? "error-input" : ""}`}
             required
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={(e) => {
+              setLocation(e.target.value);
+              // Clear error when user types
+              setErrors(prev => ({...prev, location: "", general: ""}));
+            }}
             disabled={isSubmitting || redirecting}
             placeholder="Skriv den ort kontoret befinner sig"
           />
+          {errors.location && <p className="error-message">{errors.location}</p>}
         </article>
 
         <article className="inputTextarea">
@@ -173,7 +213,7 @@ function DescriptionForm() {
           <textarea
             id="description"
             name="description"
-            className="textProfileInputs" 
+            className={`textProfileInputs ${errors.description ? "error-input" : ""}`}
             value={description}
             onChange={handleDescriptionChange}
             disabled={isSubmitting || redirecting}
@@ -181,11 +221,12 @@ function DescriptionForm() {
             placeholder="Skriv kort om erat företag och praktikplats"
             maxLength={MAX_DESCRIPTION_LENGTH}
           />
+          {errors.description && <p className="error-message">{errors.description}</p>}
           <p>Vad för projekt brukar ni jobba med?<br></br>
             Vad kan praktikanter förvänta sig?</p>
         </article>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {errors.general && <p className="error-message">{errors.general}</p>}
 
         <footer className="buttonGroup">
           <button

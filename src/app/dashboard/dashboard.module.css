@@ -16,7 +16,7 @@
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 960px) {
   .contentWrapper {
     flex-direction: row;
     gap: 24px;
@@ -46,13 +46,13 @@
   align-self: stretch;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 960px) {
   .profileWrapper {
     flex: 1;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .contentWrapper {
     gap: var(--spacing-24, 96px);
   }
@@ -155,6 +155,7 @@ border: var(--border-width-border-4, 4px) solid var(--base-background, #FFF);
 /* Company description */
 .description {
   width: 100%;
+  word-wrap: break-word;
 }
 
 .description p {
@@ -228,14 +229,8 @@ border: var(--border-width-border-4, 4px) solid var(--base-background, #FFF);
 /* Positions section */
 .positions-section {
   flex: 1;
-  margin-top: 32px;
 }
 
-@media (min-width: 768px) {
-  .positions-section {
-    margin-top: 0;
-  }
-}
 
 /* No profile section */
 .no-profile {

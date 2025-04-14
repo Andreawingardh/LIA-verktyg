@@ -23,7 +23,13 @@ function BaseInfoForm() {
   const [companyName, setCompanyName] = useState("");
   const [logo, setLogo] = useState(null);
   const [displayImage, setDisplayImage] = useState(null);
-  const [error, setError] = useState("");
+  // Convert simple error to object-based error state
+  const [errors, setErrors] = useState({
+    companyName: "",
+    logo: "",
+    displayImage: "",
+    general: ""
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [uploadStatus, setUploadStatus] = useState({ logo: "", display: "" });
@@ -55,7 +61,8 @@ function BaseInfoForm() {
     if (!file) return;
 
     setUploading(true);
-    setError(null);
+    // Clear error states when starting upload
+    setErrors(prev => ({...prev, [type === 'logo' ? 'logo' : 'displayImage']: "", general: ""}));
     setSuccess(null);
 
     try {
@@ -99,7 +106,12 @@ function BaseInfoForm() {
 
       return data.publicUrl;
     } catch (err) {
-      setError(err.message || "File upload failed");
+      // Set specific error based on file type
+      if (type === "logo") {
+        setErrors(prev => ({...prev, logo: `Logga: ${err.message || "Filuppladdning misslyckades"}`}));
+      } else {
+        setErrors(prev => ({...prev, displayImage: `Omslagsbild: ${err.message || "Filuppladdning misslyckades"}`}));
+      }
       console.error("Error uploading file:", err);
       return null;
     } finally {
@@ -124,6 +136,26 @@ function BaseInfoForm() {
     }
   }, [authLoading, user, router, initialized]);
 
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { companyName: "", logo: "", displayImage: "", general: "" };
+
+    // Validate company name - more strict validation
+    if (!companyName || !companyName.trim()) {
+      newErrors.companyName = "Företagsnamn är obligatoriskt";
+      isValid = false;
+    } else if (companyName.trim().length < 2) {
+      newErrors.companyName = "Företagsnamnet är för kort";
+      isValid = false;
+    }
+
+    // No validation for logo and display image as they are optional
+    // But we could have additional validations here
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -131,8 +163,14 @@ function BaseInfoForm() {
       return;
     }
 
+    // Validate form first - validation should be enforced
+    const isValid = validateForm();
+    if (!isValid) {
+      return; // Stop form submission if validation fails
+    }
+
     setIsSubmitting(true);
-    setError("");
+    setErrors({ companyName: "", logo: "", displayImage: "", general: "" });
 
     try {
       localStorage.setItem("companyName", companyName);
@@ -156,7 +194,7 @@ function BaseInfoForm() {
       }, 100);
     } catch (err) {
       console.error("Error in BaseInfo:", err);
-      setError("Ett fel uppstod när informationen skulle sparas");
+      setErrors(prev => ({...prev, general: "Ett fel uppstod när informationen skulle sparas"}));
       setIsSubmitting(false);
       setRedirecting(false);
     }
@@ -167,9 +205,11 @@ function BaseInfoForm() {
   const handleLogoChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      // Clear logo error when user tries again
+      setErrors(prev => ({...prev, logo: "", general: ""}));
 
       if (file.size > MAX_LOGO_FILE_SIZE) {
-        setError("Filen överstiger 2MB. Var vänlig och välj en annan fil.");
+        setErrors(prev => ({...prev, logo: "Filen överstiger 2MB. Var vänlig och välj en annan fil."}));
         return;
       }
 
@@ -183,9 +223,11 @@ function BaseInfoForm() {
   const handleDisplayImageChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      // Clear display image error when user tries again
+      setErrors(prev => ({...prev, displayImage: "", general: ""}));
 
       if (file.size > MAX_DISPLAY_FILE_SIZE) {
-        setError("Filen överstiger 10MB. Var vänlig och välj en annan fil.");
+        setErrors(prev => ({...prev, displayImage: "Filen överstiger 10MB. Var vänlig och välj en annan fil."}));
         return;
       }
 
@@ -208,7 +250,7 @@ function BaseInfoForm() {
 
   return (
     <div className="container">
-      <form className="contentWrapper" onSubmit={handleSubmit}>
+      <form className="contentWrapper" onSubmit={handleSubmit} noValidate>
         <header className="contentHeader">
           {/* <button type="button" className="goBackButton" onClick={handleGoBack}>
             <svg
@@ -239,13 +281,18 @@ function BaseInfoForm() {
             id="companyName"
             name="companyName"
             type="text"
-            className="profileInputs"
-            required
+            className={`profileInputs ${errors.companyName ? "error-input" : ""}`}
+            required="required"
             value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
+            onChange={(e) => {
+              setCompanyName(e.target.value);
+              // Clear error when user types
+              setErrors(prev => ({...prev, companyName: "", general: ""}));
+            }}
             disabled={isSubmitting}
             placeholder="Skriv företagets namn"
           />
+          {errors.companyName && <p className="error-message">{errors.companyName}</p>}
         </article>
 
         <article className="inputSingle">
@@ -257,10 +304,11 @@ function BaseInfoForm() {
             id="logo"
             name="logo"
             type="file"
-            className="profileFileInputs"
+            className={`profileFileInputs ${errors.logo ? "error-input" : ""}`}
             onChange={handleLogoChange}
             disabled={isSubmitting}
           />
+          {errors.logo && <p className="error-message">{errors.logo}</p>}
           {logoUrl && <p className="success-message">Logga uppladdad</p>}
         </article>
 
@@ -273,16 +321,17 @@ function BaseInfoForm() {
             id="displayImage"
             name="displayImage"
             type="file"
-            className="profileFileInputs"
+            className={`profileFileInputs ${errors.displayImage ? "error-input" : ""}`}
             onChange={handleDisplayImageChange}
             disabled={isSubmitting}
           />
+          {errors.displayImage && <p className="error-message">{errors.displayImage}</p>}
           {displayImageUrl && (
             <p className="success-message">Omslagsbild uppladdad</p>
           )}
         </article>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {errors.general && <p className="error-message">{errors.general}</p>}
 
         <footer className="buttonGroup">
           <button

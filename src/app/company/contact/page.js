@@ -22,7 +22,12 @@ function ContactForm() {
   const { user, loading: authLoading } = useSupabaseAuth();
   const [website, setWebsite] = useState("");
   const [contactEmail, setContactEmail] = useState("");
-  const [error, setError] = useState("");
+  // Convert to object-based error handling
+  const [errors, setErrors] = useState({
+    website: "",
+    contactEmail: "",
+    general: ""
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showCancelPopup, setShowCancelPopup] = useState(false);
@@ -51,7 +56,6 @@ function ContactForm() {
       const location = localStorage.getItem("companyLocation");
       const email = localStorage.getItem("registrationEmail");
 
-
       if ((user || email) && description && location) {
         if (registrationStep !== "contact") {
           localStorage.setItem("registrationStep", "contact");
@@ -64,13 +68,47 @@ function ContactForm() {
         setLoading(false);
       } else if (!description || !location) {
         // If we're missing description or location, go back to description page
-
         router.push("/company/description");
       } else {
         setLoading(false);
       }
     }
   }, [authLoading, contactEmail, router, initialized, user]);
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { website: "", contactEmail: "", general: "" };
+
+    // Validate website (required field)
+    if (!website.trim()) {
+      newErrors.website = "Hemsida är obligatoriskt";
+      isValid = false;
+    } else {
+      // Simple URL validation
+      try {
+        new URL(website);
+      } catch (e) {
+        newErrors.website = "Vänligen ange en giltig URL (t.ex. https://example.com)";
+        isValid = false;
+      }
+    }
+
+    // Validate contact email
+    if (!contactEmail.trim()) {
+      newErrors.contactEmail = "Kontaktmail är obligatoriskt";
+      isValid = false;
+    } else {
+      // Simple email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(contactEmail)) {
+        newErrors.contactEmail = "Vänligen ange en giltig e-postadress";
+        isValid = false;
+      }
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,8 +117,13 @@ function ContactForm() {
       return;
     }
 
+    // Validate form first
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
-    setError("");
+    setErrors({ website: "", contactEmail: "", general: "" });
 
     try {
       const email = localStorage.getItem("registrationEmail");
@@ -98,7 +141,17 @@ function ContactForm() {
           password,
         });
 
-        if (signUpError) throw signUpError;
+        if (signUpError) {
+          if (signUpError.message.includes("Email")) {
+            setErrors(prev => ({...prev, general: "Ett problem uppstod med e-postadressen: " + signUpError.message}));
+          } else if (signUpError.message.includes("Password")) {
+            setErrors(prev => ({...prev, general: "Ett problem uppstod med lösenordet: " + signUpError.message}));
+          } else {
+            throw signUpError;
+          }
+          setIsSubmitting(false);
+          return;
+        }
       }
 
       // Get current user
@@ -126,7 +179,15 @@ function ContactForm() {
           },
         ]);
 
-      if (insertError) throw insertError;
+      if (insertError) {
+        // Handle specific database errors
+        if (insertError.code === "23505") { // Unique constraint violation
+          setErrors(prev => ({...prev, general: "Ett företag med samma namn finns redan registrerat"}));
+          setIsSubmitting(false);
+          return;
+        }
+        throw insertError;
+      }
 
       // Set a flag in localStorage to show completion popup on dashboard
       localStorage.setItem("showCompletionPopup", "true");
@@ -150,7 +211,7 @@ function ContactForm() {
       router.push("/dashboard");
     } catch (err) {
       console.error("Error in Contact:", err);
-      setError(err.message || "Ett fel uppstod när profilen skulle skapas");
+      setErrors(prev => ({...prev, general: err.message || "Ett fel uppstod när profilen skulle skapas"}));
       setIsSubmitting(false);
     }
   };
@@ -169,7 +230,7 @@ function ContactForm() {
 
   return (
     <div className="container">
-      <form className="contentWrapper" onSubmit={handleSubmit}>
+      <form className="contentWrapper" onSubmit={handleSubmit} noValidate>
         <button type="button" className="goBackButton" onClick={handleGoBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -201,13 +262,18 @@ function ContactForm() {
             id="website"
             name="website"
             type="url"
-            className="profileInputs"
+            className={`profileInputs ${errors.website ? "error-input" : ""}`}
             required
             value={website}
-            onChange={(e) => setWebsite(e.target.value)}
+            onChange={(e) => {
+              setWebsite(e.target.value);
+              // Clear error when user types
+              setErrors(prev => ({...prev, website: "", general: ""}));
+            }}
             disabled={isSubmitting}
             placeholder="Skriv länken till eran hemsida"
           />
+          {errors.website && <p className="error-message">{errors.website}</p>}
         </article>
 
         <article className="inputSingle">
@@ -218,19 +284,24 @@ function ContactForm() {
             id="contactEmail"
             name="contactEmail"
             type="email"
-            className="profileInputs"
+            className={`profileInputs ${errors.contactEmail ? "error-input" : ""}`}
             required
             value={contactEmail}
-            onChange={(e) => setContactEmail(e.target.value)}
+            onChange={(e) => {
+              setContactEmail(e.target.value);
+              // Clear error when user types
+              setErrors(prev => ({...prev, contactEmail: "", general: ""}));
+            }}
             disabled={isSubmitting}
             placeholder="Skriv företagets kontaktmail"
           />
+          {errors.contactEmail && <p className="error-message">{errors.contactEmail}</p>}
           <p>
-          Kontaktmail kommer synas på eran företagssida.
+            Kontaktmail kommer synas på eran företagssida.
           </p>
         </article>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {errors.general && <p className="error-message">{errors.general}</p>}
 
         <footer className="buttonGroup">
           <button
