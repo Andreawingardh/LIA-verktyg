@@ -105,7 +105,7 @@ export const EventCard = ({ IsSubmitted }) => {
       <div className={styles.eventWrapper}>
         <div className={styles.mainWrapper}>
           <div className={styles.mainInformation}>
-            <h3 className={styles.heading}>Om eventet</h3>
+            <h2 className={styles.heading}>Om eventet</h2>
             <p>
               Mingla med oss för att hitta framtida medarbetare i ert företag
               eller bara jobba tillsammans under LIA. Ni kommer att träffa

@@ -183,21 +183,21 @@ export default function Companies() {
         <div className="image-wrapper">
           <img
             src="/images/eventpage-hero-image.png"
-            alt="Illustration av fyra personer som samarbetar med programmering kring en laptop, med kodsymboler och ikoner på blå bakgrund."
+            alt="Illustration av fyra personer som samarbetar med programmering."
           />
         </div>
       </div>
       <div className="main-wrapper">
         <div className="content-wrapper">
           <section className="search-bar-and-filter-wrapper">
-            <h2>Hitta din nya LIA-plats</h2>
+            <h1>Hitta din nya LIA-plats</h1>
             <p>
               Filtrera och hitta matchande LIA-platser från anslutna företag.
             </p>
             <form className="input-wrapper" onSubmit={handleSearch}>
               <input
                 placeholder="Sök efter företag"
-                name="input-search"
+                id="input-search"
                 onChange={handleSearchInputChange}
               />
               <label htmlFor="input-search">
