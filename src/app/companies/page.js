@@ -51,14 +51,25 @@ export default function Companies() {
   async function handleSearch(e) {
     setLoading(true);
     e.preventDefault();
-    const searchValues = e.target.elements[0].value.trim();
-    const { data, error } = await supabase
-      .from("companies")
-      .select()
-      .textSearch("name", searchValues);
 
-    setCompaniesData(data);
-    setLoading(false);
+    try {
+       const searchValues = e.target.elements[0].value.trim() + ":*";
+      console.log(searchValues);
+      const { data: searchData, error } = await supabase
+        .from("companies")
+        .select()
+        .textSearch("name", searchValues);
+
+      if (error) throw new Error();
+
+      console.log(searchData);
+      setCompaniesData(searchData);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setError(e);
+    }
+
   }
 
   const handleSearchInputChange = async (e) => {
@@ -212,6 +223,7 @@ export default function Companies() {
             </form>
 
             <Button
+
               className="light-filter-button"
               onClick={toggleFilter}
               text={isVisible ? "Stäng filtrering" : "Filtrera efter positioner"}
@@ -436,12 +448,16 @@ export default function Companies() {
 
           {/* LIST OF COMPANIES */}
           <section className="companies-list">
+
+            {error && <div>{error}</div>}
+
             {filteredCompanies.length > 0 && (
               <h1 className="matching-companies">Företag med matchande positioner</h1>
             )}
 
             {filteredCompanies.map((company) => (
               <div key={company.id}>
+
                 <CardCompany
                   logoUrl={company.logo_url}
                   applyNowClassName="card-company-2"
@@ -467,7 +483,9 @@ export default function Companies() {
             </Link> */}
               </div>
             ))}
+
             {companiesData && <h2 className="all-companies">Alla företag</h2>}
+
             {loading && <div>Loading...</div>}
             {companiesData.map((company) => (
               <div key={company.id}>
