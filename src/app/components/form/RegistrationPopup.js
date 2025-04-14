@@ -246,7 +246,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               name="email"
               type="email"
               className={`inputs ${errors.email ? "input-error" : ""}`}
-              required
+              
               placeholder="Skriv din inloggningsmail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -277,7 +277,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               name="password"
               type="password"
               className={`inputs ${errors.password ? "input-error" : ""}`}
-              required
+    
               placeholder="Skriv ett starkt lösenord"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -327,7 +327,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
                 checked={checkbox}
                 onChange={(e) => setCheckbox(e.target.checked)}
                 onBlur={() => validateCheckbox()}
-                required
+              
               />
               <label className="gdpr-text" htmlFor="checkbox">
                 Jag godkänner{" "}

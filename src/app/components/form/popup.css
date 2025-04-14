@@ -405,21 +405,6 @@ input[type="checkbox"].checkbox-error {
   background-color: #ffeeef !important;
 }
 
-/* Make sure there's a clear visual distinction for the error state */
-.checkbox-group:has(#checkbox.checkbox-error) label {
-  color: #b40509;
-}
-
-/* Force the border color for error state (fallback for some browsers) */
-@supports (-webkit-appearance: none) or (-moz-appearance: none) {
-  #checkbox.checkbox-error {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    position: relative;
-  }
-}
-
 .error-message {
   color: var(--base-destructive-foreground, #b40509);
   font-feature-settings: "liga" off, "clig" off;

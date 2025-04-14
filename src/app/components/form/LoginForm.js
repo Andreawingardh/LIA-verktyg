@@ -13,39 +13,92 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
     general: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Track whether fields have been touched
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false
+  });
+  
   const router = useRouter();
+
+  // Handle field blur (when user leaves a field)
+  const handleBlur = (field) => {
+    setTouched({
+      ...touched,
+      [field]: true
+    });
+    
+    // Validate the field when it loses focus
+    validateField(field);
+  };
+
+  // Validate a specific field
+  const validateField = (field) => {
+    let errorMessage = "";
+    
+    if (field === 'email') {
+      if (!email.trim()) {
+        errorMessage = "E-post krävs";
+      } else {
+        // Simple email format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorMessage = "Ogiltig e-postadress";
+        }
+      }
+    } else if (field === 'password') {
+      if (!password.trim()) {
+        errorMessage = "Lösenord krävs";
+      }
+    }
+    
+    setErrors({
+      ...errors,
+      [field]: errorMessage
+    });
+    
+    return !errorMessage; // Return true if valid, false if invalid
+  };
+
+  // Handle input change
+  const handleChange = (field, value) => {
+    if (field === 'email') {
+      setEmail(value);
+    } else if (field === 'password') {
+      setPassword(value);
+    }
+    
+    // Clear the general error when user starts typing
+    setErrors({
+      ...errors,
+      [field]: touched[field] ? validateField(field) ? "" : errors[field] : "",
+      general: ""
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Set all fields as touched
+    setTouched({
+      email: true,
+      password: true
+    });
+    
+    // Reset errors
     setErrors({ email: "", password: "", general: "" });
+    
+    // Validate all fields
+    const isEmailValid = validateField('email');
+    const isPasswordValid = validateField('password');
+    
+    // Check if there are validation errors
+    if (!isEmailValid || !isPasswordValid) {
+      return; // Don't proceed with submission
+    }
+    
     setIsLoading(true);
-
-    // Basic validation before API call
-    let hasErrors = false;
-    const newErrors = { email: "", password: "", general: "" };
-
-    if (!email.trim()) {
-      newErrors.email = "E-post krävs";
-      hasErrors = true;
-    } else {
-      // Simple email format validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        newErrors.email = "Ogiltig e-postadress";
-        hasErrors = true;
-      }
-    }
-
-    if (!password.trim()) {
-      newErrors.password = "Lösenord krävs";
-      hasErrors = true;
-    }
-
-    if (hasErrors) {
-      setErrors(newErrors);
-      setIsLoading(false);
-      return;
-    }
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -70,27 +123,27 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
 
       if (errorMessage.includes("Invalid login credentials")) {
         setErrors({
-          ...newErrors,
+          ...errors,
           general: "Fel e-post eller lösenord. Vänligen försök igen.",
         });
       } else if (errorMessage.includes("Email not confirmed")) {
         setErrors({
-          ...newErrors,
+          ...errors,
           email: "Din e-postadress har inte bekräftats. Kolla din inbox.",
         });
       } else if (errorMessage.includes("Too many requests")) {
         setErrors({
-          ...newErrors,
+          ...errors,
           general: "För många inloggningsförsök. Vänligen försök igen senare.",
         });
       } else if (errorMessage.includes("Invalid email")) {
         setErrors({
-          ...newErrors,
-          email: "Ogiltig e-postadress. Kontrollera och försök igen.",
+          ...errors,
+          email: "E-postadressen är inte giltig. Försök igen eller skapa ett konto.",
         });
       } else {
         setErrors({
-          ...newErrors,
+          ...errors,
           general: "Inloggningen misslyckades: " + errorMessage,
         });
       }
@@ -110,7 +163,7 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
 
   return (
     <>
-      <form className="formwrapper" onSubmit={handleSubmit}>
+      <form className="formwrapper" onSubmit={handleSubmit} noValidate>
         <div className="inputSingle">
           <article className="inputHeader">
             <label className="popupTitle" htmlFor="email">
@@ -121,16 +174,17 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
             id="email"
             name="email"
             type="email"
-            className="inputs"
-            required
+            className={`inputs ${errors.email && touched.email ? "input-error" : ""}`}
             placeholder="Skriv din inloggningsmail"
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setErrors((prev) => ({ ...prev, email: "", general: "" })); // Clear errors when user types
-            }}
+            onChange={(e) => handleChange('email', e.target.value)}
+            onBlur={() => handleBlur('email')}
           />
+          {errors.email && touched.email && (
+            <span className="error-message">{errors.email}</span>
+          )}
         </div>
+        
         <div className="inputSingle">
           <article className="inputHeader">
             <label className="popupTitle" htmlFor="password">
@@ -141,24 +195,22 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
             id="password"
             name="password"
             type="password"
-            className="inputs"
-            required
+            className={`inputs ${errors.password && touched.password ? "input-error" : ""}`}
             placeholder="Skriv ditt lösenord"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setErrors((prev) => ({ ...prev, password: "", general: "" })); // Clear errors when user types
-            }}
+            onChange={(e) => handleChange('password', e.target.value)}
+            onBlur={() => handleBlur('password')}
           />
+          {errors.password && touched.password && (
+            <span className="error-message">{errors.password}</span>
+          )}
           <a className="passwordReset" href="">
             Glömt ditt lösenord?
           </a>
         </div>
         
         {errors.general && (
-          <p
-            className="error-message"
-          >
+          <p className="error-message">
             {errors.general}
           </p>
         )}
