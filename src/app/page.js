@@ -109,66 +109,67 @@ export default function Home() {
         </div>
       </div>
 
-      <section className={styles.mainContentWrapper} ref={landingRef}>
-        <div className={styles.ctaText}>
-          <h2>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h2>
-          <p>
-            Bli upptäckt av Yrgos digital designers och webbutvecklare. Bli
-            kontaktad av relevanta praktikanter.
-          </p>
-          <p>Spara tid och stärk branschens framtid.</p>
-          <Button
-            text="Skapa företagsprofil"
-            className={styles.createProfileButton}
-            onClick={handleShowRegistration}
-          />
-        </div>
-        <div className={styles.companyList}>
-          <CardCompany
-            logoUrl="/images/grebban.svg"
-            applyNowClassName="card-company-2"
-            className="card-company-instance"
-            company="Grebban"
-            headerClassName="design-component-instance-node"
-            location="Göteborg"
-            statusProperty="internship-matching"
-            id="/"
-            showApply={true}
-            showLogotype={true}
-          />
-          <CardCompany
-            logoUrl="/images/hiq.svg"
-            applyNowClassName="card-company-2"
-            className="card-company-instance"
-            company="HiQ"
-            headerClassName="design-component-instance-node"
-            location="Göteborg"
-            statusProperty="internship-matching"
-            id="/"
-            showApply={true}
-            showLogotype={true}
-          />
-          <CardCompany
-            logoUrl="/images/simmalugnt.svg"
-            applyNowClassName="card-company-2"
-            className="card-company-instance"
-            company="Simma Lugnt"
-            headerClassName="design-component-instance-node"
-            location="Göteborg"
-            statusProperty="internship-matching"
-            id="/"
-            showApply={true}
-            showLogotype={true}
-          />
-          <Button
-            className="no-frame"
-            text="Till företagslistan"
-            style={{ textDecoration: "underline" }}
-            onClick={goToCompanyPage}
-          />
-        </div>
-      </section>
-
+      <div className={styles.sectionWrapper}>
+        <section className={styles.mainContentWrapper} ref={landingRef}>
+          <div className={styles.ctaText}>
+            <h2>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h2>
+            <p>
+              Bli upptäckt av Yrgos digital designers och webbutvecklare. Bli
+              kontaktad av relevanta praktikanter.
+            </p>
+            <p>Spara tid och stärk branschens framtid.</p>
+            <Button
+              text="Skapa företagsprofil"
+              className={styles.createProfileButton}
+              onClick={handleShowRegistration}
+            />
+          </div>
+          <div className={styles.companyList}>
+            <CardCompany
+              logoUrl="/images/grebban.svg"
+              applyNowClassName="card-company-2"
+              className="card-company-instance"
+              company="Grebban"
+              headerClassName="design-component-instance-node"
+              location="Göteborg"
+              statusProperty="internship-matching"
+              id="/"
+              showApply={true}
+              showLogotype={true}
+            />
+            <CardCompany
+              logoUrl="/images/hiq.svg"
+              applyNowClassName="card-company-2"
+              className="card-company-instance"
+              company="HiQ"
+              headerClassName="design-component-instance-node"
+              location="Göteborg"
+              statusProperty="internship-matching"
+              id="/"
+              showApply={true}
+              showLogotype={true}
+            />
+            <CardCompany
+              logoUrl="/images/simmalugnt.svg"
+              applyNowClassName="card-company-2"
+              className="card-company-instance"
+              company="Simma Lugnt"
+              headerClassName="design-component-instance-node"
+              location="Göteborg"
+              statusProperty="internship-matching"
+              id="/"
+              showApply={true}
+              showLogotype={true}
+            />
+            <Button
+              className="no-frame"
+              text="Till företagslistan"
+              style={{ textDecoration: "underline" }}
+              onClick={goToCompanyPage}
+            />
+          </div>
+        </section>
+      </div>
       {showEditPopup && (
         <EditProfileOverlay
           isOpen={showEditPopup}

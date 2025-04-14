@@ -9,6 +9,12 @@
   padding: 0 1rem;
 }
 
+.sectionWrapper{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .pageWrapper {
   display: flex;
   width: 100%;
@@ -47,11 +53,10 @@
   min-height: 40vh;
 }
 
-
 .ellipseMobile {
   position: absolute;
   left: 50%;
-  top: 40%; 
+  top: 40%;
   transform: translate(-50%, -50%);
   z-index: -1;
   width: 35rem;
@@ -303,7 +308,6 @@
   background: var(--colors-base-transparent, rgba(255, 255, 255, 0));
 }
 
-
 @media screen and (min-width: 768px) {
   .mingelstundHeading {
     font-size: 5.5rem;
@@ -339,10 +343,15 @@
   }
 
   .mainContentWrapper {
-    flex-direction: row;
-    padding: 6rem 3rem;
+    display: flex;
+    padding: var(--spacing-24, 6rem) 0;
     justify-content: center;
     align-items: center;
+    gap: var(--spacing-12, 3rem);
+    align-self: stretch;
+    flex-direction: row;
+    max-width: 80rem;
+    width: 100%;
   }
 
   .ctaText {

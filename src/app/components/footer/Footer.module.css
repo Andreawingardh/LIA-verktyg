@@ -117,24 +117,37 @@
 .lineWrapper {
   display: flex;
   justify-content: center;
-  max-width: 74rem;
+  width: 100%;
   position: relative;
-  width: 80%;
+  margin: 0 auto;
 }
 
 .line {
   height: 0.0625rem;
-  position: relative;
   background: var(--base-border, #b3c1c7);
-  width: 100%;
+  width: calc(100% - 32px);
+  max-width: 1216px;
+  margin: 0 auto;
 }
 
-@media (max-width: 960px) {
-  .lineWrapper {
-    width: 92%; 
+@media (min-width: 1100px) {
+  .line {
+    width: calc(100% - 96px);
+    max-width: 1184px;
   }
 }
 
+@media (min-width: 560px) and (max-width: 1099px) {
+  .line {
+    width: calc(100% - 32px);
+  }
+}
+
+@media (max-width: 30rem) {
+  .line {
+    width: calc(100% - 32px);
+  }
+}
 
 .teamList {
   display: flex;
@@ -243,16 +256,15 @@
   flex-direction: column;
   align-items: flex-start;
   flex: 1 0 0;
-  
 }
 
 .descWrapper {
   display: flex;
-height: var(--width-w-12, 3rem);
-flex-direction: column;
-justify-content: space-between;
-align-items: flex-start;
-align-self: stretch;
+  height: var(--width-w-12, 3rem);
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
 }
 
 /* Site Info Section Styles */
