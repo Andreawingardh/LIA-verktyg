@@ -103,7 +103,7 @@ export default function CancelConfirmationPopup({ isOpen, onClose }) {
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         <div className="cancel-popup-header">
           <h4>Avbryt Profilregistrering</h4>
-          <button className="close-btn" onClick={onClose}>
+          <button className="close-btn close-btn-text" onClick={onClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -118,22 +118,22 @@ export default function CancelConfirmationPopup({ isOpen, onClose }) {
                 fill="#0F1314"
               />
             </svg>
-            <p className="close-btn-text">Stäng</p>
+            Stäng
           </button>
         </div>
 
         <div className="formwrapper">
-          <section className="cancel-description">
+          <div className="cancel-description">
             <p>
               Vill du avbryta skapandet av din företagsprofil? Ditt konto kommer
               fortfarande vara aktivt och du kommer kunna fortsätta skapa profil
               när du vill.
             </p>
-          </section>
+          </div>
           {error && <p className="error-message">{error}</p>}
         </div>
 
-        <footer className="button-group">
+        <div className="button-group">
           <button
             type="button"
             className="deleteButton"
@@ -151,7 +151,7 @@ export default function CancelConfirmationPopup({ isOpen, onClose }) {
           >
             Nej, fortsätt skapa profil
           </button>
-        </footer>
+        </div>
       </div>
     </div>
   );

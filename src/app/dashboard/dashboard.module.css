@@ -132,7 +132,7 @@ border: var(--border-width-border-4, 4px) solid var(--base-background, #FFF);
   flex: 1;
 }
 
-.company-details h2 {
+.company-details h1 {
   font-family: Inter, sans-serif;
   font-size: 31.25px;
   font-weight: 500;
@@ -180,7 +180,7 @@ border: var(--border-width-border-4, 4px) solid var(--base-background, #FFF);
   border: none;
 }
 
-.website a {
+a.website {
   color: #00287e;
   font-family: Inter, sans-serif;
   font-size: 16px;
@@ -190,7 +190,7 @@ border: var(--border-width-border-4, 4px) solid var(--base-background, #FFF);
   text-decoration: none;
 }
 
-.website a:hover {
+a.website:hover {
   text-decoration: underline;
 }
 

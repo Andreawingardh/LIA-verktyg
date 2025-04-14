@@ -16,7 +16,7 @@ export default function Contact() {
   return (
     <>
       <div className={styles.mainWrapper}>
-        <section className={styles.contentWrapper}>
+        <div className={styles.contentWrapper}>
           <Button
             text="Gå tillbaka"
             onClick={previous}
@@ -41,13 +41,13 @@ export default function Contact() {
           />
 
           <article>
-            <h3>Kontakt</h3>
+            <h1>Kontakt</h1>
             <p>
               Hör av dig om du har frågor om tjänsten, behöver support eller
               vill veta mer om hur Yrgos LIA fungerar!
             </p>
             <div className={styles.emailWrapper}>
-              <h3>Kontaktpersoner</h3>
+              <h2>Kontaktpersoner</h2>
             </div>
             <div  className={styles.textWrapper}>
               <h4 className={styles.bolded}>Marie Kalmnäs</h4>
@@ -60,7 +60,7 @@ export default function Contact() {
               </div>
             </div>
           </article>
-        </section>
+        </div>
       </div>
       <CreateCompanyProfileBanner />
     </>

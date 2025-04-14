@@ -140,7 +140,7 @@ function DescriptionForm() {
             </svg>
             Gå tillbaka
           </button>
-          <h2 className="title">Skapa företagsprofil</h2>
+          <h1 className="title">Skapa företagsprofil</h1>
           <ProgressIndicator currentStep="description" />
         </header>
 

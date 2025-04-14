@@ -30,7 +30,7 @@
   align-self: stretch;
 }
 
-.textWrapper h3 {
+.textWrapper h1 {
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
 

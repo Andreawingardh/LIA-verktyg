@@ -63,14 +63,14 @@ export default function Home() {
   };
 
   return (
-    <section className={styles.page}>
+    <div className={styles.page}>
       <section className={styles.landingPageHero}>
         <div className={styles.spacer}></div>
         <div className={styles.heroContentWrapper}>
           <div className={styles.header}>
           <div className={styles.ellipseMobile}></div>
           <div className={styles.ellipseDesktop}></div>
-          <img src="/images/yrgo-logo-mobile.svg" className={styles.yrgoLogo} />
+          <img src="/images/yrgo-logo-mobile.svg" className={styles.yrgoLogo} alt="YRGO logo"/>
           <h1 className={styles.headLine}>Mingelstund</h1>
           <div className={styles.subheadingMobile}>
             <p>23 april • 13:00–15:00</p>
@@ -101,7 +101,7 @@ export default function Home() {
       </section>
       <section className={styles.mainContentWrapper} ref={landingRef}>
         <div className={styles.ctaText}>
-          <h3>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h3>
+          <h2>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h2>
           <p>
             Bli upptäckt av Yrgos digital designers och webbutvecklare. Bli
             kontaktad av relevanta praktikanter.{" "}
@@ -184,6 +184,6 @@ export default function Home() {
           onShowRegistration={handleShowRegistration}
         />
       )}
-    </section>
+    </div>
   );
 }

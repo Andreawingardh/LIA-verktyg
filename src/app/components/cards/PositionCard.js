@@ -141,7 +141,7 @@ export default function PositionCard() {
             >
               <article className="headerCard">
                 <div className="subHeading">
-                  <h4 className="headerTitle">{position.title}</h4>
+                  <h3 className="headerTitle">{position.title}</h3>
 
                   <p className="openPositions">
                     Antal platser: {position.spots}
@@ -266,7 +266,8 @@ export default function PositionCard() {
                         >
                           <button
                             className="secondary-button"
-                            onClick={(e) => handleEditClick(position, e)}
+                          onClick={(e) => handleEditClick(position, e)}
+                          aria-label="Redigera position"
                           >
                             Redigera
                           </button>

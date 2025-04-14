@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
 
   return (
     <div className={styles.privacyPolicy}>
-      <section className={styles.contentWrapper}>
+      <div className={styles.contentWrapper}>
         <Button
           text="Gå tillbaka"
           onClick={previous}
@@ -39,16 +39,16 @@ export default function PrivacyPolicy() {
           className="go-back-button"
         />
         <section className={styles.textWrapper}>
-          <h3>Sekretesspolicy</h3>
+          <h1>Sekretesspolicy</h1>
           <p className={styles.largeLeadingNormalRegular}>
             Vi värnar om din integritet och hanterar alltid dina personuppgifter
             i enlighet med gällande lagar och regler, inklusive GDPR.
           </p>
 
           <article>
-            <p className={styles.largeLeadingNormalMedium}>
+            <h2 className={styles.largeLeadingNormalMedium}>
               Vilka uppgifter samlar vi in och varför?
-            </p>
+            </h2>
             Vid registrering av konto: Namn, e-postadress och lösenord. Används
             för kontoregistrering, autentisering och för att skicka nödvändig
             information om tjänsten. Vid anmälan till event:
@@ -63,18 +63,18 @@ export default function PrivacyPolicy() {
             besökare på webbplatsen.
           </article>
           <article>
-            <p className={styles.largeLeadingNormalMedium}>
+            <h2 className={styles.largeLeadingNormalMedium}>
               Laglig grund för behandling
-            </p>
+            </h2>
             <p>
               Vi behandlar dina personuppgifter baserat på samtycke eller vårt
               berättigade intresse vid skapande av konto och företagsprofiler.
             </p>
           </article>
           <article>
-            <p className={styles.largeLeadingNormalMedium}>
+            <h2 className={styles.largeLeadingNormalMedium}>
               Hur länge sparas uppgifterna?
-            </p>
+            </h2>
             <p>
               Vi sparar dina personuppgifter så länge ditt konto är aktivt eller
               tjänsten är tillgänglig. Vid avslut av konto eller tjänst raderas
@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
             </p>
           </article>
           <article>
-            <p className={styles.largeLeadingNormalMedium}>Dina rättigheter</p>
+            <h2 className={styles.largeLeadingNormalMedium}>Dina rättigheter</h2>
             <p>Du har rätt att:</p>
             <ul>
               <li>
@@ -112,10 +112,9 @@ export default function PrivacyPolicy() {
             </p>
           </article>
           <article>
-            {" "}
-            <p className={styles.largeLeadingNormalMedium}>
+            <h2 className={styles.largeLeadingNormalMedium}>
               Säkerhet och datalagring
-            </p>
+            </h2>
             <p>
               Datalagring sker via tjänsten Supabase. Supabase har
               säkerhetsrutiner som inkluderar kryptering av data för att skydda
@@ -123,9 +122,9 @@ export default function PrivacyPolicy() {
             </p>
           </article>
           <article>
-            <p className={styles.largeLeadingNormalMedium}>
+            <h2 className={styles.largeLeadingNormalMedium}>
               Delning med tredje part
-            </p>
+            </h2>
             <p>
               Utöver datalagringsverktyget Supabase sker ingen delning med
               trejde part.
@@ -136,19 +135,19 @@ export default function PrivacyPolicy() {
               Vid frågor gällande hantering av personuppgifter och integritet,
               vänligen kontakta någon av följande:
             </p>
-            <p className={styles.bolded}>
+            <h3 className={styles.bolded}>
               Marie Kalmnäs 
-            </p>
+            </h3>
             <p>Lärare, Yrgo Digital Designer</p>
             <p>marie.kalmnas@educ.goteborg.se </p>
-            <p className={styles.bolded}>
+            <h3 className={styles.bolded}>
               Hans Andersson
-            </p>
+            </h3>
             <p>Lärare, Yrgo Webbutvecklare</p>
             <p> hans.2.andersson@educ.goteborg.se</p>
           </article>
         </section>
-      </section>
+      </div>
       <CreateCompanyProfileBanner />
     </div>
   );

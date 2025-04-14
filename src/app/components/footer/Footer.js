@@ -54,8 +54,7 @@ const Footer = () => {
 
   return (
     <>
-      
-      <footer className={styles.footer} role="contentinfo">
+      <footer className={styles.footer}>
         {/* Registration Popup */}
         {showRegistrationPopup && (
           <RegistrationPopup
@@ -75,7 +74,7 @@ const Footer = () => {
         )}
         <div className={styles.lineWrapper}>
           <div className={styles.line}></div>
-          </div>
+        </div>
         <section
           className={styles.teamContainer}
           aria-labelledby="team-heading"
@@ -95,14 +94,13 @@ const Footer = () => {
                         alt=""
                         fill
                         className={styles.avatarImage}
-                        sizes="width: 100vw, height: 100vh"
                       />
                     </div>
                     <div className={styles.memberInfo}>
                       <div className={styles.descWrapper}>
-                      <h3 className={styles.memberName}>{student.name}</h3>
+                        <h3 className={styles.memberName}>{student.name}</h3>
                         <p className={styles.memberRole}>{student.role}</p>
-                        </div>
+                      </div>
                       <Link
                         href={student.profileUrl}
                         className={styles.memberLink}
@@ -133,11 +131,11 @@ const Footer = () => {
           </div>
         </section>
 
-        <section className={styles.siteContainer}>
+        <div className={styles.siteContainer}>
           <div className={styles.siteInfoSection}>
             <div className={styles.siteInfoLayout}>
               <div className={styles.brandInfo}>
-                <div className={styles.brandLogo} aria-label="Yrgo logotyp">
+                <div className={styles.brandLogo} alt="Yrgo logotyp">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="180"
@@ -277,7 +275,7 @@ const Footer = () => {
                               y2="16"
                               gradientUnits="userSpaceOnUse"
                             >
-                              <stop stopColor="#1AAFFF" />
+                              <stop stopColor="#1AAFFF" offset="1" />
                               <stop offset="1" stopColor="#0563DF" />
                             </linearGradient>
                             <clipPath id="clip0_1365_17305">
@@ -384,10 +382,10 @@ const Footer = () => {
                   className={styles.siteNav}
                   aria-labelledby="site-nav-heading"
                 >
+                  <h2 id="site-nav-heading" className={styles.siteHeading}>
+                    Navigera sidan
+                  </h2>
                   <ul className={styles.siteNavList}>
-                    <h2 id="site-nav-heading" className={styles.siteHeading}>
-                      Navigera sidan
-                    </h2>
                     <li>
                       <Link href="/contact">Kontakt</Link>
                     </li>
@@ -405,7 +403,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-        </section>
+        </div>
       </footer>
     </>
   );

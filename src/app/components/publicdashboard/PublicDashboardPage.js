@@ -148,7 +148,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
   }
 
   return (
-    <main className={styles["main-content"]}>
+    <>
       {/* Company Header Banner */}
       {companyData &&
         companyData.display_image_url &&
@@ -186,7 +186,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                       </div>
                     )}
                     <div className={styles["company-details"]}>
-                      <h2>{companyData.name || "Acme Agency"}</h2>
+                      <h1>{companyData.name || "Acme Agency"}</h1>
                     </div>
                   </div>
 
@@ -204,15 +204,16 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
 
                 {/* Website Button*/}
                 {companyData.website && (
-                  <button type="button" className={styles.website}>
-                    <a
+                  // <button type="button" className={styles.website}>
+                      <a
+                        className={styles.website}
                       href={companyData.website}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       {formatWebsiteForDisplay(companyData.website)}
                     </a>
-                  </button>
+                  // </button>
                 )}
 
                 {companyData.email && (
@@ -245,7 +246,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
       </div>
       {/* <PositionsBanner /> */}
       <PositionsBanner />
-    </main>
+    </>
   );
 }
 

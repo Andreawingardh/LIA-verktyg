@@ -67,7 +67,7 @@ export const PositionsBanner = () => {
   return (
     <div className={styles.positionsBannerWrapper}>
       <section className={styles.positionsBanner}>
-        <h4>Vill du också synas här och matchas med framtida kollegor?</h4>
+        <h1>Vill du också synas här och matchas med framtida kollegor?</h1>
         <p>Deltagande företag</p>
         <div className={styles.rollingBannerContent}>
           <div className={styles.rollingBannerImageWrapper}>
@@ -100,13 +100,7 @@ export const PositionsBanner = () => {
           />
         )}
 
-        <Link href="/companies">
-          <Button
-            className="no-frame"
-            text="Gå till Lia-listan"
-            hasIcon={true}
-            rightIcon={
-              <svg
+        <Link href="/companies" className="no-frame">Gå till LIA-listan<svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="17"
@@ -120,8 +114,6 @@ export const PositionsBanner = () => {
                   fill="#00287E"
                 />
               </svg>
-            }
-          />
         </Link>
 
         {/* Registration Popup */}
