@@ -252,24 +252,7 @@ function BaseInfoForm() {
     <div className="container">
       <form className="contentWrapper" onSubmit={handleSubmit} noValidate>
         <header className="contentHeader">
-          {/* <button type="button" className="goBackButton" onClick={handleGoBack}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M8.47124 2.86177C8.73159 3.12212 8.73159 3.54423 8.47124 3.80458L4.94265 7.33316H12.6665C13.0347 7.33316 13.3332 7.63164 13.3332 7.99983C13.3332 8.36802 13.0347 8.66649 12.6665 8.66649H4.94264L8.47124 12.1951C8.73159 12.4555 8.73159 12.8776 8.47124 13.1379C8.21089 13.3983 7.78878 13.3983 7.52843 13.1379L2.86177 8.47123C2.73674 8.34621 2.6665 8.17664 2.6665 7.99983C2.6665 7.82302 2.73674 7.65345 2.86177 7.52842L7.52843 2.86177C7.78878 2.60142 8.21089 2.60142 8.47124 2.86177Z"
-                fill="#0F1314"
-              />
-            </svg>
-            Gå tillbaka
-          </button> */}
-          <h2 className="title">Skapa företagsprofil</h2>
+          <h1 className="title">Skapa företagsprofil</h1>
           <ProgressIndicator currentStep="baseInfo" />
         </header>
 
@@ -333,7 +316,7 @@ function BaseInfoForm() {
 
         {errors.general && <p className="error-message">{errors.general}</p>}
 
-        <footer className="buttonGroup">
+        <div className="buttonGroup">
           <button
             className="profileSubmitButton"
             type="submit"
@@ -349,7 +332,7 @@ function BaseInfoForm() {
           >
             Avbryt Registrering
           </button>
-        </footer>
+        </div>
       </form>
 
       {/* Cancel Confirmation Popup */}

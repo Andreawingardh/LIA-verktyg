@@ -182,13 +182,13 @@ export default function Companies() {
     <>
       <div className="cover-wrapper">
         <div className="image-wrapper">
-          <img src="/images/eventpage-hero-image.png" />
+          <img src="/images/eventpage-hero-image.png" alt="Illustration av fyra personer som samarbetar med programmering kring en laptop, med kodsymboler och ikoner på blå bakgrund." />
         </div>
       </div>
       <div className="main-wrapper">
         <section className="content-wrapper">
           <section className="search-bar-and-filter-wrapper">
-            <h4>Hitta din nya LIA-plats</h4>
+            <h1>Hitta din nya LIA-plats</h1>
             <p>
               Filtrera och hitta matchande LIA-platser från anslutna företag.
             </p>
@@ -197,7 +197,7 @@ export default function Companies() {
                 placeholder="Sök efter företag"
                 name="input-search"
                 onChange={handleSearchInputChange}
-              />
+              /><label htmlFor="input-search">
               <Button
                 text="Sök"
                 className="primary-button"
@@ -219,7 +219,8 @@ export default function Companies() {
                   </svg>
                 }
                 type="submit"
-              ></Button>
+                ></Button>
+                </label>
             </form>
 
             <Button

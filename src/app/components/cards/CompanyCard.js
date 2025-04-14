@@ -32,7 +32,7 @@ export const CardCompany = ({
             ) && (
               <div>
                 <div className={`header ${headerClassName}`}>
-                  <h5>{company}</h5>
+                  <h3>{company}</h3>
 
                   <p>{location}</p>
                 </div>

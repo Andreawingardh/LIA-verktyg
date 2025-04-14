@@ -9,14 +9,14 @@ export default function Positions() {
       
       <div className={styles.headerWrapper}>
         <section className={styles.hero}>
-          <img className={styles.heroImage} src="/images/eventpage-hero-image.png" />
+          <img className={styles.heroImage} src="/images/eventpage-hero-image.png" alt="Illustration av fyra personer som samarbetar med programmering kring en laptop, med kodsymboler och ikoner på blå bakgrund."/>
           <div className={styles.heroContent}>
-            <h3 className={styles.textHeader}>
-              Välkommen på LIA-event!
+            <div className={styles.textHeader}>
+              <h1>Välkommen på LIA-event!</h1>
                 <p className={styles.large}>
                   Kom och mingla med Digital Designers och Webbutvecklare.
                 </p>
-            </h3>
+            </div>
             <div className={styles.content}>
               <div>
                 <p>Plats</p>

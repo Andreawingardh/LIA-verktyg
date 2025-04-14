@@ -57,6 +57,7 @@ export default function RemovePositionButton({ position, onPositionUpdate }) {
         className="secondary-button deleteButton"
         onClick={handleDeleteClick}
         disabled={isSaving}
+        aria-label="Ta bort position"
       >
         {isSaving ? "Tar bort..." : "Ta bort position"}
         {successMessage && <span className="success-message">{successMessage}</span>}

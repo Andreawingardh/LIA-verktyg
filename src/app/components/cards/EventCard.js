@@ -116,9 +116,9 @@ export const EventCard = ({ IsSubmitted }) => {
           </div>{" "}
           {!submitStatus && (
             <form className={styles.eventForm} onSubmit={handleSubmit}>
-              <section className={styles.formWrapper}>
+              <div className={styles.formWrapper}>
                 <div className={styles.inputSingle}>
-                  <label>
+                  <label htmlFor="name">
                     Namn <span className={styles.asterix}> *</span>
                   </label>
                   <input
@@ -128,7 +128,7 @@ export const EventCard = ({ IsSubmitted }) => {
                   />
                 </div>
                 <div className={styles.inputSingle}>
-                  <label>
+                  <label htmlFor="email">
                     E-post<span className={styles.asterix}> *</span>
                   </label>
                   <input
@@ -140,13 +140,13 @@ export const EventCard = ({ IsSubmitted }) => {
                 </div>
 
                 <div className={styles.checkbox}>
-                  <input type="checkbox" required />
-                  Jag godkänner <a href="/privacy-policy">
+                  <input type="checkbox" name="checkbox" required />
+                  <label htmlFor="checkbox">Jag godkänner <a href="/privacy-policy">
                     sekretesspolicy
-                  </a>{" "}
+                  </a></label>
                   <span className={styles.asterix}> *</span>
                 </div>
-              </section>
+              </div>
               <div className={styles.confirmButton}>
                 <Button
                   className="buttonEvent"

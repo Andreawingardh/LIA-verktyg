@@ -105,7 +105,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className={styles["main-content"]}>
+    <>
       {/* Company Header Banner */}
       {companyProfile &&
         companyProfile.display_image_url &&
@@ -216,6 +216,6 @@ export default function DashboardPage() {
 
       {/* <PositionsBanner /> */}
       <PositionsBanner />
-    </main>
+    </>
   );
 }

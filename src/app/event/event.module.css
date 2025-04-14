@@ -57,7 +57,7 @@
     align-self: stretch;
   }
 
-  .heroContent h3 {
+  .heroContent h1 {
     color: var(--base-primary-foreground, #fff);
     font-feature-settings: "liga" off, "clig" off;
 

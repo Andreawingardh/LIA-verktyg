@@ -323,7 +323,7 @@ export default function Header({ metadata }) {
   );
 
   return (
-    <header className={styles.header} role="banner">
+    <header className={styles.header}>
       <div className={styles.navContainer}>
         {/* Mobile view */}
         {isMobile && (

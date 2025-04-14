@@ -212,7 +212,6 @@ letter-spacing: 0.0125rem;
   margin-top: -1px;
   overflow: hidden;
   position: relative;
-  text-decoration: underline;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: fit-content;
