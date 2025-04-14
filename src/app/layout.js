@@ -19,7 +19,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="sve">
+    <html lang="sv">
       <body className={`${inter.variable} ${unna.variable}`}>
         <Header metadata={metadata} />
         <main>{children}</main>
