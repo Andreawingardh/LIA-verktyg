@@ -57,18 +57,19 @@
     align-self: stretch;
   }
 
-  .heroContent h1 {
-    color: var(--base-primary-foreground, #fff);
-    font-feature-settings: "liga" off, "clig" off;
+  
+}
+.heroContent h1 {
+  color: var(--base-primary-foreground, #fff);
+  font-feature-settings: "liga" off, "clig" off;
 
-    /* heading-3/leading-normal/medium */
-    font-family: var(--typography-font-family-font-sans, Inter);
-    font-size: var(--font-size-2xl);
-    font-style: normal;
-    font-weight: var(--font-weight-medium, 500);
-    line-height: 130%; /* 2.53906rem */
-    letter-spacing: -0.0125rem;
-  }
+  /* heading-3/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--font-size-2xl);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 130%; /* 2.53906rem */
+  letter-spacing: -0.0125rem;
 }
 
 .heroContent {
