@@ -64,14 +64,149 @@ import { AddToCalendarButton } from "add-to-calendar-button-react";
 export const EventCard = ({ IsSubmitted }) => {
   const [submitted, setSubmitted] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(false);
+
+  // Form validation states
+  const [formErrors, setFormErrors] = useState({
+    name: { error: false, message: "" },
+    email: { error: false, message: "" },
+    privacy: { error: false, message: "" },
+  });
+
+  // Track whether fields have been touched
+  const [touched, setTouched] = useState({
+    name: false,
+    email: false,
+    privacy: false,
+  });
+
   const eventTitle = "Yrgo:s mingelevent, 23 april";
   const eventDescription =
     "Mingla med oss för att hitta framtida medarbetare i ert företag eller bara jobba tillsammans under LIA. Ni kommer att träffa Webbutvecklare och Digital Designers från Yrgo som vill visa vad de har jobbat med under året och vi hoppas att ni hittar en match.";
   const eventUrl = "https://yrgo-internify.vercel.app/event";
 
+  // Validation functions
+  const validateName = (name) => {
+    if (!name || name.trim() === "") {
+      return { error: true, message: "Namn är obligatoriskt" };
+    }
+    return { error: false, message: "" };
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || email.trim() === "") {
+      return { error: true, message: "E-post är obligatoriskt" };
+    } else if (!emailRegex.test(email)) {
+      return { error: true, message: "Ange en giltig e-postadress" };
+    }
+    return { error: false, message: "" };
+  };
+
+  const validatePrivacy = (checked) => {
+    if (!checked) {
+      return { error: true, message: "Du måste godkänna sekretesspolicyn" };
+    }
+    return { error: false, message: "" };
+  };
+
+  // Handle field blur (when user leaves a field)
+  const handleBlur = (field, value) => {
+    setTouched({
+      ...touched,
+      [field]: true,
+    });
+
+    let validationResult;
+
+    switch (field) {
+      case "name":
+        validationResult = validateName(value);
+        break;
+      case "email":
+        validationResult = validateEmail(value);
+        break;
+      case "privacy":
+        validationResult = validatePrivacy(value);
+        break;
+      default:
+        validationResult = { error: false, message: "" };
+    }
+
+    setFormErrors({
+      ...formErrors,
+      [field]: validationResult,
+    });
+  };
+
+  // Handle field change
+  const handleChange = (field, value) => {
+    if (touched[field]) {
+      let validationResult;
+
+      switch (field) {
+        case "name":
+          validationResult = validateName(value);
+          break;
+        case "email":
+          validationResult = validateEmail(value);
+          break;
+        case "privacy":
+          validationResult = validatePrivacy(value);
+          break;
+        default:
+          validationResult = { error: false, message: "" };
+      }
+
+      setFormErrors({
+        ...formErrors,
+        [field]: validationResult,
+      });
+    }
+  };
+
+  // Validate all fields
+  const validateForm = (formData) => {
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const privacy = formData.get("privacy") === "on";
+
+    const nameValidation = validateName(name);
+    const emailValidation = validateEmail(email);
+    const privacyValidation = validatePrivacy(privacy);
+
+    const newFormErrors = {
+      name: nameValidation,
+      email: emailValidation,
+      privacy: privacyValidation,
+    };
+
+    setFormErrors(newFormErrors);
+
+    // Set all fields as touched
+    setTouched({
+      name: true,
+      email: true,
+      privacy: true,
+    });
+
+    // Return true if no errors
+    return (
+      !nameValidation.error &&
+      !emailValidation.error &&
+      !privacyValidation.error
+    );
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+
+    // Validate the form
+    const isValid = validateForm(formData);
+
+    if (!isValid) {
+      return;
+    }
 
     const formName = formData.get("name");
     const formEmail = formData.get("email");
@@ -110,13 +245,16 @@ export const EventCard = ({ IsSubmitted }) => {
               Mingla med oss för att hitta framtida medarbetare i ert företag
               eller bara jobba tillsammans under LIA. Ni kommer att träffa
               Webbutvecklare och Digital Designers från Yrgo som vill visa vad
-              de har jobbat med under året och vi hoppas att ni hittar en
-              match. 
+              de har jobbat med under året och vi hoppas att ni hittar en match.
             </p>
           </div>{" "}
           {!submitStatus && (
-            <form className={styles.eventForm} onSubmit={handleSubmit}>
-              <div className={styles.formWrapper}>
+            <form
+              className={styles.eventForm}
+              onSubmit={handleSubmit}
+              noValidate
+            >
+              <section className={styles.formWrapper}>
                 <div className={styles.inputSingle}>
                   <label htmlFor="name">
                     Namn <span className={styles.asterix}> *</span>
@@ -125,9 +263,17 @@ export const EventCard = ({ IsSubmitted }) => {
                     id="name"
                     name="name"
                     placeholder="Skriv ditt för- och efternamn"
-                    required
+                    className={formErrors.name.error ? styles.inputError : ""}
+                    onBlur={(e) => handleBlur("name", e.target.value)}
+                    onChange={(e) => handleChange("name", e.target.value)}
                   />
+                  {formErrors.name.error && (
+                    <span className={styles.errorMessage}>
+                      {formErrors.name.message}
+                    </span>
+                  )}
                 </div>
+
                 <div className={styles.inputSingle}>
                   <label htmlFor="email">
                     E-post<span className={styles.asterix}> *</span>
@@ -137,25 +283,46 @@ export const EventCard = ({ IsSubmitted }) => {
                     name="email"
                     type="email"
                     placeholder="Skriv din jobbmail"
-                    required
+                    className={formErrors.email.error ? styles.inputError : ""}
+                    onBlur={(e) => handleBlur("email", e.target.value)}
+                    onChange={(e) => handleChange("email", e.target.value)}
                   />
+                  {formErrors.email.error && (
+                    <span className={styles.errorMessage}>
+                      {formErrors.email.message}
+                    </span>
+                  )}
                 </div>
 
-                <div className={styles.checkbox}>
-                  <input type="checkbox" name="checkbox" id="checkbox" required />
-                  <label htmlFor="checkbox">Jag godkänner <a href="/privacy-policy">
-                    sekretesspolicy
-                  </a></label>
+                <div
+                  className={`${styles.checkbox} ${
+                    formErrors.privacy.error ? styles.checkboxError : ""
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    name="privacy"
+                    onBlur={(e) => handleBlur("privacy", e.target.checked)}
+                    onChange={(e) => handleChange("privacy", e.target.checked)}
+                  />
+                  Jag godkänner <a href="/privacy-policy">sekretesspolicy</a>{" "}
                   <span className={styles.asterix}> *</span>
                 </div>
-              </div>
+                {formErrors.privacy.error && (
+                  <span className={styles.errorMessage}>
+                    {formErrors.privacy.message}
+                  </span>
+                )}
+              </section>
               <div className={styles.confirmButton}>
                 <Button
                   className="buttonEvent"
                   text="Jag vill gå på eventet!"
                 />
               </div>
-              {!submitStatus.success && <div> {submitStatus.message}</div>}
+              {submitStatus && !submitStatus.success && (
+                <div className={styles.formError}>{submitStatus.message}</div>
+              )}
             </form>
           )}
           {submitStatus && (

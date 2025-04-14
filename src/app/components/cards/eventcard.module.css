@@ -51,7 +51,7 @@
 
     /* heading-2/leading-normal/medium */
     font-family: var(--typography-font-family-font-sans, Inter);
-    font-size: var(--typography-base-sizes-3x-large-font-size, 2.44125rem);
+    font-size: var(--font-size-3xl);
     font-style: normal;
     font-weight: var(--font-weight-medium, 500);
     line-height: 120%; /* 2.9295rem */
@@ -307,4 +307,53 @@ letter-spacing: 0.0125rem;
   align-items: center;
   flex-direction: row;
   gap: 1rem;
+}
+
+
+
+
+
+.inputError {
+  border: 1px solid var(--base-destructive, #B40509) !important;
+  background-color: rgba(180, 5, 9, 0.05) !important;
+}
+
+
+.errorMessage {
+  display: block;
+  color: var(--base-destructive-foreground, #B40509);
+  font-feature-settings: 'liga' off, 'clig' off;
+  
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+}
+
+
+.checkbox + .errorMessage {
+  margin-top: -1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.checkboxError input {
+  border: 1px solid var(--base-destructive, #B40509) !important;
+  background-color: rgba(180, 5, 9, 0.05) !important;
+}
+
+
+.formError {
+  color: var(--base-destructive, #B40509);
+  
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: rgba(180, 5, 9, 0.05);
+  width: 100%;
+  text-align: center;
+
 }
