@@ -179,7 +179,7 @@ export default function CreatePositionForm({ user, onClose }) {
         </section>
       </div>
 
-      <div className="formGroup">
+      {selectedTable && selectedTable.length > 0 && (<div className="formGroup">
         <label className="formLabel">Antal platser</label>
         <div className="tabGroup">
           {[1, 2, 3, 4, 5].map((number) => (
@@ -194,8 +194,8 @@ export default function CreatePositionForm({ user, onClose }) {
               {number}
             </button>
           ))}
-        </div>
-      </div>
+        </div> 
+      </div>)}
 
       {skillsOptions.length > 0 && (
         <div className="skillsSection">
