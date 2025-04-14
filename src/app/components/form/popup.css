@@ -240,30 +240,28 @@
   letter-spacing: 0.2px;
 }
 
+.description-container {
+  position: relative;
+  width: 100%;
+}
 
-  .description-container {
-    position: relative;
-    width: 100%;
-  }
-  
-  .descriptionInput {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    resize: none;
-    min-height: 100px;
-    transition: border-color 0.3s;
-  }
-  
-  .descriptionInput:focus {
-    outline: none;
-    border-color: #001a52;
-    box-shadow: 0 0 0 2px rgba(0, 26, 82, 0.1);
-  }
+.descriptionInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  resize: none;
+  min-height: 100px;
+  transition: border-color 0.3s;
+}
 
+.descriptionInput:focus {
+  outline: none;
+  border-color: #001a52;
+  box-shadow: 0 0 0 2px rgba(0, 26, 82, 0.1);
+}
 
 .inputs {
   display: flex;
@@ -366,13 +364,17 @@
   cursor: pointer;
 }
 
-.email-error-container {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
 .email-error-container .error-message {
-  margin-bottom: 0.25rem;
+  color: var(--base-destructive-foreground, #b40509);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
 }
 
 .form-group {
@@ -385,11 +387,50 @@
   background-color: rgba(244, 67, 54, 0.05) !important;
 }
 
+/* Base checkbox styling */
+#checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--border-radius-sm, 2px);
+  border: 1px solid var(--base-link, #00287e);
+  background: var(--base-background, #fff);
+  appearance: auto; /* Explicitly set appearance */
+  -webkit-appearance: auto; /* For Safari */
+}
+
+/* Targeting the specific error state */
+#checkbox.checkbox-error,
+input[type="checkbox"].checkbox-error {
+  border: 2px solid #b40509 !important;
+  background-color: #ffeeef !important;
+}
+
+/* Make sure there's a clear visual distinction for the error state */
+.checkbox-group:has(#checkbox.checkbox-error) label {
+  color: #b40509;
+}
+
+/* Force the border color for error state (fallback for some browsers) */
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+  #checkbox.checkbox-error {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    position: relative;
+  }
+}
+
 .error-message {
   color: var(--base-destructive-foreground, #b40509);
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0;
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
 }
 
 .passwordReset {
@@ -421,8 +462,6 @@
 }
 
 .password-requirements-container {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   min-height: 1.5rem; /* Minimum height to prevent layout shifts */
 }
 
@@ -834,7 +873,7 @@
   border: 1px solid var(--base-secondary, #001a52);
   background: var(--base-background, #fff);
   color: var(--base-secondary, #001a52);
-  fill: var(--base-secondary, #001a52)
+  fill: var(--base-secondary, #001a52);
 }
 
 .footer-positions {
@@ -984,11 +1023,6 @@
   background-color: #b71c1c;
 }
 
-.input-error {
-  border-color: #f44336 !important;
-  background-color: rgba(244, 67, 54, 0.05) !important;
-}
-
 .loading {
   display: flex;
   justify-content: center;
@@ -1052,33 +1086,30 @@
 
 .inputs:focus-visible {
   border-radius: var(--border-radius-xl, 0.75rem);
-  border: 2px solid var(--base-outline, #0F1314);
-  outline: none; 
+  border: 2px solid var(--base-outline, #0f1314);
+  outline: none;
 }
-
 
 button:focus-visible,
 #checkbox:focus-visible {
   border-radius: var(--border-radius-full, 624.9375rem);
-  border: 2px solid var(--base-primary, #E51236);
+  border: 2px solid var(--base-primary, #e51236);
   outline: none;
 }
 
 .register-btn:focus-visible {
   border-radius: var(--border-radius-full, 624.9375rem);
-  border: 2px solid var(--base-primary, #E51236);
+  border: 2px solid var(--base-primary, #e51236);
   outline: none;
-  background-color: transparent; 
+  background-color: transparent;
 }
 
 #createButton:focus-visible {
   border-radius: var(--border-radius-full, 624.9375rem);
-  border: 2px solid var(--base-primary, #E51236);
+  border: 2px solid var(--base-primary, #e51236);
   outline: none;
 }
-
 
 .input-error:focus-visible {
   border-color: #f44336 !important;
 }
-

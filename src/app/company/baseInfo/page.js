@@ -162,22 +162,35 @@ function BaseInfoForm() {
     }
   };
 
+  const MAX_LOGO_FILE_SIZE = 2 * 1024 * 1024;
+
   const handleLogoChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+
+      if (file.size > MAX_LOGO_FILE_SIZE) {
+        setError("Filen överstiger 2MB. Var vänlig och välj en annan fil.");
+        return;
+      }
+
       setLogo(file);
       const fileUrl = await fileUpload(file, "logo");
     }
   };
 
+  const MAX_DISPLAY_FILE_SIZE = 10 * 1024 * 1024;
+
   const handleDisplayImageChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setDisplayImage(file);
 
+      if (file.size > MAX_DISPLAY_FILE_SIZE) {
+        setError("Filen överstiger 10MB. Var vänlig och välj en annan fil.");
+        return;
+      }
+
+      setDisplayImage(file);
       const fileUrl = await fileUpload(file, "display");
-    } else {
-      console.error("No file selected");
     }
   };
 

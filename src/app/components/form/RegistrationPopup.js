@@ -9,6 +9,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -23,56 +24,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     hasSpecial: false,
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    let formIsValid = true;
-    const missingRequirements = [];
-
-    if (email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        newErrors.email = "Mail följer inte rätt format. Exempel:";
-        formIsValid = false;
-      }
-    }
-
-    if (password) {
-      if (password.length < passwordRequirements.minLength) {
-        missingRequirements.push("minLength");
-        formIsValid = false;
-      }
-
-      if (!/[A-Z]/.test(password)) {
-        missingRequirements.push("uppercase");
-        formIsValid = false;
-      }
-
-      if (!/[a-z]/.test(password)) {
-        missingRequirements.push("lowercase");
-        formIsValid = false;
-      }
-
-      if (!/\d/.test(password)) {
-        missingRequirements.push("number");
-        formIsValid = false;
-      }
-
-      if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-        missingRequirements.push("special");
-        formIsValid = false;
-      }
-
-      if (missingRequirements.length > 0) {
-        newErrors.password = "Lösenordet uppfyller inte kraven";
-        newErrors.passwordRequirements = missingRequirements;
-      }
-    }
-
-    setErrors(newErrors);
-    setIsFormValid(formIsValid);
-    return formIsValid;
-  };
-
   const handleLoginClick = () => {
     onClose();
     if (onShowLogin) {
@@ -80,18 +31,34 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     }
   };
 
+  const validateCheckbox = () => {
+    if (!checkbox) {
+      setErrors((prev) => ({
+        ...prev,
+        checkbox: "Du måste godkänna sekretesspolicyn för att fortsätta.",
+      }));
+      return false;
+    } else {
+      setErrors((prev) => {
+        const { checkbox, ...rest } = prev;
+        return rest;
+      });
+      return true;
+    }
+  };
+
   const validateEmail = () => {
     if (email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        setErrors(prev => ({
+        setErrors((prev) => ({
           ...prev,
-          email: "Mail följer inte rätt format. Exempel:"
+          email: "Mail följer inte rätt format. Exempel:",
         }));
         return false;
       } else {
         // Clear email error if valid
-        setErrors(prev => {
+        setErrors((prev) => {
           const { email, ...rest } = prev;
           return rest;
         });
@@ -132,15 +99,15 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
       }
 
       if (!isValid) {
-        setErrors(prev => ({
+        setErrors((prev) => ({
           ...prev,
           password: "Lösenordet uppfyller inte kraven",
-          passwordRequirements: missingRequirements
+          passwordRequirements: missingRequirements,
         }));
         return false;
       } else {
         // Clear password error if valid
-        setErrors(prev => {
+        setErrors((prev) => {
           const { password, passwordRequirements, ...rest } = prev;
           return rest;
         });
@@ -156,8 +123,9 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
     // Validate both fields on submit
     const isEmailValid = validateEmail();
     const isPasswordValid = validatePassword();
-    
-    if (!isEmailValid || !isPasswordValid || redirecting) {
+    const isCheckboxValid = validateCheckbox();
+
+    if (!isEmailValid || !isPasswordValid || !isCheckboxValid || redirecting) {
       return;
     }
 
@@ -167,6 +135,7 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        checkbox,
       });
 
       if (error) {
@@ -195,6 +164,14 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
           setErrors({
             ...errors,
             general: "För många försök. Vänligen försök igen senare.",
+          });
+        } else if (
+          error.message.includes("checkbox") ||
+          error.message.includes("Checkbox")
+        ) {
+          setErrors({
+            ...errors,
+            checkbox: error.message,
           });
         } else {
           setErrors({ ...errors, general: error.message });
@@ -280,9 +257,11 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
             {errors.email && (
               <div className="email-error-container">
                 <p className="error-message">{errors.email}</p>
-                <ul className="password-requirements">
-                  <li className="requirement-error">exempel@exempel.com</li>
-                </ul>
+                {errors.email === "Mail följer inte rätt format. Exempel:" && (
+                  <ul className="password-requirements">
+                    <li className="requirement-error">exempel@exempel.com</li>
+                  </ul>
+                )}
               </div>
             )}
           </div>
@@ -338,15 +317,32 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               </>
             )}
             <div className="checkbox-group">
-              <input id="checkbox" name="checkbox" type="checkbox" required />
-              <label className="gdpr-text " htmlFor="checkbox">
+              <input
+                id="checkbox"
+                name="checkbox"
+                type="checkbox"
+                className={`checkbox ${
+                  errors.checkbox ? "checkbox-error" : ""
+                }`}
+                checked={checkbox}
+                onChange={(e) => setCheckbox(e.target.checked)}
+                onBlur={() => validateCheckbox()}
+                required
+              />
+              <label className="gdpr-text" htmlFor="checkbox">
                 Jag godkänner{" "}
                 <a className="gdpr" href="/privacy-policy">
-                  sekretesspolicy 
+                  sekretesspolicy
                 </a>
                 <span className="asterix"> *</span>
               </label>
             </div>
+
+            {errors.checkbox && (
+              <div className="email-error-container">
+                <p className="error-message">{errors.checkbox}</p>
+              </div>
+            )}
           </div>
 
           {errors.general && <p className="error-message">{errors.general}</p>}
@@ -356,7 +352,9 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
               type="submit"
               id="createButton"
               disabled={loading || redirecting}
-              className={Object.keys(errors).length > 0 ? "button-disabled" : ""}
+              className={
+                Object.keys(errors).length > 0 ? "button-disabled" : ""
+              }
             >
               {loading ? "Skapar konto..." : "Skapa Företagskonto"}
             </button>

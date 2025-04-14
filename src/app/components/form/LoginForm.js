@@ -53,9 +53,10 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
         password,
       });
 
+      if (error) throw error;
+
       if (data) {
         router.refresh();
-
         router.push("/dashboard");
 
         if (onSuccess) {
@@ -149,30 +150,14 @@ export default function LoginForm({ onSuccess, onRegisterClick }) {
               setErrors((prev) => ({ ...prev, password: "", general: "" })); // Clear errors when user types
             }}
           />
-          {errors.email && (
-            <p
-              className="error-message"
-              style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}
-            >
-              {errors.email}
-            </p>
-          )}
           <a className="passwordReset" href="">
             Glömt ditt lösenord?
           </a>
         </div>
-        {errors.password && (
-          <p
-            className="error-message"
-            style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}
-          >
-            {errors.password}
-          </p>
-        )}
+        
         {errors.general && (
           <p
             className="error-message"
-            style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}
           >
             {errors.general}
           </p>
