@@ -58,7 +58,7 @@
   }
 
   .heroContent h1 {
-    color: var(--base-primary-foreground, #fff);
+    color: #fff;
     font-feature-settings: "liga" off, "clig" off;
 
     /* heading-3/leading-normal/medium */
@@ -81,7 +81,7 @@
   justify-content: center;
 }
 
-.heroContent h3 {
+.heroContent h1 {
   color: var(--base-primary-foreground, #fff);
   font-feature-settings: "liga" off, "clig" off;
 
@@ -92,7 +92,7 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: 130%; /* 1.85088rem */
   letter-spacing: -0.0125rem;
-}
+ } 
 
 .textHeader {
   display: flex;

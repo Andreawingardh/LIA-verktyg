@@ -9,10 +9,10 @@ export default function Positions() {
       
       <div className={styles.headerWrapper}>
         <section className={styles.hero}>
-          <img className={styles.heroImage} src="/images/eventpage-hero-image.png" alt="Illustration av fyra personer som samarbetar med programmering kring en laptop."/>
+          <img className={styles.heroImage} src="/images/event-page-hero.png" alt="Lindholmen Science Park i Göteborg"/>
           <div className={styles.heroContent}>
             <div className={styles.textHeader}>
-              <h1>Välkommen på LIA-event!</h1>
+              <h1 className={styles.textHeader}>Välkommen på LIA-event!</h1>
                 <p className={styles.large}>
                   Kom och mingla med Digital Designers och Webbutvecklare.
                 </p>
