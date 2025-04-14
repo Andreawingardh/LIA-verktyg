@@ -26,7 +26,7 @@ export default function Positions() {
                 <p>Tid</p>
                 <p>15:00–17:00, 23 april</p>
               </div>
-              <div className={styles.eventButton}>
+             
                 <AddToCalendarButton
                   name="Mingelevent"
                   options={[
@@ -54,7 +54,7 @@ export default function Positions() {
                 --btn-hover-text: #001A52; 
                 --btn-hover-text: #E51236;"
                 ></AddToCalendarButton>
-              </div>
+              
             </div>
           </div>
         </section>

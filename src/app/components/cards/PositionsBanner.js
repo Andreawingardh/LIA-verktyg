@@ -100,7 +100,7 @@ export const PositionsBanner = () => {
           />
         )}
 
-        <Link href="/companies" className="no-frame">Gå till LIA-listan<svg
+        <Link href="/companies" className="no-frame">Gå till företagslistan<svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="17"

@@ -106,7 +106,7 @@
 
 .headerWrapper img {
   /* Layout mobile */
-  min-height: 6.51975rem;
+  min-height:16.78125rem;
   object-fit: cover;
   aspect-ratio: 358 / 104.32;
   border-radius: var(--border-radius-xl, .75rem);

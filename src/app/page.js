@@ -115,9 +115,9 @@ export default function Home() {
             <h2>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h2>
             <p>
               Bli upptäckt av Yrgos digital designers och webbutvecklare. Bli
-              kontaktad av relevanta praktikanter.
+              kontaktad av relevanta praktikanter.<br></br>
+              Spara tid och stärk branschens framtid.
             </p>
-            <p>Spara tid och stärk branschens framtid.</p>
             <Button
               text="Skapa företagsprofil"
               className={styles.createProfileButton}

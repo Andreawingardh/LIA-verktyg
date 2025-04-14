@@ -106,7 +106,7 @@ const Footer = () => {
                         className={styles.memberLink}
                       >
                         <span>
-                          Se min profil
+                          Se min portfölj
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -395,7 +395,7 @@ const Footer = () => {
                       <Link href="/event">Mingelevent</Link>
                     </li>
                     <li>
-                      <Link href="/companies">Företagssidan</Link>
+                      <Link href="/companies">Företagslistan</Link>
                     </li>
                     <li>
                       <Link href="/privacy-policy">Sekretesspolicy</Link>

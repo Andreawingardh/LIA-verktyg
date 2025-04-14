@@ -197,16 +197,12 @@ input {
 }
 
 h1 {
-  /* Mobile layout */
-  /* flex: 1 0 0; */
-
-  /* Typography */
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
 
   /* heading-4/leading-normal/medium */
   font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-xlarge-font-size, 1.26563rem);
+  font-size: var(--font-size-xl);
   font-style: normal;
   font-weight: var(--font-weight-medium, 500);
   line-height: 140%; /* 1.77188rem */

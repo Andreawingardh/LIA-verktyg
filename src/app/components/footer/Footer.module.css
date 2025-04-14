@@ -30,7 +30,7 @@
   text-align: center;
   font-feature-settings: "liga" off, "clig" off;
   font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-4x-large-font-size, 28.83px);
+  font-size: var( --font-size-4xl);
   font-style: normal;
   font-weight: var(--font-weight-normal, 400);
   line-height: 100%;
@@ -423,6 +423,13 @@
   padding: 0;
   margin: 0;
   width: 100%;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%;
 }
 
 .siteNavList {
@@ -437,14 +444,26 @@
 .siteNavList li {
   margin-bottom: 0.625rem;
   width: 100%;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%;
 }
 
 .socialList a {
   text-decoration: none;
-  color: #333;
-  font-size: 0.875rem;
   transition: color 0.2s ease;
   width: 100%;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%;
 }
 
 .siteNavList a {
