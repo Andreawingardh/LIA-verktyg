@@ -5,10 +5,13 @@ import "@/assets/styles/fonts.css";
 import { Inter } from "next/font/google";
 import { Unna } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
 const unna = Unna({
-  weight: ["400", "700"], // Add this line to specify the weights
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
+  variable: "--font-unna",
 });
 
 export const metadata = {
@@ -19,7 +22,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="sv">
+    <html lang="sv" className={`${inter.variable} ${unna.variable}`}>
       <body className={`${inter.variable} ${unna.variable}`}>
         <Header metadata={metadata} />
         <main>{children}</main>

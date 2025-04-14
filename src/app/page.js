@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import RegistrationPopup from "./components/form/RegistrationPopup";
 import LoginPopup from "./components/form/LoginPopup";
 import { supabase } from "../utils/supabase/client";
@@ -12,7 +12,6 @@ import EditProfileOverlay from "./components/profile/EditProfileOverlay";
 import { Button } from "./components/buttons/Button";
 import { useRouter } from "next/navigation";
 import { CardCompany } from "./components/cards/CompanyCard";
-import { useRef } from "react";
 
 export default function Home() {
   const landingRef = useRef(null);
@@ -63,48 +62,59 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.page}>
-      <section className={styles.landingPageHero}>
-        <div className={styles.spacer}></div>
-        <div className={styles.heroContentWrapper}>
-          <div className={styles.header}>
-          <div className={styles.ellipseMobile}></div>
-          <div className={styles.ellipseDesktop}></div>
-          <img src="/images/yrgo-logo-mobile.svg" className={styles.yrgoLogo} alt="YRGO logo"/>
-          <h1 className={styles.headLine}>Mingelstund</h1>
-          <div className={styles.subheadingMobile}>
-            <p>23 april • 13:00–15:00</p>
-            <p>Visual Arena, Göteborg</p>
-            </div>
-            </div>
-          <div className={styles.footer}>
-            <p>
-              Välkommen till en avslappnad mingelstund med Yrgos digital
-              designers och webbutvecklare. Upptäck din nästa kollega i en
-              lättsam och personlig miljö.
-            </p>
-            <Button
-              text="Anmäl dig nu"
-              className={styles.eventButton}
-              onClick={goToEvent}
+    <div className={styles.pageWrapper}>
+      <div className={styles.heroContainer}>
+        <div className={styles.heroContent}>
+          <div className={styles.logoContainer}>
+            <img
+              src="/images/yrgo-logo-mobile.svg"
+              className={styles.yrgoLogo}
+              alt="YRGO logo"
             />
           </div>
+
+          <div className={styles.ellipseTextWrapper}>
+            <div className={styles.ellipseMobile}></div>
+            <div className={styles.ellipseDesktop}></div>
+
+            <div className={styles.heroTextContainer}>
+              <h1 className={styles.mingelstundHeading}>Mingelstund</h1>
+              <div className={styles.eventDetails}>
+                <p>23 april • 13:00–15:00</p>
+                <p>Visual Arena, Göteborg</p>
+              </div>
+              <div className={styles.footerDesc}>
+                <p className={styles.heroDescription}>
+                  Välkommen till en avslappnad mingelstund med Yrgos digital
+                  designers och webbutvecklare. Upptäck din nästa kollega i en
+                  lättsam och personlig miljö.
+                </p>
+                <Button
+                  text="Anmäl dig nu"
+                  className={styles.registerButton}
+                  onClick={goToEvent}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={styles.busyContentWrapper}>
-          Upptagen 23 april?{" "}
+
+        <div className={styles.scrollPrompt}>
+          <p>Upptagen 23 april?</p>
           <Button
             className={styles.scrollButton}
             onClick={scrollToLanding}
-            text="Scrolla ner"
+            text="Skrolla ner"
           />
         </div>
-      </section>
+      </div>
+
       <section className={styles.mainContentWrapper} ref={landingRef}>
         <div className={styles.ctaText}>
           <h2>Skapa er företagsprofil och bli upptäckt i vårt nätverk.</h2>
           <p>
             Bli upptäckt av Yrgos digital designers och webbutvecklare. Bli
-            kontaktad av relevanta praktikanter.{" "}
+            kontaktad av relevanta praktikanter.
           </p>
           <p>Spara tid och stärk branschens framtid.</p>
           <Button
@@ -115,7 +125,7 @@ export default function Home() {
         </div>
         <div className={styles.companyList}>
           <CardCompany
-            logoUrl=" /images/grebban.svg"
+            logoUrl="/images/grebban.svg"
             applyNowClassName="card-company-2"
             className="card-company-instance"
             company="Grebban"
@@ -125,9 +135,9 @@ export default function Home() {
             id="/"
             showApply={true}
             showLogotype={true}
-          ></CardCompany>
+          />
           <CardCompany
-            logoUrl=" /images/hiq.svg"
+            logoUrl="/images/hiq.svg"
             applyNowClassName="card-company-2"
             className="card-company-instance"
             company="HiQ"
@@ -137,9 +147,9 @@ export default function Home() {
             id="/"
             showApply={true}
             showLogotype={true}
-          ></CardCompany>
+          />
           <CardCompany
-            logoUrl=" /images/simmalugnt.svg"
+            logoUrl="/images/simmalugnt.svg"
             applyNowClassName="card-company-2"
             className="card-company-instance"
             company="Simma Lugnt"
@@ -149,13 +159,13 @@ export default function Home() {
             id="/"
             showApply={true}
             showLogotype={true}
-          ></CardCompany>
+          />
           <Button
             className="no-frame"
             text="Till företagslistan"
             style={{ textDecoration: "underline" }}
             onClick={goToCompanyPage}
-          ></Button>
+          />
         </div>
       </section>
 
@@ -167,7 +177,6 @@ export default function Home() {
         />
       )}
 
-      {/* Registration Popup */}
       {showRegistrationPopup && (
         <RegistrationPopup
           isOpen={showRegistrationPopup}
@@ -176,7 +185,6 @@ export default function Home() {
         />
       )}
 
-      {/* Login Popup */}
       {showLoginPopup && (
         <LoginPopup
           isOpen={showLoginPopup}

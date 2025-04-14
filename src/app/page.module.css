@@ -1,189 +1,62 @@
-.page {
-  @media screen and (min-width: 960px) {
-    display: flex;
-    max-width: 80rem;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
-}
-
-.main {
+.heroContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
-}
-
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
-}
-
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
-}
-
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.ctas {
-  display: flex;
-  gap: 16px;
-}
-
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  cursor: pointer;
-  display: flex;
+  min-height: 90vh;
+  width: 100%;
+  overflow: hidden;
   align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
+  padding: 0 1rem;
 }
 
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 158px;
-}
-
-.footer {
-  grid-row-start: 3;
+.pageWrapper {
   display: flex;
-  gap: 24px;
-}
-
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer img {
-  flex-shrink: 0;
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}
-
-@media (max-width: 960px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
-  }
-
-  .main {
-    align-items: center;
-  }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-}
-
-.landingPageHero {
-  /* Layout mobile */
-  display: flex;
-  max-width: 24.375rem;
-  height: 43rem;
-  max-width: 80rem;
-  /* padding: var(--spacing-3, 0.75rem) var(--spacing-4, 1rem); */
+  width: 100%;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  @media screen and (min-width: 960px) {
-    /* padding: var(--spacing-3, 0.75rem) var(--spacing-12, 2rem); */
-    gap: var(--spacing-8, 2rem);
-  }
+  align-items: flex-start;
+  gap: 0.5rem;
 }
+
+.footerDesc {
+  display: flex;
+  max-width: 28.75rem;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-10, 2.5rem);
+  align-self: stretch;
+}
+
+.heroContent {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  width: 100%;
+  max-width: 48.875rem;
+  padding: 6rem 0;
+}
+
+.ellipseTextWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 40vh;
+}
+
 
 .ellipseMobile {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%; 
   transform: translate(-50%, -50%);
-  overflow: hidden;
   z-index: -1;
   width: 35rem;
   height: 35rem;
-  border-radius: 35rem;
+  border-radius: 50%;
   background: var(--base-background, #fff);
   box-shadow: 0px 193px 54px 0px rgba(229, 18, 54, 0),
     0px 123px 49px 0px rgba(229, 18, 54, 0.03),
@@ -203,12 +76,12 @@ a.secondary {
     display: block;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 43%;
     transform: translate(-50%, -50%);
     width: 38.625rem;
     height: 38.625rem;
     z-index: -1;
-    border-radius: 38.625rem;
+    border-radius: 50%;
     background: var(--base-background, #fff);
     box-shadow: 0px 193px 54px 0px rgba(229, 18, 54, 0),
       0px 123px 49px 0px rgba(229, 18, 54, 0.03),
@@ -218,175 +91,126 @@ a.secondary {
   }
 }
 
-.heroContentWrapper {
-  display: flex;
-  max-width: 48.875rem;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-8, 2rem);
-  align-self: stretch;
+.logoContainer {
+  margin-bottom: 1rem;
   position: relative;
-
-  padding: 2rem 1rem;
-  margin: 0 auto;
-
-  @media screen and (min-width: 960px) {
-    display: flex;
-    max-width: 48.875rem;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-8, 2rem);
-    align-self: stretch;
-    padding: 3rem 2rem;
-  }
+  z-index: 3;
 }
 
 .yrgoLogo {
   width: 6.125rem;
   height: 1.5rem;
-  flex-shrink: 0;
-
-  @media screen and (min-width: 960px) {
-    display: flex;
-    width: 12.25rem;
-    height: 3rem;
-    justify-content: center;
-    align-items: center;
-    aspect-ratio: 49/12;
-  }
 }
 
-.headLine {
-  color: var(--base-secondary, #001a52);
+.heroTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  font-family: Unna;
-  font-size: clamp(2.5rem, 12vw, 9.875rem);
+  gap: 1.5rem;
+  max-width: 28.75rem;
+  position: relative;
+  z-index: 2;
+}
+
+.mingelstundHeading {
+  color: #001a52;
+  font-family: var(--font-unna);
+  font-size: 4.5rem;
   font-style: italic;
   font-weight: 700;
-  line-height: 130%; /* 5.85rem */
+  line-height: 130%;
   letter-spacing: -0.09rem;
-  width: fit-content;
+  margin: 0;
+  transition: font-size 0.3s ease;
 }
 
-.subheadingMobile {
-  max-width: 31.25rem;
-  align-self: stretch;
+.eventDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #001a52;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 150%;
+}
 
-  color: var(--base-secondary, #001a52);
+.heroDescription {
+  color: #0f1314;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.0125rem;
+  text-align: center;
+  max-width: 28.75rem;
+}
 
+.registerButton {
+  display: flex;
+  height: 2.75rem;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 624.9375rem;
+  background: #e51236;
+  border: 1px solid #e51236;
+  color: #fff;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0.0125rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.registerButton:hover {
+  background: #fff;
+  color: #e51236;
+  border-color: #fff;
+}
+
+.scrollPrompt {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--base-muted-foreground, #495b62);
+  text-align: center;
   font-feature-settings: "liga" off, "clig" off;
 
-  /* large/leading-normal/medium */
+  /* body/leading-normal/regular */
   font-family: var(--typography-font-family-font-sans, Inter);
-  font-size: var(--typography-base-sizes-large-font-size, 1.125rem);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
   font-style: normal;
-  font-weight: var(--font-weight-medium, 500);
-  line-height: 150%; /* 1.6875rem */
-  letter-spacing: 0.00938rem;
-
-  @media screen and (min-width: 960px) {
-    display: flex;
-    gap: 2rem;
-    margin: 0 auto;
-  }
-}
-
-.subheadingMobile p {
-  text-align: center;
-  width: 100%;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
+  margin-top: auto;
+  padding-bottom: 2rem;
 }
 
 .scrollButton {
   display: flex;
-  height: var(--height-h-11, 2.75rem);
-  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
+  height: 2.75rem;
+  padding: 0.5rem 1rem;
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-2, 0.5rem);
-  border-radius: var(--border-radius-full, 624.9375rem);
-  background: var(--colors-base-transparent, rgba(255, 255, 255, 0));
+  gap: 0.5rem;
+  border-radius: 624.9375rem;
+  background: transparent;
   border: none;
-}
-
-.eventButton {
-  display: flex;
-  height: var(--height-h-11, 2.75rem);
-  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2, 0.5rem);
-  border-radius: var(--border-radius-full, 624.9375rem);
-  background: var(--base-primary, #e51236);
-  border: none;
-  color: #fff;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  color: #0f1314;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-}
-
-.eventButton:hover {
-  border-radius: var(--border-radius-full, 624.9375rem);
-  border: 1px solid var(--base-primary-foreground, #fff);
-  background: var(--base-primary-foreground, #fff);
-  color: var(--base-primary, #e51236);
-}
-
-.busyContentWrapper {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.ctaText {
-  /* Mobile */
-  display: flex;
-  padding: var(--spacing-8, 2rem) var(--spacing-0, 0rem);
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-8, 2rem);
-  align-self: stretch;
-
-  /* Desktop */
-  @media screen and (min-width: 960px) {
-    display: flex;
-    padding: var(--spacing-12, 3rem);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-8, 2rem);
-    flex: 1 0 0;
-  }
-}
-
-.mainContentWrapper {
-  /* Mobile */
-  display: flex;
-  padding: var(--spacing-12, 3rem) var(--spacing-4, 1rem);
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-12, 3rem);
-  align-self: stretch;
-
-  /* Desktop */
-  @media screen and (min-width: 960px) {
-    flex-direction: row;
-    padding: var(--spacing-24, 6rem) var(--spacing-12, 3rem);
-    justify-content: center;
-    align-items: center;
-    gap: var(--spacing-12, 3rem);
-    align-self: stretch;
-  }
-}
-
-.createProfileButton {
-  display: flex;
-  height: var(--height-h-11, 2.75rem);
-  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2, 0.5rem);
-  border-radius: var(--border-radius-full, 624.9375rem);
-  border: 1px solid var(--base-secondary, #001a52);
-  background: var(--base-secondary, #001a52);
-  color: var(--base-secondary-foreground, #fff);
+  color: var(--base-link, #00287e);
   font-feature-settings: "liga" off, "clig" off;
 
   /* body/leading-normal/medium */
@@ -396,81 +220,143 @@ a.secondary {
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 1.5rem */
   letter-spacing: 0.0125rem;
+}
+
+.scrollButton:hover {
+  text-decoration: underline;
+}
+
+.mainContentWrapper {
+  display: flex;
+  padding: 3rem 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  align-self: stretch;
+}
+
+.ctaText {
+  display: flex;
+  padding: 2rem 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  align-self: stretch;
+}
+
+.ctaText h2 {
+  color: #001a52;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 130%;
+}
+
+.ctaText p {
+  color: #0f1314;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.createProfileButton {
+  display: flex;
+  height: 2.75rem;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 624.9375rem;
+  border: 1px solid #001a52;
+  background: #001a52;
+  color: #fff;
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0.0125rem;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
   cursor: pointer;
 }
 
 .createProfileButton:hover {
-  border-radius: var(--border-radius-full, 624.9375rem);
-  border: 1px solid var(--base-secondary, #fff);
-  background: var(--base-primary, #fff);
+  background: #fff;
   color: #001a52;
+  border-color: #001a52;
 }
 
 .companyList {
   display: flex;
-  padding: 0rem var(--spacing-0, 0rem);
+  padding: 0 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-4, 1rem);
+  gap: 1rem;
   align-self: stretch;
-
-  /* Desktop */
-
-  @media screen and (min-width: 960px) {
-    display: flex;
-    padding: 0rem var(--spacing-12, 3rem);
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    gap: var(--spacing-4, 1rem);
-    flex: 1 0 0;
-  }
-}
-
-.companyList button {
-  align-self: flex-end;
-}
-
-.heroContentWrapper p {
-  text-wrap: balance;
-  margin: auto 0;
-  text-align: center;
-
-  /* Desktop */
-  @media screen and (min-width: 960px) {
-    display: flex;
-    max-width: 48.875rem;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-8, 2rem);
-  }
 }
 
 .spacer {
   width: 0.0625rem;
   height: var(--width-w-4, 1rem);
   flex-shrink: 0;
+  background: var(--colors-base-transparent, rgba(255, 255, 255, 0));
 }
 
-.footer {
-  display: flex;
 
-  max-width: 28.75rem;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-10, 2.5rem);
+@media screen and (min-width: 768px) {
+  .mingelstundHeading {
+    font-size: 5.5rem;
+  }
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-4, 1rem);
-  width: 100%;
-}
+@media screen and (min-width: 960px) {
+  .mingelstundHeading {
+    font-size: 9.875rem;
+  }
 
-.ctaText h3 {
-  color: #0f1314;
+  .ellipseDesktop {
+    max-width: 38.625rem;
+    max-height: 38.625rem;
+  }
+
+  .yrgoLogo {
+    width: 12.25rem;
+    height: 3rem;
+  }
+
+  .logoContainer {
+    margin-bottom: 0.5rem;
+  }
+
+  .eventDetails {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .heroContent {
+    padding: 5rem 2rem;
+  }
+
+  .mainContentWrapper {
+    flex-direction: row;
+    padding: 6rem 3rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ctaText {
+    padding: 3rem;
+    flex: 1 0 0;
+  }
+
+  .companyList {
+    padding: 0 3rem;
+    align-items: flex-end;
+    flex: 1 0 0;
+  }
+
+  .companyList button {
+    align-self: flex-end;
+  }
 }
