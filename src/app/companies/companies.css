@@ -196,7 +196,7 @@ input {
   background: var(--base-background, #fff);
 }
 
-h1 {
+h2 {
   /* Mobile layout */
   /* flex: 1 0 0; */
 

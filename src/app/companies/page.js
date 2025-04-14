@@ -53,7 +53,7 @@ export default function Companies() {
     e.preventDefault();
 
     try {
-       const searchValues = e.target.elements[0].value.trim() + ":*";
+      const searchValues = e.target.elements[0].value.trim() + ":*";
       console.log(searchValues);
       const { data: searchData, error } = await supabase
         .from("companies")
@@ -69,7 +69,6 @@ export default function Companies() {
       console.log(e);
       setError(e);
     }
-
   }
 
   const handleSearchInputChange = async (e) => {
@@ -182,13 +181,16 @@ export default function Companies() {
     <>
       <div className="cover-wrapper">
         <div className="image-wrapper">
-          <img src="/images/eventpage-hero-image.png" alt="Illustration av fyra personer som samarbetar med programmering kring en laptop, med kodsymboler och ikoner på blå bakgrund." />
+          <img
+            src="/images/eventpage-hero-image.png"
+            alt="Illustration av fyra personer som samarbetar med programmering kring en laptop, med kodsymboler och ikoner på blå bakgrund."
+          />
         </div>
       </div>
       <div className="main-wrapper">
-        <section className="content-wrapper">
+        <div className="content-wrapper">
           <section className="search-bar-and-filter-wrapper">
-            <h1>Hitta din nya LIA-plats</h1>
+            <h2>Hitta din nya LIA-plats</h2>
             <p>
               Filtrera och hitta matchande LIA-platser från anslutna företag.
             </p>
@@ -197,37 +199,40 @@ export default function Companies() {
                 placeholder="Sök efter företag"
                 name="input-search"
                 onChange={handleSearchInputChange}
-              /><label htmlFor="input-search">
-              <Button
-                text="Sök"
-                className="primary-button"
-                hasIcon={true}
-                leftIcon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="17"
-                    viewBox="0 0 16 17"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M7.33333 2.81543C4.66396 2.81543 2.5 4.97939 2.5 7.64876C2.5 10.3181 4.66396 12.4821 7.33333 12.4821C8.64044 12.4821 9.82637 11.9632 10.6964 11.1202C10.7113 11.0998 10.728 11.0803 10.7465 11.0619C10.7649 11.0435 10.7844 11.0268 10.8048 11.0118C11.6478 10.1418 12.1667 8.95587 12.1667 7.64876C12.1667 4.97939 10.0027 2.81543 7.33333 2.81543ZM11.7966 11.4049C12.6515 10.3901 13.1667 9.07958 13.1667 7.64876C13.1667 4.4271 10.555 1.81543 7.33333 1.81543C4.11167 1.81543 1.5 4.4271 1.5 7.64876C1.5 10.8704 4.11167 13.4821 7.33333 13.4821C8.76415 13.4821 10.0747 12.967 11.0895 12.112L13.6465 14.669C13.8417 14.8643 14.1583 14.8643 14.3536 14.669C14.5488 14.4737 14.5488 14.1572 14.3536 13.9619L11.7966 11.4049Z"
-                      fill="white"
-                    />
-                  </svg>
-                }
-                type="submit"
+              />
+              <label htmlFor="input-search">
+                <Button
+                  id="input-search"
+                  text="Sök"
+                  className="primary-button"
+                  hasIcon={true}
+                  leftIcon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="17"
+                      viewBox="0 0 16 17"
+                      fill="none"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M7.33333 2.81543C4.66396 2.81543 2.5 4.97939 2.5 7.64876C2.5 10.3181 4.66396 12.4821 7.33333 12.4821C8.64044 12.4821 9.82637 11.9632 10.6964 11.1202C10.7113 11.0998 10.728 11.0803 10.7465 11.0619C10.7649 11.0435 10.7844 11.0268 10.8048 11.0118C11.6478 10.1418 12.1667 8.95587 12.1667 7.64876C12.1667 4.97939 10.0027 2.81543 7.33333 2.81543ZM11.7966 11.4049C12.6515 10.3901 13.1667 9.07958 13.1667 7.64876C13.1667 4.4271 10.555 1.81543 7.33333 1.81543C4.11167 1.81543 1.5 4.4271 1.5 7.64876C1.5 10.8704 4.11167 13.4821 7.33333 13.4821C8.76415 13.4821 10.0747 12.967 11.0895 12.112L13.6465 14.669C13.8417 14.8643 14.1583 14.8643 14.3536 14.669C14.5488 14.4737 14.5488 14.1572 14.3536 13.9619L11.7966 11.4049Z"
+                        fill="white"
+                      />
+                    </svg>
+                  }
+                  type="submit"
                 ></Button>
-                </label>
+              </label>
             </form>
 
             <Button
-
               className="light-filter-button"
               onClick={toggleFilter}
-              text={isVisible ? "Stäng filtrering" : "Filtrera efter positioner"}
+              text={
+                isVisible ? "Stäng filtrering" : "Filtrera efter positioner"
+              }
               hasIcon={true}
               rightIcon={
                 isVisible ? (
@@ -449,16 +454,16 @@ export default function Companies() {
 
           {/* LIST OF COMPANIES */}
           <section className="companies-list">
-
             {error && <div>{error}</div>}
 
             {filteredCompanies.length > 0 && (
-              <h1 className="matching-companies">Företag med matchande positioner</h1>
+              <h1 className="matching-companies">
+                Företag med matchande positioner
+              </h1>
             )}
 
             {filteredCompanies.map((company) => (
               <div key={company.id}>
-
                 <CardCompany
                   logoUrl={company.logo_url}
                   applyNowClassName="card-company-2"
@@ -510,7 +515,7 @@ export default function Companies() {
               </div>
             ))}
           </section>
-        </section>
+        </div>
       </div>
       <CreateCompanyProfileBanner />
     </>
