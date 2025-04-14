@@ -17,7 +17,6 @@ export const PositionsBanner = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
- 
   useEffect(() => {
     const checkUser = async () => {
       try {
@@ -72,20 +71,24 @@ export const PositionsBanner = () => {
         <p>Deltagande företag</p>
         <div className={styles.rollingBannerContent}>
           <div className={styles.rollingBannerImageWrapper}>
-            {companiesData.map((company) => (
-              <img
-                key={`first-${company.id}`}
-                src={company.logo_url}
-                alt={company.name || "Company logo"}
-              />
-            ))}
-            {companiesData.map((company) => (
-              <img
-                key={`second-${company.id}`}
-                src={company.logo_url}
-                alt={company.name || "Company logo"}
-              />
-            ))}
+            {companiesData.map((company) =>
+              company.logo_url != null ? (
+                <img
+                  key={`first-${company.id}`}
+                  src={company.logo_url}
+                  alt={company.name || "Company logo"}
+                />
+              ) : null
+            )}
+            {companiesData.map((company) =>
+              company.logo_url != null ? (
+                <img
+                  key={`first-${company.id}`}
+                  src={company.logo_url}
+                  alt={company.name || "Company logo"}
+                />
+              ) : null
+            )}
           </div>
         </div>
 
