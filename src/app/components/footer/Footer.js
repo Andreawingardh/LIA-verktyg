@@ -135,13 +135,14 @@ const Footer = () => {
           <div className={styles.siteInfoSection}>
             <div className={styles.siteInfoLayout}>
               <div className={styles.brandInfo}>
-                <div className={styles.brandLogo} alt="Yrgo logotyp">
+                <div className={styles.brandLogo}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="180"
                     height="44"
                     viewBox="0 0 180 44"
                     fill="none"
+                    alt="Yrgo logotyp"
                   >
                     <path
                       d="M157.979 43.8798C146.026 43.8798 136.298 34.0401 136.298 21.943C136.298 17.8754 137.405 13.9042 139.502 10.4584C140.25 9.22569 141.853 8.83595 143.087 9.5841C144.315 10.3341 144.707 11.9394 143.959 13.1698C142.359 15.7996 141.514 18.831 141.514 21.943C141.514 31.1604 148.898 38.6619 157.979 38.6619C167.061 38.6619 174.452 31.1604 174.452 21.943C174.452 12.7256 167.06 5.21792 157.979 5.21792C155.326 5.22025 152.795 5.8397 150.458 7.0628C149.179 7.73301 147.605 7.23268 146.94 5.95649C146.272 4.67979 146.767 3.10346 148.043 2.43506C151.088 0.845009 154.526 0.0023307 157.977 0C169.938 0 179.667 9.84203 179.667 21.943C179.667 34.044 169.938 43.8798 157.979 43.8798Z"
@@ -339,7 +340,7 @@ const Footer = () => {
                               gradientUnits="userSpaceOnUse"
                               gradientTransform="translate(5.66667 16.6667) rotate(-81.5289) scale(15.8395)"
                             >
-                              <stop stopColor="#FFDD55" />
+                              <stop offset="0.1" stopColor="#FFDD55" />
                               <stop offset="0.1" stopColor="#FFDD55" />
                               <stop offset="0.517936" stopColor="#FF442C" />
                               <stop offset="1" stopColor="#FF1ED2" />
