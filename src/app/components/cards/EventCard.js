@@ -122,6 +122,7 @@ export const EventCard = ({ IsSubmitted }) => {
                     Namn <span className={styles.asterix}> *</span>
                   </label>
                   <input
+                    id="name"
                     name="name"
                     placeholder="Skriv ditt för- och efternamn"
                     required
@@ -132,6 +133,7 @@ export const EventCard = ({ IsSubmitted }) => {
                     E-post<span className={styles.asterix}> *</span>
                   </label>
                   <input
+                    id="email"
                     name="email"
                     type="email"
                     placeholder="Skriv din jobbmail"
@@ -140,7 +142,7 @@ export const EventCard = ({ IsSubmitted }) => {
                 </div>
 
                 <div className={styles.checkbox}>
-                  <input type="checkbox" name="checkbox" required />
+                  <input type="checkbox" name="checkbox" id="checkbox" required />
                   <label htmlFor="checkbox">Jag godkänner <a href="/privacy-policy">
                     sekretesspolicy
                   </a></label>
