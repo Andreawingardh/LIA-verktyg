@@ -27,7 +27,7 @@ const Footer = () => {
       name: "Andrea Wingårdh",
       role: "Webbutvecklare",
       profileUrl: "https://github.com/Andreawingardh",
-      avatar: "/images/Card/Andrea-Avatar.png",
+      avatar: "/images/Card/Andrea-avatar.png",
       bio: "Github"
     },
     {
