@@ -1,9 +1,12 @@
+
+
 import "./globals.css";
 import Header from "./components/header/Header.js";
 import Footer from "./components/footer/Footer.js";
 import "@/assets/styles/fonts.css";
 import { Inter } from "next/font/google";
 import { Unna } from "next/font/google";
+
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -21,9 +24,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="sv" className={`${inter.variable} ${unna.variable}`}>
-      <body className={`${inter.variable} ${unna.variable}`}>
+      <body className={`${inter.variable} ${unna.variable}` } style={{ overflow: 'hidden' }}>
         <Header metadata={metadata} />
         <main>{children}</main>
         <Footer metadata={metadata} />
