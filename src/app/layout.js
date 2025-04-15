@@ -18,6 +18,9 @@ export const metadata = {
   organization: "YRGO",
   title: "Internify",
   description: "YRGO",
+  icons: {
+    icon: '/favicon.ico'
+  }
 };
 
 export default function RootLayout({ children }) {
