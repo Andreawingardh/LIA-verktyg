@@ -8,7 +8,7 @@ import Link from "next/link";
 import { PositionsBanner } from "../cards/PositionsBanner";
 
 const formatWebsiteForDisplay = (url) => {
-  if (!url) return "www.acmeagency.com";
+  if (!url) return "https://www.yrgo.se";
 
   try {
     // Create URL object to parse the url
@@ -186,7 +186,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                       </div>
                     )}
                     <div className={styles["company-details"]}>
-                      <h1>{companyData.name || "Acme Agency"}</h1>
+                      <h1>{companyData.name || ""}</h1>
                     </div>
                   </div>
 
@@ -195,24 +195,20 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                   </p>
 
                   <div className={styles.description}>
-                    <p>
-                      {companyData.description ||
-                        "Acme Inc är en designbyrå sedan 10 år tillbaka. Vi arbetar med främst med kommunikation och varumärkesutveckling. Vi söker främst praktikanter som fokuserar på rörligt. Som praktikant hos oss får man inte bara frilöst, utan även jobba skarpt mot kund och mycket frihet."}
-                    </p>
+                    <p>{companyData.description || ""}</p>
                   </div>
                 </div>
 
                 {/* Website Button*/}
                 {companyData.website && (
-                  // <button type="button" className={styles.website}>
-                      <a
-                        className={styles.website}
-                      href={companyData.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {formatWebsiteForDisplay(companyData.website)}
-                    </a>
+                  <a
+                    className={styles.website}
+                    href={companyData.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {formatWebsiteForDisplay(companyData.website)}
+                  </a>
                   // </button>
                 )}
 
