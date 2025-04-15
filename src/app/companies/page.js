@@ -521,7 +521,7 @@ export default function Companies() {
                   showLogotype={company.logo_url != null ? true : false}
                   companyPositions={
                     company.position_count
-                      ? "Lediga LIA-positioner"
+                      ? "Lediga LIA-platser"
                       : ""
                   }
                   showApply={company.position_count > 0 ? true : false}
