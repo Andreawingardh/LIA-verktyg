@@ -10,7 +10,7 @@ import { ProgressIndicator } from "../../components/form/ProgressIndicator";
 import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
 
 
-const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-banner-placeholder.webp";
+const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-placeholder-hero.png";
 
 export default function RegisterPage() {
   return (
