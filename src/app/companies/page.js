@@ -410,7 +410,7 @@ export default function Companies() {
                           onClick={() => handleSkillToggle(skill)}
                         >
                           <img
-                            src={`/images/software-icons/${skill.skills_name}.svg`}
+                            src={`/images/software-icons/${skill.skills_name.toLowerCase().replace(/\s+/g, '')}.svg`}
                             alt={skill.skills_name}
                           />
                           {skill.skills_name}

@@ -9,6 +9,9 @@ import "../company.css";
 import { ProgressIndicator } from "../../components/form/ProgressIndicator";
 import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
 
+
+const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-banner-placeholder.webp";
+
 export default function ContactPage() {
   return (
     <FormProvider>
@@ -66,8 +69,7 @@ function ContactForm() {
         }
         
         setLoading(false);
-      } else if (!description || !location) {
-        // If we're missing description or location, go back to description page
+      } else if (!location) {
         router.push("/company/description");
       } else {
         setLoading(false);
@@ -95,8 +97,7 @@ function ContactForm() {
 
     // Validate contact email
     if (!contactEmail.trim()) {
-      newErrors.contactEmail = "Kontaktmail är obligatoriskt";
-      isValid = false;
+      isValid = true;
     } else {
       // Simple email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -133,6 +134,8 @@ function ContactForm() {
       const location = localStorage.getItem("companyLocation");
       const logoUrl = localStorage.getItem("logoUrl");
       const displayImageUrl = localStorage.getItem("displayImageUrl");
+      // The displayImageUrl already contains either the uploaded image URL or the placeholder path
+      // from the BaseInfo page, so we don't need additional logic here
 
       if (!user) {
         // Only try to sign up if we don't already have a user
@@ -201,6 +204,7 @@ function ContactForm() {
       localStorage.removeItem("companyLocation");
       localStorage.removeItem("hasLogo");
       localStorage.removeItem("hasDisplayImage");
+      localStorage.removeItem("useDefaultDisplayImage");
       localStorage.removeItem("logoUrl");
       localStorage.removeItem("displayImageUrl");
 
@@ -284,7 +288,7 @@ function ContactForm() {
             id="contactEmail"
             name="contactEmail"
             type="email"
-            className={`profileInputs ${errors.contactEmail ? "error-input" : ""}`}
+            className="profileInputs"
             required
             value={contactEmail}
             onChange={(e) => {
@@ -295,7 +299,6 @@ function ContactForm() {
             disabled={isSubmitting}
             placeholder="Skriv företagets kontaktmail"
           />
-          {errors.contactEmail && <p className="error-message">{errors.contactEmail}</p>}
           <p>
             Kontaktmail kommer synas på eran företagssida.
           </p>
