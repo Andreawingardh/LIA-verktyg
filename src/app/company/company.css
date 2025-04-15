@@ -1,7 +1,7 @@
 .container {
   display: flex;
   width: 100vw;
-  padding: var(--spacing-12, 48px) var(--spacing-4, 16px);
+  padding: var(--spacing-4, 16px);
   flex-direction: column;
   align-items: center;
   height: calc(100vh - 110px);
