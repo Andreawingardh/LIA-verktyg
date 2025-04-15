@@ -14,7 +14,7 @@ import { PositionsBanner } from "../components/cards/PositionsBanner";
 import Link from "next/link";
 
 const formatWebsiteForDisplay = (url) => {
-  if (!url) return "www.acmeagency.com";
+  if (!url) return "www.yrgo.se";
 
   try {
     // Create URL object to parse the url
@@ -108,14 +108,20 @@ export default function DashboardPage() {
     <>
       {/* Company Header Banner */}
       {companyProfile &&
-        companyProfile.display_image_url &&
-        companyProfile.display_image_url !== "pending" && (
-          <div className={styles["cover-image"]}>
-            <div className={styles.coverWrapper}>
-              <img src={companyProfile.display_image_url} alt="Omslagsbild" />
-            </div>
+      companyProfile.display_image_url &&
+      companyProfile.display_image_url !== "pending" ? (
+        <div className={styles["cover-image"]}>
+          <div className={styles.coverWrapper}>
+            <img src={companyProfile.display_image_url} alt="Omslagsbild" />
           </div>
-        )}
+        </div>
+      ) : (
+        <div className={styles["cover-image"]}>
+          <div className={styles.coverWrapper}>
+            <img src="/images/company-placeholder-hero.png" alt="Omslagsbild" />
+          </div>
+        </div>
+      )}
 
       <div className={styles["dashboard-container"]}>
         <div className={styles.contentWrapper}>
@@ -128,24 +134,16 @@ export default function DashboardPage() {
                 <div className={styles["profile-content"]}>
                   <div className={styles["profile-header"]}>
                     {companyProfile.logo_url &&
-                    companyProfile.logo_url !== "pending" ? (
-                      <div className={styles["company-logo"]}>
-                        <img
-                          src={companyProfile.logo_url}
-                          alt={`${companyProfile.name} logotyp`}
-                        />
-                      </div>
-                    ) : (
-                      <div className={styles["company-logo"]}>
-                        <div>
-                          {companyProfile.name
-                            ? companyProfile.name.charAt(0)
-                            : "A"}
+                      companyProfile.logo_url !== "pending" && (
+                        <div className={styles["company-logo"]}>
+                          <img
+                            src={companyProfile.logo_url}
+                            alt={`${companyProfile.name} logotyp`}
+                          />
                         </div>
-                      </div>
-                    )}
+                      )}
                     <div className={styles["company-details"]}>
-                      <h2>{companyProfile.name || "Acme Agency"}</h2>
+                      <h2>{companyProfile.name || ""}</h2>
                     </div>
                   </div>
 
@@ -154,10 +152,7 @@ export default function DashboardPage() {
                   </p>
 
                   <div className={styles.description}>
-                    <p>
-                      {companyProfile.description ||
-                        "Acme Inc är en designbyrå sedan 10 år tillbaka. Vi arbetar med främst med kommunikation och varumärkesutveckling. Vi söker främst praktikanter som fokuserar på rörligt. Som praktikant hos oss får man inte bara frilöst, utan även jobba skarpt mot kund och mycket frihet."}
-                    </p>
+                    <p>{companyProfile.description || ""}</p>
                   </div>
                 </div>
 

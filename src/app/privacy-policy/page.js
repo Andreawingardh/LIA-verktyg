@@ -10,7 +10,7 @@ import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfile
 export default function PrivacyPolicy() {
   const router = useRouter();
   function previous() {
-    router.back();
+    router.back({ scroll: false });
   }
 
   return (
