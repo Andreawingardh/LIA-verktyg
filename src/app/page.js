@@ -525,10 +525,10 @@ export default function Home() {
           </div>
           <div className={styles.companyList}>
             <CardCompany
-              logoUrl="images/fakelogos/Brightforge.svg"
+              logoUrl="images/fakelogos/Codecraft.svg"
               applyNowClassName="card-company-2"
               className="card-company-instance"
-              company="Brightforge"
+              company="Codecraft"
               headerClassName="design-component-instance-node"
               location="Göteborg"
               statusProperty="internship-matching"
@@ -537,10 +537,10 @@ export default function Home() {
               showLogotype={true}
             />
             <CardCompany
-              logoUrl="images/fakelogos/Codelure.svg"
+              logoUrl="images/fakelogos/Pixelperfect.svg"
               applyNowClassName="card-company-2"
               className="card-company-instance"
-              company="Codelure"
+              company="Pixelperfect"
               headerClassName="design-component-instance-node"
               location="Göteborg"
               statusProperty="internship-matching"
@@ -549,10 +549,10 @@ export default function Home() {
               showLogotype={true}
             />
             <CardCompany
-              logoUrl="images/fakelogos/Quibly.svg"
+              logoUrl="images/fakelogos/Devmatrix.svg"
               applyNowClassName="card-company-2"
               className="card-company-instance"
-              company="Quibly"
+              company="Devmatrix"
               headerClassName="design-component-instance-node"
               location="Göteborg"
               statusProperty="internship-matching"

@@ -1,0 +1,39 @@
+ <svg
+              viewBox="0 0 200 100"
+              width="100%"
+              height="100%"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="100"
+                rx="10"
+                fill="#2D3748"
+              />
+              <text
+                x="100"
+                y="50"
+                fontFamily="Arial, sans-serif"
+                fontWeight="bold"
+                fontSize="24"
+                fill="white"
+                textAnchor="middle"
+                dominantBaseline="middle"
+              >
+                CodeCraft
+              </text>
+              <path
+                d="M40,30 L60,50 L40,70"
+                stroke="#4FD1C5"
+                strokeWidth="3"
+                fill="none"
+              />
+              <path
+                d="M160,30 L140,50 L160,70"
+                stroke="#4FD1C5"
+                strokeWidth="3"
+                fill="none"
+              />
+            </svg>
