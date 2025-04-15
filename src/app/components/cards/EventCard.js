@@ -10,55 +10,16 @@ import { supabase } from "@/utils/supabase/client";
 import "@/app/components/buttons/button.css";
 import {
   EmailShareButton,
-  FacebookMessengerShareButton,
   FacebookShareButton,
-  GabShareButton,
-  HatenaShareButton,
-  InstapaperShareButton,
-  LineShareButton,
   LinkedinShareButton,
-  LivejournalShareButton,
-  MailruShareButton,
-  OKShareButton,
-  PinterestShareButton,
-  PocketShareButton,
-  RedditShareButton,
-  TelegramShareButton,
-  ThreadsShareButton,
-  TumblrShareButton,
-  TwitterShareButton,
-  ViberShareButton,
-  VKShareButton,
-  WhatsappShareButton,
-  WorkplaceShareButton,
 } from "react-share";
 import {
   EmailIcon,
   FacebookIcon,
-  FacebookMessengerIcon,
-  GabIcon,
-  HatenaIcon,
-  InstapaperIcon,
-  LineIcon,
   LinkedinIcon,
-  LivejournalIcon,
-  MailruIcon,
-  OKIcon,
-  PinterestIcon,
-  PocketIcon,
-  RedditIcon,
-  TelegramIcon,
-  ThreadsIcon,
-  TumblrIcon,
-  TwitterIcon,
-  ViberIcon,
-  VKIcon,
-  WeiboIcon,
-  WhatsappIcon,
-  WorkplaceIcon,
-  XIcon,
-  BlueskyIcon,
 } from "react-share";
+
+/* This import needs to be present on this page, otherwise the AddToCalendarButton disappears from the event-page */
 import { AddToCalendarButton } from "add-to-calendar-button-react";
 
 export const EventCard = ({ IsSubmitted }) => {
