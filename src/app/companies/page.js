@@ -411,6 +411,7 @@ export default function Companies() {
                         >
                           <img
                             src={`/images/software-icons/${skill.skills_name.toLowerCase().replace(/\s+/g, '')}.svg`}
+                            aria-hidden
                             alt={skill.skills_name}
                           />
                           {skill.skills_name}
