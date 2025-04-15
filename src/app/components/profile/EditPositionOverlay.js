@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "../../../utils/supabase/client";
-import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 import EditPositionForm from "../form/position/EditPositionForm";
 import "../form/popup.css";
 

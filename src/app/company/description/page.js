@@ -24,8 +24,8 @@ function DescriptionForm() {
   // Convert to object-based error handling
   const [errors, setErrors] = useState({
     description: "",
-    location: "", 
-    general: ""
+    location: "",
+    general: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -62,9 +62,11 @@ function DescriptionForm() {
       if (savedDescription) setDescription(savedDescription);
       if (savedLocation) setLocation(savedLocation);
 
-      if ((user || localStorage.getItem("registrationEmail")) && 
-          ((registrationStep === "description" && companyName) || 
-           (companyName && !registrationStep))) {
+      if (
+        (user || localStorage.getItem("registrationEmail")) &&
+        ((registrationStep === "description" && companyName) ||
+          (companyName && !registrationStep))
+      ) {
         setLoading(false);
       } else if (!companyName) {
         router.push("/company/baseInfo");
@@ -80,7 +82,7 @@ function DescriptionForm() {
     if (newValue.length <= MAX_DESCRIPTION_LENGTH) {
       setDescription(newValue);
       // Clear error when user types
-      setErrors(prev => ({...prev, description: "", general: ""}));
+      setErrors((prev) => ({ ...prev, description: "", general: "" }));
     }
   };
 
@@ -99,8 +101,6 @@ function DescriptionForm() {
       newErrors.location = "Kontorsort får ha max 20 tecken";
       isValid = false;
     }
-    // Description is optional but we can validate min length if entered
-    
 
     setErrors(newErrors);
     return isValid;
@@ -108,7 +108,7 @@ function DescriptionForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (redirecting || isSubmitting) {
       return;
     }
@@ -125,17 +125,19 @@ function DescriptionForm() {
       localStorage.setItem("companyDescription", description);
       localStorage.setItem("companyLocation", location);
       localStorage.setItem("registrationStep", "contact");
-      
+
       // Mark that we're redirecting to prevent multiple redirects
       setRedirecting(true);
-      
+
       // Add a small delay before redirecting
       setTimeout(() => {
         router.push("/company/contact");
       }, 100);
     } catch (err) {
-      console.error("Error in Description:", err);
-      setErrors(prev => ({...prev, general: "Ett fel uppstod när informationen skulle sparas"}));
+      setErrors((prev) => ({
+        ...prev,
+        general: "Ett fel uppstod när informationen skulle sparas",
+      }));
       setIsSubmitting(false);
       setRedirecting(false);
     }
@@ -192,12 +194,14 @@ function DescriptionForm() {
             onChange={(e) => {
               setLocation(e.target.value);
               // Clear error when user types
-              setErrors(prev => ({...prev, location: "", general: ""}));
+              setErrors((prev) => ({ ...prev, location: "", general: "" }));
             }}
             disabled={isSubmitting || redirecting}
             placeholder="Skriv den ort kontoret befinner sig"
           />
-          {errors.location && <p className="error-message">{errors.location}</p>}
+          {errors.location && (
+            <p className="error-message">{errors.location}</p>
+          )}
         </article>
 
         <article className="inputTextarea">
@@ -205,14 +209,22 @@ function DescriptionForm() {
             <label className="popupTitle" htmlFor="description">
               Företagsbeskrivning
             </label>
-            <span className={`characterCounter ${description.length >= MAX_DESCRIPTION_LENGTH ? 'characterCounterMax' : ''}`}>
+            <span
+              className={`characterCounter ${
+                description.length >= MAX_DESCRIPTION_LENGTH
+                  ? "characterCounterMax"
+                  : ""
+              }`}
+            >
               {description.length}/{MAX_DESCRIPTION_LENGTH}
             </span>
           </div>
           <textarea
             id="description"
             name="description"
-            className={`textProfileInputs ${errors.description ? "error-input" : ""}`}
+            className={`textProfileInputs ${
+              errors.description ? "error-input" : ""
+            }`}
             value={description}
             onChange={handleDescriptionChange}
             disabled={isSubmitting || redirecting}
@@ -220,9 +232,13 @@ function DescriptionForm() {
             placeholder="Skriv kort om erat företag och praktikplats"
             maxLength={MAX_DESCRIPTION_LENGTH}
           />
-          {errors.description && <p className="error-message">{errors.description}</p>}
-          <p>Vad för projekt brukar ni jobba med?<br></br>
-            Vad kan praktikanter förvänta sig?</p>
+          {errors.description && (
+            <p className="error-message">{errors.description}</p>
+          )}
+          <p>
+            Vad för projekt brukar ni jobba med?<br></br>
+            Vad kan praktikanter förvänta sig?
+          </p>
         </article>
 
         {errors.general && <p className="error-message">{errors.general}</p>}

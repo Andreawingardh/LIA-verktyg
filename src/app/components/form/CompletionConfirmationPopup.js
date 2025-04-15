@@ -8,7 +8,6 @@ export default function CompletionConfirmationPopup({
   onClose,
   onAddLiaPosition,
 }) {
-  const router = useRouter();
 
   const handleShowProfile = () => {
     onClose();

@@ -10,7 +10,7 @@ import { ProgressIndicator } from "../../components/form/ProgressIndicator";
 import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
 
 
-const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-banner-placeholder.webp";
+const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-placeholder-hero.png";
 
 export default function RegisterPage() {
   return (
@@ -119,7 +119,6 @@ function BaseInfoForm() {
       } else {
         setErrors(prev => ({...prev, displayImage: `Omslagsbild: ${err.message || "Filuppladdning misslyckades"}`}));
       }
-      console.error("Error uploading file:", err);
       return null;
     } finally {
       setUploading(false);
@@ -214,7 +213,6 @@ function BaseInfoForm() {
         router.push("/company/description");
       }, 100);
     } catch (err) {
-      console.error("Error in BaseInfo:", err);
       setErrors(prev => ({...prev, general: "Ett fel uppstod när informationen skulle sparas"}));
       setIsSubmitting(false);
       setRedirecting(false);
@@ -263,9 +261,6 @@ function BaseInfoForm() {
     setShowCancelPopup(true);
   };
 
-  const handleGoBack = () => {
-    router.push("/");
-  };
 
   if (loading || authLoading) {
     return <div>Laddar...</div>;
@@ -334,9 +329,6 @@ function BaseInfoForm() {
           {errors.displayImage && <p className="error-message">{errors.displayImage}</p>}
           {displayImageUrl && (
             <p className="success-message">Omslagsbild uppladdad</p>
-          )}
-          {!displayImage && !displayImageUrl && (
-            <p className="info-message">En standardbild kommer att användas om ingen bild laddas upp</p>
           )}
         </article>
 

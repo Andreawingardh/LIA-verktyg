@@ -47,8 +47,7 @@ export default function EditProfileOverlay({
     }
   }, [isOpen]);
 
-  // We've moved the restoration logic to the fetchCompanyData function
-  // to ensure we always show either the fetched data or saved draft data
+
   useEffect(() => {
     if (formId && isOpen && (companyId || user)) {
       // When formId is set, trigger data fetch again to ensure proper loading
@@ -163,7 +162,6 @@ export default function EditProfileOverlay({
             setDisplayImagePreview(data.display_image_url);
           }
         } catch (err) {
-          console.error("Error parsing saved draft data", err);
           // Fall back to the fetched data
           populateFormWithFetchedData(data);
         }
@@ -172,7 +170,6 @@ export default function EditProfileOverlay({
         populateFormWithFetchedData(data);
       }
     } catch (err) {
-      console.error("Error fetching company data:", err);
       setError(
         "Kunde inte hämta företagsinformation: " + (err.message || "Okänt fel")
       );
@@ -415,7 +412,6 @@ export default function EditProfileOverlay({
         onClose();
       }, 1500);
     } catch (err) {
-      console.error("Error updating company profile:", err);
       setError(
         "Kunde inte uppdatera företagsprofilen: " + (err.message || "Okänt fel")
       );
@@ -543,7 +539,6 @@ export default function EditProfileOverlay({
                 name="email"
                 type="email"
                 className={`inputs ${formErrors.email ? 'input-error' : ''}`}
-                required
                 value={companyData.email}
                 onChange={handleInputChange}
                 disabled={saving}
@@ -563,7 +558,6 @@ export default function EditProfileOverlay({
                   id="description"
                   name="description"
                   className="descriptionInput"
-                  required
                   value={companyData.description}
                   onChange={handleInputChange}
                   disabled={saving}

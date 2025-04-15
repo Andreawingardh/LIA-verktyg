@@ -12,7 +12,6 @@ export default function RegistrationPopup({ isOpen, onClose, onShowLogin }) {
   const [checkbox, setCheckbox] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [isFormValid, setIsFormValid] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
 
   // Password requirements

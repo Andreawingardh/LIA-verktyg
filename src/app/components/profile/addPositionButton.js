@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import AddPositionOverlay from "./addPositionOverlay";
-
-import { supabase } from "@/utils/supabase/client";
 import React from "react";
 import "../form/popup.css";
 

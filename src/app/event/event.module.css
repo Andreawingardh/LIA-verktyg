@@ -10,10 +10,6 @@
 
   /*Style*/
   background: var(--base-primary, #e51236);
-
-  /* @media screen and (min-width: 1024px) {
-    flex-direction: row;
-  } */
 }
 
 @media (min-width: 960px) {

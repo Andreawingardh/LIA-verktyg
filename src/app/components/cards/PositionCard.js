@@ -1,9 +1,7 @@
 import { supabase } from "../../../utils/supabase/client";
-import EditPositionButton from "../profile/EditPositionButton";
 import { useState, useEffect } from "react";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 import "./positioncard.css";
-import EditPositionForm from "../form/position/EditPositionForm";
 import RemovePositionButton from "../buttons/RemovePositionButton";
 import EditPositionOverlay from "../profile/EditPositionOverlay";
 import AddPositionButton from "../profile/addPositionButton";
@@ -47,7 +45,6 @@ export default function PositionCard() {
         fetchSkillsForPositions(data);
       }
     } catch (err) {
-      console.error("Error fetching positions:", err);
       setError("Kunde inte hämta positioner");
     }
   };
@@ -94,7 +91,6 @@ export default function PositionCard() {
 
       setPositionSkills(skillsMap);
     } catch (err) {
-      console.error("Error fetching skills for positions:", err);
       setError("Kunde inte hämta kunskaper för positioner");
     }
   };
