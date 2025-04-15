@@ -1,6 +1,6 @@
-# YRGO-Internify
+# YRGO Internify
 
-Internify is a web application designed to connect students from YRGO's Digital Designer and Web Developer programs with companies offering internship positions (LIA - Lärande i Arbete). The platform enables companies to create profiles, list available internship positions, and connect with potential interns.
+YRGO Internify is a web application designed to connect students from YRGO's Digital Designer and Web Developer programs with companies offering internship positions (LIA - Lärande i Arbete). The platform enables companies to create profiles, list available internship positions, and connect with potential interns.
 
 ## Features
 
