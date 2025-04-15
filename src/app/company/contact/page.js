@@ -10,7 +10,7 @@ import { ProgressIndicator } from "../../components/form/ProgressIndicator";
 import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
 
 
-const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-banner-placeholder.webp";
+const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-placeholder-hero.png";
 
 export default function ContactPage() {
   return (
@@ -134,8 +134,6 @@ function ContactForm() {
       const location = localStorage.getItem("companyLocation");
       const logoUrl = localStorage.getItem("logoUrl");
       const displayImageUrl = localStorage.getItem("displayImageUrl");
-      // The displayImageUrl already contains either the uploaded image URL or the placeholder path
-      // from the BaseInfo page, so we don't need additional logic here
 
       if (!user) {
         // Only try to sign up if we don't already have a user
