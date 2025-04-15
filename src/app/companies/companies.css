@@ -336,9 +336,3 @@ h1 {
     gap: 1rem;
   }
 }
-
-img:not([src]),
-img[src=""],
-img[src$="#broken"] {
-  visibility: hidden;
-}
