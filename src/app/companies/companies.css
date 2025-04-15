@@ -336,3 +336,7 @@ h1 {
     gap: 1rem;
   }
 }
+
+.svg-loader {
+  width:50px;
+}
