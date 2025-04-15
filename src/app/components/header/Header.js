@@ -177,7 +177,6 @@ export default function Header({ metadata }) {
     try {
       await logout();
     } catch (error) {
-      console.error("Logout error:", error);
       await supabase.auth.signOut();
       router.refresh();
     }

@@ -1,8 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabase } from "../../../utils/supabase/client";
-import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 import CreatePositions from "../../positions/create/page";
 
 import "../form/popup.css";

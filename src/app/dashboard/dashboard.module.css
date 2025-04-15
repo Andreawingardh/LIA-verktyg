@@ -180,9 +180,19 @@
   border-radius: 9999px;
   background: transparent;
   border: none;
+  color: var(--base-link, #00287e);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;  
 }
 
-.website a{
+.website a {
   color: #00287e;
   font-family: Inter, sans-serif;
   font-size: 16px;

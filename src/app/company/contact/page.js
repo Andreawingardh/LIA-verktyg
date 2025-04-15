@@ -212,7 +212,6 @@ function ContactForm() {
       // Redirect to dashboard
       router.push("/dashboard");
     } catch (err) {
-      console.error("Error in Contact:", err);
       setErrors(prev => ({...prev, general: err.message || "Ett fel uppstod när profilen skulle skapas"}));
       setIsSubmitting(false);
     }

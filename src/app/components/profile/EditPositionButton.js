@@ -16,10 +16,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
     }
   }, [position]);
 
-  const handleOpenOverlay = () => {
-    setIsOverlayOpen(true);
-  };
-
   // Function to refresh position data from database
   const refreshPositionData = async () => {
     if (position && position.id) {
@@ -32,12 +28,11 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
           .single();
 
         if (positionError) {
-          console.error("Error fetching position data:", positionError);
+          
           return;
         }
 
         if (!positionData) {
-          console.error("Position not found in database");
           return;
         }
 
@@ -50,7 +45,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
             : "";
 
         if (!tableName) {
-          console.error("Could not determine table name for skills");
           return;
         }
 
@@ -66,7 +60,6 @@ export default function EditPositionButton({ position, onPositionUpdate }) {
           .eq("position_id", position.id);
 
         if (skillsError) {
-          console.error("Error fetching skills data:", skillsError);
           return;
         }
 

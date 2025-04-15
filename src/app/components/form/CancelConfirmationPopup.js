@@ -49,10 +49,6 @@ export default function CancelConfirmationPopup({ isOpen, onClose }) {
         .select("id")
         .eq("user_id", userId);
 
-      if (fetchError) {
-        console.error("Error checking for existing companies:", fetchError);
-      }
-
       // If user already has a company, don't create a new one
       if (!existingCompanies || existingCompanies.length === 0) {
         const { error: insertError } = await supabase.from("companies").insert([
@@ -86,7 +82,6 @@ export default function CancelConfirmationPopup({ isOpen, onClose }) {
       onClose();
       router.push("/dashboard");
     } catch (err) {
-      console.error("Error creating basic profile:", err);
       setError(err.message || "Ett fel uppstod när profilen skulle skapas");
       setIsSubmitting(false);
     }

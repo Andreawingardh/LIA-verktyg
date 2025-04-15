@@ -1,50 +1,10 @@
-:root {
-  /* Colors */
-  --base-foreground: #0f1314;
-  --base-background: #fff;
-  --base-muted-foreground: #495b62;
-  --base-input: #bfbfbf;
-  --base-link: #00287e;
-  --base-secondary: #001a52;
-  --base-secondary-foreground: #fff;
-  --colors-base-transparent: rgba(255, 255, 255, 0);
-
-  /* Typography */
-  --typography-font-family-font-sans: Inter, sans-serif;
-  --typography-base-sizes-base-font-size: 1rem;
-  --typography-base-sizes-base-line-height: 1.5rem;
-  --typography-base-sizes-xlarge-font-size: 1.25rem;
-  --typography-base-sizes-large-line-height: 1.75rem;
-
-  /* Font weights */
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-
-  /* Spacing */
-  --spacing-1: 0.25rem;
-  --spacing-2: 0.5rem;
-  --spacing-3: 0.75rem;
-  --spacing-4: 1rem;
-  --spacing-6: 1.5rem;
-  --spacing-8: 2rem;
-
-  /* Heights and widths */
-  --height-h-11: 2.75rem;
-  --width-w-80: 20rem;
-
-  /* Border radius */
-  --border-radius-lg: 0.625rem;
-  --border-radius-xl: 0.75rem;
-  --border-radius-full: 22px;
-}
-
 .container {
   display: flex;
-width: 100vw;
-height: 100vh;
-padding: var(--spacing-12, 48px) var(--spacing-4, 16px);
-flex-direction: column;
-align-items: center;
+  width: 100vw;
+  height: 100vh;
+  padding: var(--spacing-12, 48px) var(--spacing-4, 16px);
+  flex-direction: column;
+  align-items: center;
 }
 
 .contentWrapper {
@@ -53,7 +13,6 @@ align-items: center;
   justify-content: flex-start;
   align-items: flex-start;
   gap: var(--spacing-6, 24px);
-  /* Remove align-self: stretch */
   width: 100%;
   flex: 1;
   padding-bottom: 6vh;
@@ -88,10 +47,10 @@ align-items: center;
 }
 
 .goBackButton:hover {
-  background: var(--base-accent, #E6E6E6);
+  background: var(--base-accent, #e6e6e6);
 }
 
-textarea.profileInputs{
+textarea.profileInputs {
   resize: none;
 }
 
@@ -134,71 +93,70 @@ textarea.profileInputs{
 }
 
 .inputSingle p {
-  color: var(--base-muted-foreground, #495B62);
-font-feature-settings: 'liga' off, 'clig' off;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-normal/regular */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-normal, 400);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
-text-wrap: wrap;
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  text-wrap: wrap;
 }
 
 .textProfileInputs {
   display: flex;
-min-height: 60px;
-padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
-align-items: flex-start;
-flex: 1 0 0;
-align-self: stretch;
-border-radius: var(--border-radius-lg, 10px);
-border: 1px solid var(--base-input, #BFBFBF);
-background: var(--base-background, #FFF);
-resize: none;
-overflow: hidden;
-color: var(--base-muted-foreground, #495B62);
-font-feature-settings: 'liga' off, 'clig' off;
-text-overflow: ellipsis;
-text-wrap: wrap;
+  min-height: 60px;
+  padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: var(--border-radius-lg, 10px);
+  border: 1px solid var(--base-input, #bfbfbf);
+  background: var(--base-background, #fff);
+  resize: none;
+  overflow: hidden;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+  text-overflow: ellipsis;
+  text-wrap: wrap;
 
-/* body/leading-normal/regular */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-normal, 400);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
 }
 
 .inputTextarea {
   display: flex;
-height: 228px;
-flex-direction: column;
-align-items: flex-start;
-gap: var(--spacing-2, 8px);
-align-self: stretch;
-
+  height: 228px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2, 8px);
+  align-self: stretch;
 }
 
 .inputTextarea p {
   overflow: hidden;
-color: var(--base-muted-foreground, #495B62);
-font-feature-settings: 'liga' off, 'clig' off;
-text-overflow: ellipsis;
-white-space: nowrap;
+  color: var(--base-muted-foreground, #495b62);
+  font-feature-settings: "liga" off, "clig" off;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
-/* body/leading-normal/regular */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 16px);
-font-style: normal;
-font-weight: var(--font-weight-normal, 400);
-line-height: 150%; /* 24px */
-letter-spacing: 0.2px;
-align-self: stretch;
-text-wrap: wrap;
+  /* body/leading-normal/regular */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 16px);
+  font-style: normal;
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 150%; /* 24px */
+  letter-spacing: 0.2px;
+  align-self: stretch;
+  text-wrap: wrap;
 }
 .profileFileInputs {
   display: flex;
@@ -238,8 +196,8 @@ text-wrap: wrap;
   gap: var(--spacing-2, 8px);
   align-self: stretch;
   border-radius: var(--border-radius-full, 22px);
-border: 1px solid var(--base-secondary, #001A52);
-background: var(--base-secondary, #001A52);
+  border: 1px solid var(--base-secondary, #001a52);
+  background: var(--base-secondary, #001a52);
   color: var(--base-secondary-foreground, #fff);
   font-feature-settings: "liga" off, "clig" off;
 
@@ -251,13 +209,13 @@ background: var(--base-secondary, #001A52);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
   cursor: pointer;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.profileSubmitButton:hover{
+.profileSubmitButton:hover {
   background-color: var(--base-secondary-foreground, #fff);
-  color: var(--base-secondary, #001A52);
-  border: 1px solid var(--base-secondary, #001A52);
+  color: var(--base-secondary, #001a52);
+  border: 1px solid var(--base-secondary, #001a52);
 }
 
 .cancelButton {
@@ -281,14 +239,12 @@ background: var(--base-secondary, #001A52);
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
-  transition: background-color .3s, color .3s, border-color .3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .cancelButton:hover {
-  background: var(--base-accent, #E6E6E6);
+  background: var(--base-accent, #e6e6e6);
   cursor: pointer;
-
-  
 }
 
 .contentHeader {
@@ -321,20 +277,20 @@ background: var(--base-secondary, #001A52);
   flex-shrink: 0;
   align-self: stretch;
   border-radius: var(--border-radius-full, 9999px);
-  background: var(--base-primary, #e51236); 
+  background: var(--base-primary, #e51236);
 }
 
 .progressBar.completed {
-  background: rgba(229, 18, 54, 0.5); 
+  background: rgba(229, 18, 54, 0.5);
 }
 
 .progressBar.inactive {
-  background: #d1d5db; 
+  background: #d1d5db;
 }
 
 .progressPosition {
   align-self: stretch;
-  color: var(--base-primary, #e51236); 
+  color: var(--base-primary, #e51236);
   font-feature-settings: "liga" off, "clig" off;
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-small-font-size, 14px);
@@ -343,7 +299,6 @@ background: var(--base-secondary, #001A52);
   line-height: 150%;
   letter-spacing: 0.2px;
 }
-
 
 .labelWithCounter {
   display: flex;
@@ -354,28 +309,25 @@ background: var(--base-secondary, #001A52);
 
 .characterCounter {
   font-size: 14px;
-  color: var(--base-muted-foreground, #495B62);
+  color: var(--base-muted-foreground, #495b62);
   font-family: var(--typography-font-family-font-sans, Inter);
   letter-spacing: 0.2px;
 }
 
 .characterCounterMax {
-  color: var(--base-primary, #E51236);
+  color: var(--base-primary, #e51236);
 }
-
-
-/* Add these styles to your company.css file */
 
 /* Error input styling */
 .error-input {
-  border-color: #E51236 !important;
+  border-color: #e51236 !important;
   background-color: rgba(229, 18, 54, 0.05) !important;
 }
 
 /* Error message styling */
 .error-message {
-  color: #E51236;
-  font-feature-settings: 'liga' off, 'clig' off;
+  color: #e51236;
+  font-feature-settings: "liga" off, "clig" off;
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: 14px;
   font-style: normal;
@@ -388,8 +340,8 @@ background: var(--base-secondary, #001A52);
 
 /* Success message styling */
 .success-message {
-  color: #10B981;
-  font-feature-settings: 'liga' off, 'clig' off;
+  color: #10b981;
+  font-feature-settings: "liga" off, "clig" off;
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: 14px;
   font-style: normal;
@@ -402,6 +354,5 @@ background: var(--base-secondary, #001A52);
 
 /* Asterisk for required fields */
 .asterix {
-  color: #E51236;
+  color: #e51236;
 }
-

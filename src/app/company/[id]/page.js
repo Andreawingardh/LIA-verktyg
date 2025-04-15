@@ -47,7 +47,6 @@ export default function CompanyDetailPage() {
         }
       } catch (e) {
         setError(e);
-        console.error("Error fetching data:", e);
       } finally {
         setLoading(false);
       }

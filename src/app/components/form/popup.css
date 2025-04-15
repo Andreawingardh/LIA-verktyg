@@ -1,42 +1,4 @@
-:root {
-  /* Colors */
-  --base-foreground: #0f1314;
-  --base-background: #fff;
-  --base-muted-foreground: #495b62;
-  --base-input: #bfbfbf;
-  --base-link: #00287e;
-  --base-secondary: #001a52;
-  --base-secondary-foreground: #fff;
-  --colors-base-transparent: rgba(255, 255, 255, 0);
 
-  /* Typography */
-  --typography-font-family-font-sans: Inter, sans-serif;
-  --typography-base-sizes-base-font-size: 1rem;
-  --typography-base-sizes-base-line-height: 1.5rem;
-  --typography-base-sizes-xlarge-font-size: 1.25rem;
-  --typography-base-sizes-large-line-height: 1.75rem;
-
-  /* Font weights */
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-
-  /* Spacing */
-  --spacing-1: 0.25rem;
-  --spacing-2: 0.5rem;
-  --spacing-3: 0.75rem;
-  --spacing-4: 1rem;
-  --spacing-6: 1.5rem;
-  --spacing-8: 2rem;
-
-  /* Heights and widths */
-  --height-h-11: 2.75rem;
-  --width-w-80: 20rem;
-
-  /* Border radius */
-  --border-radius-lg: 0.625rem;
-  --border-radius-xl: 0.75rem;
-  --border-radius-full: 1.375rem;
-}
 
 .popup-header {
   display: flex;
@@ -568,7 +530,6 @@ input[type="checkbox"].checkbox-error {
 .tabs,
 .tabGroup {
   display: flex;
-  /* height: var(--height-h-11, 44px); */
   padding: 4px;
   flex-direction: row;
   align-items: center;

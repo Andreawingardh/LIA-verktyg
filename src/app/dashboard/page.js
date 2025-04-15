@@ -7,15 +7,15 @@ import { supabase } from "../../utils/supabase/client";
 import EditProfileButton from "../components/profile/EditProfileButton";
 import CompletionConfirmationPopup from "../components/form/CompletionConfirmationPopup";
 import styles from "./dashboard.module.css";
-import AddPositionButton from "../components/profile/addPositionButton";
 import AddPositionOverlay from "../components/profile/addPositionOverlay";
 import PositionCard from "../components/cards/PositionCard";
 import { PositionsBanner } from "../components/cards/PositionsBanner";
 import Link from "next/link";
 
 const formatWebsiteForDisplay = (url) => {
-  if (!url) return "www.yrgo.se";
-
+  if (!url) {
+    return "";
+  }
   try {
     // Create URL object to parse the url
     const urlObj = new URL(url);
@@ -38,7 +38,6 @@ const formatWebsiteForDisplay = (url) => {
 };
 
 export default function DashboardPage() {
-  const router = useRouter();
   const { user, loading: authLoading } = useSupabaseAuth();
   const [companyProfile, setCompanyProfile] = useState(null);
   const [positions, setPositions] = useState([]);
@@ -73,7 +72,6 @@ export default function DashboardPage() {
       if (fetchError) throw fetchError;
       setCompanyProfile(data);
     } catch (err) {
-      console.error("Error fetching company profile:", err);
       setError("Kunde inte hämta företagsprofil");
     } finally {
       setLoading(false);
@@ -90,7 +88,6 @@ export default function DashboardPage() {
       if (fetchError) throw fetchError;
       setPositions(data || []);
     } catch (err) {
-      console.error("Error fetching positions:", err);
       setError("Kunde inte hämta positioner");
     }
   };
@@ -148,7 +145,7 @@ export default function DashboardPage() {
                   </div>
 
                   <p className={styles.location}>
-                    {companyProfile.location || "Göteborg"}
+                    {companyProfile.location || ""}
                   </p>
 
                   <div className={styles.description}>

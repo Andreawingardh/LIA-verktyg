@@ -8,7 +8,6 @@ import Link from "next/link";
 import { PositionsBanner } from "../cards/PositionsBanner";
 
 const formatWebsiteForDisplay = (url) => {
-  if (!url) return "https://www.yrgo.se";
 
   try {
     // Create URL object to parse the url
@@ -181,7 +180,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                     ) : (
                       <div className={styles["company-logo"]}>
                         <div>
-                          {companyData.name ? companyData.name.charAt(0) : "A"}
+                          {companyData.name ? companyData.name.charAt(0) : ""}
                         </div>
                       </div>
                     )}
@@ -191,7 +190,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                   </div>
 
                   <p className={styles.location}>
-                    {companyData.location || "Göteborg"}
+                    {companyData.location || ""}
                   </p>
 
                   <div className={styles.description}>
@@ -209,7 +208,6 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                   >
                     {formatWebsiteForDisplay(companyData.website)}
                   </a>
-                  // </button>
                 )}
 
                 {companyData.email && (

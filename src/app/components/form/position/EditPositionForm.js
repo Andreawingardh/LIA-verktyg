@@ -55,10 +55,6 @@ export default function EditPositionForm({
       if (tableName) {
         loadPositionData(tableName);
       } else {
-        console.error(
-          "Could not determine table name from position title:",
-          position.title
-        );
         setLoading(false);
       }
     }
@@ -112,7 +108,6 @@ export default function EditPositionForm({
       setSelectedMainSkills(mainSkills);
       setSelectedSoftware(software);
     } catch (err) {
-      console.error("Error loading position data:", err);
       setError(err);
     } finally {
       setLoading(false);
@@ -132,19 +127,16 @@ export default function EditPositionForm({
         .eq("type", "Software");
 
       if (skillsError) {
-        console.error("Error fetching skills:", skillsError);
         throw skillsError;
       }
 
       if (softwareError) {
-        console.error("Error fetching software:", softwareError);
         throw softwareError;
       }
 
       setSkillsOptions(skillData || []);
       setSoftwareOptions(softwareData || []);
     } catch (err) {
-      console.error("Error loading skills options:", err);
       setError(err);
     }
   };
@@ -181,7 +173,6 @@ export default function EditPositionForm({
           .select();
 
         if (updateError) {
-          console.error("Error updating position:", updateError);
           throw updateError;
         }
 
@@ -191,7 +182,6 @@ export default function EditPositionForm({
           .eq("position_id", position.id);
 
         if (deleteError) {
-          console.error("Error deleting existing skills:", deleteError);
           throw deleteError;
         }
 
@@ -201,7 +191,7 @@ export default function EditPositionForm({
           .eq("position_id", position.id);
 
         if (verifyError) {
-          console.error("Error checking remaining skills:", verifyError);
+          throw verifyError;
         }
 
         if (remainingSkills && remainingSkills.length > 0) {
@@ -227,7 +217,6 @@ export default function EditPositionForm({
             .select();
 
           if (skillsError) {
-            console.error("Error inserting skills:", skillsError);
             throw skillsError;
           }
 
@@ -242,10 +231,7 @@ export default function EditPositionForm({
             .eq("position_id", position.id);
 
           if (verifyInsertError) {
-            console.error(
-              "Error verifying skill insertion:",
-              verifyInsertError
-            );
+            throw verifyInsertError;
           } else {
             if (finalSkills.length !== skillsToInsert.length) {
               console.warn("Not all skills were inserted correctly");
@@ -278,7 +264,6 @@ export default function EditPositionForm({
         }, 1000);
       }
     } catch (error) {
-      console.error("Error updating position:", error);
       alert(
         "Ett fel uppstod när positionen skulle uppdateras: " + error.message
       );
@@ -303,7 +288,6 @@ export default function EditPositionForm({
       );
 
       if (error) {
-        console.error("Error deleting position:", error);
         throw error;
       }
 
@@ -320,7 +304,6 @@ export default function EditPositionForm({
         onClose();
       }, 1000);
     } catch (error) {
-      console.error("Error deleting position:", error);
       alert("Ett fel uppstod när positionen skulle tas bort: " + error.message);
       setError(error);
     } finally {
@@ -357,7 +340,6 @@ export default function EditPositionForm({
         setSelectedSoftware([]);
       }
     } catch (err) {
-      console.error("Error in handleTitleChange:", err);
       setError(err);
     } finally {
       setLoading(false);

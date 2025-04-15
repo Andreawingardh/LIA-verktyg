@@ -43,7 +43,6 @@ export default function RemovePositionButton({ position, onPositionUpdate }) {
       // Close the confirmation overlay after deletion
       setIsDeleteOverlayOpen(false);
     } catch (error) {
-      console.error("Error deleting position:", error);
       alert("Ett fel uppstod när positionen skulle tas bort: " + error.message);
     } finally {
       setIsSaving(false);
