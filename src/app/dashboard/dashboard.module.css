@@ -34,6 +34,7 @@
   align-items: flex-start;
   gap: 16px;
   width: 100%;
+  word-break: break-word;
 }
 
 .profile-content {

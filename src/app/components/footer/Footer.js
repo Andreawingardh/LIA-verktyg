@@ -27,7 +27,7 @@ const Footer = () => {
       name: "Andrea Wingårdh",
       role: "Webbutvecklare",
       profileUrl: "https://github.com/Andreawingardh",
-      avatar: "/images/Card/Andrea-avatar.png",
+      avatar: "/images/Card/Andrea-Avatar.png",
       bio: "Github"
     },
     {
@@ -97,6 +97,7 @@ const Footer = () => {
                         src={student.avatar}
                         alt={`Photo of ${student.name}`}
                         fill
+                        sizes ="true"
                         className={styles.avatarImage}
                       />
                     </div>

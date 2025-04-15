@@ -180,7 +180,7 @@ export default function PublicDashboardPage({ companyData, positionsData }) {
                     ) : (
                       <div className={styles["company-logo"]}>
                         <div>
-                          {companyData.name ? companyData.name.charAt(0) : ""}
+                          
                         </div>
                       </div>
                     )}
