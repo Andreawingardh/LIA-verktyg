@@ -2,7 +2,6 @@
 import { supabase } from "@/utils/supabase/client";
 import styling from "../page.module.css";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { CardCompany } from "../components/cards/CompanyCard";
 import "./companies.css";
 import { useRouter } from "next/navigation";
@@ -12,6 +11,7 @@ import "@/app/components/form/popup.css";
 import "@/app/components/buttons/button.css";
 import "@/app/components/form/popup.css";
 import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfileBanner";
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function Companies() {
   const router = useRouter();
@@ -25,11 +25,14 @@ export default function Companies() {
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [skillsExpanded, setSkillsExpanded] = useState(false);
-  const [softwareExpanded, setSoftwareExpanded] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    fetchCompaniesWithMatchingPositions();
+  }, [selectedSkills]);
 
   async function fetchData() {
     try {
@@ -104,56 +107,73 @@ export default function Companies() {
   }
 
   function handleSkillToggle(skill) {
-    setSkills((prevSkills) => {
-      // Check if the skill is already selected
-      const isAlreadySelected = prevSkills.some((s) => s.id === skill.id);
-
-      if (isAlreadySelected) {
-        // Remove the skill if it's already selected
-        return prevSkills.filter((s) => s.id !== skill.id);
-      } else {
-        // Add the skill if it's not already selected
-        return [...prevSkills, skill];
-      }
+    setSkills(prevSkills => {
+      const isAlreadySelected = prevSkills.some(s => s.id === skill.id);
+      
+      const newSkills = isAlreadySelected
+        ? prevSkills.filter(s => s.id !== skill.id)
+        : [...prevSkills, skill];
+      
+      return newSkills;
     });
-    fetchCompaniesWithMatchingPositions();
   }
 
   const isSkillSelected = (skillId) => {
     return selectedSkills.some((skill) => skill.id === skillId);
   };
 
-  async function fetchCompaniesWithMatchingPositions() {
-    // Define the skill ID you want to check
+  const fetchCompaniesWithMatchingPositions = useDebouncedCallback(async () => {
+    if (selectedSkills.length === 0) {
+      setFilteredCompanies([]);
+      return;
+    }
 
-    const skillIds = selectedSkills.map((skill) => skill.id);
+    try {
+      setLoading(true);
+      const skillIds = selectedSkills.map((skill) => skill.id);
 
-    // Step 1: Fetch positions that match the skill ID through the webbutvecklare_skill_id table
-    const { data: positions, error: positionsError } = await supabase
-      .from("webbutvecklare_skill_position") // Assuming this is the linking table
-      .select("positions(*)") // Fetch positions related to the skill
-      .in("skills_id", skillIds); // Assuming 'skill_id' is the column in the linking table
+      /* This creates an inner join between the selectedTable's junction table and the position table. This is done in order to get the positions.id*/
+      const { data: positions, error: positionsError } = await supabase
+        .from(selectedTable + "_skill_position")
+        .select("positions(*)")
+        .in("skills_id", skillIds);
 
-    if (positionsError) {
-      console.error("Error fetching positions:", positionsError);
-    } else {
-      // Step 2: Extract user_ids from the positions
+      if (positionsError) {
+        throw new Error(
+          "Misslyckades med att hämta LIA-positioner:",
+          positionsError
+        );
+      }
+
+      /* If none are selected, this sets filteredcompanies to an empty array. */
+      if (!positions || positions.length === 0) {
+        setFilteredCompanies([]);
+        setLoading(false);
+        return;
+      }
+
+      /* This looks through positions to get the matching userid. */
       const userIds = positions
         .filter((item) => item.positions && item.positions.user_id)
-        .map((item) => item.positions.user_id); // Extract user_ids from positions
+        .map((item) => item.positions.user_id);
 
-      // Step 3: Fetch companies for the retrieved user_ids
+      /* This fetches the data from the companies table with the selected user ids. */
       const { data: matchingCompanies, error: companiesError } = await supabase
         .from("companies")
         .select("*")
-        .in("user_id", userIds); // Fetch companies where user_id matches
+        .in("user_id", userIds);
 
       if (companiesError) {
-        console.error("Error fetching companies:", companiesError);
+        throw new Error("Misslyckades med att hämta företag:", companiesError);
       }
+
       setFilteredCompanies(matchingCompanies);
+    } catch (e) {
+      setError(e.message || "Ett fel uppstod vid filtreringen.");
+    } finally {
+      setLoading(false);
     }
-  }
+  }, 300)
 
   /* The functions handle scripts on the page */
 
@@ -454,7 +474,8 @@ export default function Companies() {
 
           {/* LIST OF COMPANIES */}
           <section className="companies-list">
-            {error && <div>{error}</div>}
+            {loading && (<div>Laddar...</div>)}
+            {error && (<div>{error}</div>)}
 
             {filteredCompanies.length > 0 && (
               <h1 className="matching-companies">
@@ -472,7 +493,6 @@ export default function Companies() {
                   headerClassName="design-component-instance-node"
                   location={company.location}
                   statusProperty="internship-matching"
-                  // statusProperty= {company.position_count > 0 ?"positions-open" : "application-closed" }
                   id={company.id}
                   companyPositions={
                     company.position_count
@@ -482,17 +502,11 @@ export default function Companies() {
                   showApply={true}
                   showLogotype={true}
                 />
-
-                {/* <Link href={`/companies/${company.id}`}>
-              {company.name}: Currently
-              {company.position_count ? company.position_count : 0} positions
-            </Link> */}
               </div>
             ))}
 
             {companiesData && <h2 className="all-companies">Alla företag</h2>}
 
-            {loading && <div>Loading...</div>}
             {companiesData.map((company) => (
               <div key={company.id}>
                 <CardCompany
