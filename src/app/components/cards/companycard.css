@@ -81,30 +81,23 @@
 }
 
 .card-company .frame {
-  /* align-items: center;
-  align-self: stretch;
-  display: flex;
-  flex: 0 0 auto;
-  justify-content: space-between;
-  position: relative;
-  width: 100%; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-top: 1rem;
   overflow: hidden;
-color: var(--base-card-foreground, #283236);
-font-feature-settings: 'liga' off, 'clig' off;
-text-overflow: ellipsis;
+  color: var(--base-card-foreground, #283236);
+  font-feature-settings: "liga" off, "clig" off;
+  text-overflow: ellipsis;
 
-/* small/leading-normal/medium */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-small-font-size, 0.875rem);
-font-style: normal;
-font-weight: var(--font-weight-medium, 500);
-line-height: 150%; /* 1.3125rem */
-letter-spacing: 0.0125rem;
+  /* small/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-small-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.3125rem */
+  letter-spacing: 0.0125rem;
 }
 
 .card-company .div-wrapper {
@@ -118,17 +111,17 @@ letter-spacing: 0.0125rem;
 
 .header {
   overflow: hidden;
-color: var(--base-card-foreground, #283236);
-font-feature-settings: 'liga' off, 'clig' off;
-text-overflow: ellipsis;
+  color: var(--base-card-foreground, #283236);
+  font-feature-settings: "liga" off, "clig" off;
+  text-overflow: ellipsis;
 
-/* body/leading-normal/medium */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 1rem);
-font-style: normal;
-font-weight: var(--font-weight-medium, 500);
-line-height: 150%; /* 1.5rem */
-letter-spacing: 0.0125rem;
+  /* body/leading-normal/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: 0.0125rem;
 }
 .card-company .div {
   -webkit-box-orient: vertical;
@@ -164,7 +157,6 @@ letter-spacing: 0.0125rem;
 }
 
 @media screen and (min-width: 1024px) {
- 
   .card-company .text {
     width: 100%;
     flex: 1;
@@ -176,13 +168,11 @@ letter-spacing: 0.0125rem;
     justify-content: space-between;
   }
 
-
   .card-company .apply-now {
     position: relative;
     right: 0;
     justify-self: flex-end;
   }
-
 
   .card-company .div-wrapper,
   .card-company .div {
@@ -245,7 +235,7 @@ letter-spacing: 0.0125rem;
   background: var(--base-card-highlight, #dbe6ff);
 } */
 
-h5 {
+h3 {
   /* Mobile layout */
   display: -webkit-box;
   -webkit-box-orient: vertical;
