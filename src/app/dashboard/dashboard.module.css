@@ -182,7 +182,7 @@
   border: none;
 }
 
-a.website {
+.website a{
   color: #00287e;
   font-family: Inter, sans-serif;
   font-size: 16px;
@@ -192,7 +192,7 @@ a.website {
   text-decoration: none;
 }
 
-a.website:hover {
+.website:hover {
   text-decoration: underline;
 }
 

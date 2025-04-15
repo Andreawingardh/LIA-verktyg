@@ -793,6 +793,7 @@ input[type="checkbox"].checkbox-error {
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  cursor: pointer;
 }
 
 .formGroup {
@@ -933,6 +934,7 @@ input[type="checkbox"].checkbox-error {
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  cursor: pointer;
 }
 
 .show-more-btn:hover {

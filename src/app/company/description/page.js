@@ -95,13 +95,12 @@ function DescriptionForm() {
     } else if (location.length < 2) {
       newErrors.location = "Kontorsort är för kort";
       isValid = false;
-    }
-
-    // Description is optional but we can validate min length if entered
-    if (description.trim() && description.length < 10) {
-      newErrors.description = "Beskrivningen är för kort (minst 10 tecken)";
+    } else if (location.length > 20) {
+      newErrors.location = "Kontorsort får ha max 20 tecken";
       isValid = false;
     }
+    // Description is optional but we can validate min length if entered
+    
 
     setErrors(newErrors);
     return isValid;
