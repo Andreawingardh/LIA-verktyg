@@ -14,8 +14,6 @@
 .mainInformation {
   /* Layout mobile */
   display: flex;
-  /* padding: var(--spacing-8, 2rem) var(--spacing-4, 1rem) var(--spacing-0, 0rem)
-    var(--spacing-4, 1rem); */
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-6, 1.5rem);
@@ -131,19 +129,6 @@
   color: var(--base-destructive-foreground, #b40509);
 }
 
-/* .mainDesktop {
-  @media screen and (min-width: 1024px) {
-    display: flex;
-    max-width: 80rem;
-    padding: var(--spacing-16, 4rem) var(--spacing-12, 3rem) var(--spacing-24, 6rem) var(--spacing-12, 3rem);
-    justify-content: center;
-    align-items: flex-start;
-    gap: var(--spacing-6, 1.5rem);
-    align-self: stretch;
-    width: 100%;
-  }
-} */
-
 .eventForm {
   /* Layout mobile */
   display: flex;
@@ -238,8 +223,6 @@
   letter-spacing: 0.0125rem;
 }
 .eventForm label {
-  /* Layout mobile */
-
   /* Typography */
 
   color: var(--base-foreground, #0f1314);
@@ -262,16 +245,16 @@
   align-items: flex-start;
   gap: var(--spacing-2, 0.5rem);
   align-self: stretch;
-  color: var(--base-foreground, #0F1314);
-font-feature-settings: 'liga' off, 'clig' off;
+  color: var(--base-foreground, #0f1314);
+  font-feature-settings: "liga" off, "clig" off;
 
-/* body/leading-none/medium */
-font-family: var(--typography-font-family-font-sans, Inter);
-font-size: var(--typography-base-sizes-base-font-size, 1rem);
-font-style: normal;
-font-weight: var(--font-weight-medium, 500);
-line-height: 100%; /* 1rem */
-letter-spacing: 0.0125rem;
+  /* body/leading-none/medium */
+  font-family: var(--typography-font-family-font-sans, Inter);
+  font-size: var(--typography-base-sizes-base-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 100%; /* 1rem */
+  letter-spacing: 0.0125rem;
 }
 
 .checkbox input {
@@ -280,7 +263,6 @@ letter-spacing: 0.0125rem;
   border-radius: var(--border-radius-sm, 0.125rem);
   border: 1px solid var(--base-link, #00287e);
   background: var(--base-background, #fff);
-  
 }
 
 .checkbox a {
@@ -309,21 +291,16 @@ letter-spacing: 0.0125rem;
   gap: 1rem;
 }
 
-
-
-
-
 .inputError {
-  border: 1px solid var(--base-destructive, #B40509) !important;
+  border: 1px solid var(--base-destructive, #b40509) !important;
   background-color: rgba(180, 5, 9, 0.05) !important;
 }
 
-
 .errorMessage {
   display: block;
-  color: var(--base-destructive-foreground, #B40509);
-  font-feature-settings: 'liga' off, 'clig' off;
-  
+  color: var(--base-destructive-foreground, #b40509);
+  font-feature-settings: "liga" off, "clig" off;
+
   /* body/leading-normal/regular */
   font-family: var(--typography-font-family-font-sans, Inter);
   font-size: var(--typography-base-sizes-base-font-size, 1rem);
@@ -333,27 +310,23 @@ letter-spacing: 0.0125rem;
   letter-spacing: 0.0125rem;
 }
 
-
 .checkbox + .errorMessage {
   margin-top: -1.5rem;
   margin-bottom: 0.5rem;
 }
 
-
 .checkboxError input {
-  border: 1px solid var(--base-destructive, #B40509) !important;
+  border: 1px solid var(--base-destructive, #b40509) !important;
   background-color: rgba(180, 5, 9, 0.05) !important;
 }
 
-
 .formError {
-  color: var(--base-destructive, #B40509);
-  
+  color: var(--base-destructive, #b40509);
+
   margin-top: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
   background-color: rgba(180, 5, 9, 0.05);
   width: 100%;
   text-align: center;
-
 }

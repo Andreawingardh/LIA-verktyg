@@ -13,14 +13,6 @@
   align-items: center;
   align-self: stretch;
   justify-content: center;
-
-  @media screen and (min-width: 960px) {
-    /* padding: var(--spacing-8, 2rem) 0rem var(--spacing-32, 8rem) 0rem;
-    justify-content: center;
-    align-items: flex-start;
-    align-self: stretch;
-    flex-direction: row; */
-  }
 }
 
 .content-wrapper {
@@ -363,4 +355,9 @@ h1 {
   font-weight: var(--font-weight-normal, 400);
   line-height: 100%; /* 1rem */
   letter-spacing: 0.0125rem;
+}
+
+.svg-loader {
+  width: 50px;
+  margin: auto;
 }

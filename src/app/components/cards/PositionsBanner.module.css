@@ -108,7 +108,6 @@
   }
 }
 
-/* Optional: Pause animation on hover */
 .rollingBannerContent:hover .rollingBannerImageWrapper {
   animation-play-state: paused;
 }

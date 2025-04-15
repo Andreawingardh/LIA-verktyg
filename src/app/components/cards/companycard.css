@@ -230,11 +230,6 @@
   width: 100%;
 }
 
-/* .card-company.matching {
-  border: 1px solid var(--base-secondary, #001a52);
-  background: var(--base-card-highlight, #dbe6ff);
-} */
-
 h3 {
   /* Mobile layout */
   display: -webkit-box;

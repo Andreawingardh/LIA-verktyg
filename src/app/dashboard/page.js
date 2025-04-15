@@ -187,7 +187,7 @@ export default function DashboardPage() {
           ) : (
             <div className={styles["no-profile"]}>
               <p>Du har inte skapat någon företagsprofil ännu.</p>
-              <Link href="/company/register" className="primary-button">
+              <Link href="/company/baseInfo" className="primary-button">
                 Skapa Företagsprofil
               </Link>
             </div>

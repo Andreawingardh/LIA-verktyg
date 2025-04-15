@@ -34,6 +34,7 @@ export default function Companies() {
     fetchCompaniesWithMatchingPositions();
   }, [selectedSkills]);
 
+  /* This fetches the data on mount */
   async function fetchData() {
     try {
       const { data, error } = await supabase.from("companies").select("*");
@@ -94,18 +95,18 @@ export default function Companies() {
         .select("*");
 
       if (skillsError) {
-        // Throw the actual errors
         throw skillsError;
       }
 
       setSkillsData(skillData);
-      setLoading(false);
     } catch (err) {
       setError(err);
+    } finally {
       setLoading(false);
     }
   }
 
+  /* This sets selectedSkills when clicked */
   function handleSkillToggle(skill) {
     setSkills((prevSkills) => {
       const isAlreadySelected = prevSkills.some((s) => s.id === skill.id);
@@ -192,10 +193,6 @@ export default function Companies() {
 
     router.refresh();
   };
-
-  if (error) {
-    return <div>Error loading companies: {error.message}</div>;
-  }
 
   return (
     <>

@@ -16,6 +16,7 @@ export const PositionsBanner = () => {
   const [fetchData, setFetchData] = useState(true);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const checkUser = async () => {
@@ -23,7 +24,7 @@ export const PositionsBanner = () => {
         const { data } = await supabase.auth.getUser();
         setUser(data.user);
       } catch (error) {
-        console.error("Error checking user:", error);
+        setError(error.message)
       } finally {
         setIsLoading(false);
       }
@@ -54,7 +55,7 @@ export const PositionsBanner = () => {
         return companiesData;
       }
     } catch (e) {
-      console.error(e);
+      setError(e.message)
     }
   }
 
@@ -63,6 +64,10 @@ export const PositionsBanner = () => {
       fetchCompanies();
     }
   }, [fetchData]);
+
+  if (error) {
+    return (<div>{error}</div>)
+  }
 
   return (
     <div className={styles.positionsBannerWrapper}>
