@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../../utils/supabase/client";
 import { useSupabaseAuth } from "../../../hook/useSupabaseAuth";
 import "../form/popup.css";
+import { useRouter } from "next/navigation";
+import DeleteProfileOverlay from "./DeleteProfileOverlay";
 
 const FORM_STORAGE_KEY = "company_edit_form_data";
 const MAX_DESCRIPTION_LENGTH = 120;
@@ -16,6 +18,7 @@ export default function EditProfileOverlay({
   companyId,
   onProfileUpdate,
 }) {
+  const router = useRouter();
   const { user } = useSupabaseAuth();
   const [companyData, setCompanyData] = useState({
     name: "",
@@ -30,6 +33,7 @@ export default function EditProfileOverlay({
   const [newDisplayImage, setNewDisplayImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [formId, setFormId] = useState("");
@@ -37,20 +41,24 @@ export default function EditProfileOverlay({
   const [formErrors, setFormErrors] = useState({
     name: "",
     email: "",
-    website: ""
+    website: "",
   });
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
 
-  // Generate a unique form ID when the overlay opens
+  useEffect(() => {
+    if (isOpen && !showDeleteOverlay) {
+      document.body.style.overflow = "auto";
+    }
+  }, [isOpen, showDeleteOverlay]);
+
   useEffect(() => {
     if (isOpen) {
       setFormId(`form_${Date.now()}`);
     }
   }, [isOpen]);
 
-
   useEffect(() => {
     if (formId && isOpen && (companyId || user)) {
-      // When formId is set, trigger data fetch again to ensure proper loading
       fetchCompanyData();
     }
   }, [formId]);
@@ -91,7 +99,6 @@ export default function EditProfileOverlay({
             if (parsedData.displayImagePreview) {
               setDisplayImagePreview(parsedData.displayImagePreview);
             }
-
           } catch (err) {
             console.error("Error parsing saved form data", err);
           }
@@ -113,15 +120,13 @@ export default function EditProfileOverlay({
     }
   }, [isOpen, companyId, user]);
 
-  useEffect(() => {
-  }, [companyData]);
+  useEffect(() => {}, [companyData]);
 
   const fetchCompanyData = async () => {
     setLoading(true);
     setError("");
 
     try {
-      // Query based on companyId if provided, otherwise use the logged-in user
       const query = supabase.from("companies").select("*");
 
       if (companyId) {
@@ -137,11 +142,9 @@ export default function EditProfileOverlay({
       if (fetchError) throw fetchError;
       if (!data) throw new Error("Ingen företagsprofil hittades");
 
-      // Check if we have saved draft data from a previous edit
       const savedData = localStorage.getItem(`${FORM_STORAGE_KEY}_${formId}`);
 
       if (savedData) {
-        // We have saved draft data, use it
         try {
           const parsedData = JSON.parse(savedData);
           setCompanyData(parsedData.formData);
@@ -162,7 +165,6 @@ export default function EditProfileOverlay({
             setDisplayImagePreview(data.display_image_url);
           }
         } catch (err) {
-          // Fall back to the fetched data
           populateFormWithFetchedData(data);
         }
       } else {
@@ -187,7 +189,7 @@ export default function EditProfileOverlay({
       website: data.website || "",
       email: data.email || "",
     });
-    
+
     // Set the description character count
     setDescriptionCharCount(data.description ? data.description.length : 0);
 
@@ -204,15 +206,15 @@ export default function EditProfileOverlay({
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Clear error for this field when typing
     if (formErrors[name]) {
       setFormErrors({
         ...formErrors,
-        [name]: ""
+        [name]: "",
       });
     }
-    
+
     // If it's the description field, update the char count
     if (name === "description") {
       // Limit text to MAX_DESCRIPTION_LENGTH characters
@@ -265,7 +267,7 @@ export default function EditProfileOverlay({
     const errors = {
       name: "",
       email: "",
-      website: ""
+      website: "",
     };
 
     // Validate company name
@@ -299,12 +301,12 @@ export default function EditProfileOverlay({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate form before submission
     if (!validateForm()) {
       return;
     }
-    
+
     setSaving(true);
     setError("");
     setSuccess("");
@@ -322,15 +324,13 @@ export default function EditProfileOverlay({
         const filePath = `company-logos/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
-          .from('images')
+          .from("images")
           .upload(filePath, newLogo);
 
         if (uploadError) throw uploadError;
 
         // Get public URL
-        const { data } = supabase.storage
-          .from('images')
-          .getPublicUrl(filePath);
+        const { data } = supabase.storage.from("images").getPublicUrl(filePath);
 
         logoUrl = data.publicUrl;
       }
@@ -344,15 +344,13 @@ export default function EditProfileOverlay({
         const filePath = `company-displays/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
-          .from('images')
+          .from("images")
           .upload(filePath, newDisplayImage);
 
         if (uploadError) throw uploadError;
 
         // Get public URL
-        const { data } = supabase.storage
-          .from('images')
-          .getPublicUrl(filePath);
+        const { data } = supabase.storage.from("images").getPublicUrl(filePath);
 
         displayImageUrl = data.publicUrl;
       }
@@ -393,21 +391,17 @@ export default function EditProfileOverlay({
 
       setSuccess("Företagsprofilen har uppdaterats!");
 
-      // Clear saved form data
       if (formId) {
         localStorage.removeItem(`${FORM_STORAGE_KEY}_${formId}`);
       }
 
-      // Reset file inputs
       setNewLogo(null);
       setNewDisplayImage(null);
 
-      // Call the callback function with the updated data
       if (typeof onProfileUpdate === "function") {
         onProfileUpdate(updateData);
       }
 
-      // Close overlay after a brief delay to show success message
       setTimeout(() => {
         onClose();
       }, 1500);
@@ -417,6 +411,53 @@ export default function EditProfileOverlay({
       );
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDeleteProfile = async () => {
+    setDeleting(true);
+    setError("");
+
+    try {
+      const { error: positionsError } = await supabase
+        .from("positions")
+        .delete()
+        .eq("user_id", user.id);
+
+      if (positionsError) throw positionsError;
+
+      const query = supabase.from("companies").delete();
+
+      if (companyId) {
+        query.eq("id", companyId);
+      } else if (user) {
+        query.eq("user_id", user.id);
+      } else {
+        throw new Error("Ingen företagsprofil hittades för borttagning");
+      }
+
+      const { error: deleteError } = await query;
+
+      if (deleteError) throw deleteError;
+
+      if (formId) {
+        localStorage.removeItem(`${FORM_STORAGE_KEY}_${formId}`);
+      }
+
+      router.push("/");
+
+      setSuccess("Företagsprofilen har tagits bort");
+
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    } catch (err) {
+      setError(
+        "Kunde inte ta bort företagsprofilen: " + (err.message || "Okänt fel")
+      );
+      setDeleting(false);
+    } finally {
+      setShowDeleteOverlay(false);
     }
   };
 
@@ -471,21 +512,22 @@ export default function EditProfileOverlay({
                 <label className="popupTitle" htmlFor="company_name">
                   Företagsnamn <span className="asterix">*</span>
                 </label>
-                
               </article>
               <input
                 id="company_name"
                 name="name"
                 type="text"
-                className={`inputs ${formErrors.name ? 'input-error' : ''}`}
+                className={`inputs ${formErrors.name ? "input-error" : ""}`}
                 required
                 value={companyData.name}
                 onChange={handleInputChange}
-                disabled={saving}
+                disabled={saving || deleting}
                 placeholder="Ditt företagsnamn"
                 maxLength={MAX_NAME_LENGTH}
               />
-              {formErrors.name && <p className="error-message">{formErrors.name}</p>}
+              {formErrors.name && (
+                <p className="error-message">{formErrors.name}</p>
+              )}
             </div>
 
             <div className="inputSingle">
@@ -502,7 +544,7 @@ export default function EditProfileOverlay({
                 required
                 value={companyData.location}
                 onChange={handleInputChange}
-                disabled={saving}
+                disabled={saving || deleting}
                 placeholder="Var finns ert kontor?"
                 maxLength={MAX_LOCATION_LENGTH}
               />
@@ -518,14 +560,16 @@ export default function EditProfileOverlay({
                 id="website"
                 name="website"
                 type="url"
-                className={`inputs ${formErrors.website ? 'input-error' : ''}`}
+                className={`inputs ${formErrors.website ? "input-error" : ""}`}
                 required
                 value={companyData.website}
                 onChange={handleInputChange}
-                disabled={saving}
+                disabled={saving || deleting}
                 placeholder="https://www.dittforetag.se"
               />
-              {formErrors.website && <p className="error-message">{formErrors.website}</p>}
+              {formErrors.website && (
+                <p className="error-message">{formErrors.website}</p>
+              )}
             </div>
 
             <div className="inputSingle">
@@ -538,13 +582,15 @@ export default function EditProfileOverlay({
                 id="contact_email"
                 name="email"
                 type="email"
-                className={`inputs ${formErrors.email ? 'input-error' : ''}`}
+                className={`inputs ${formErrors.email ? "input-error" : ""}`}
                 value={companyData.email}
                 onChange={handleInputChange}
-                disabled={saving}
+                disabled={saving || deleting}
                 placeholder="kontakt@dittforetag.se"
               />
-              {formErrors.email && <p className="error-message">{formErrors.email}</p>}
+              {formErrors.email && (
+                <p className="error-message">{formErrors.email}</p>
+              )}
             </div>
 
             <div className="inputSingle">
@@ -560,12 +606,18 @@ export default function EditProfileOverlay({
                   className="descriptionInput"
                   value={companyData.description}
                   onChange={handleInputChange}
-                  disabled={saving}
+                  disabled={saving || deleting}
                   placeholder="Berätta om ert företag, er verksamhet och vad ni erbjuder"
                   rows={5}
                   maxLength={MAX_DESCRIPTION_LENGTH}
                 />
-                <div className={`char-counter ${descriptionCharCount >= MAX_DESCRIPTION_LENGTH ? 'char-counter-max' : ''}`}>
+                <div
+                  className={`char-counter ${
+                    descriptionCharCount >= MAX_DESCRIPTION_LENGTH
+                      ? "char-counter-max"
+                      : ""
+                  }`}
+                >
                   {descriptionCharCount}/{MAX_DESCRIPTION_LENGTH}
                 </div>
               </div>
@@ -583,17 +635,9 @@ export default function EditProfileOverlay({
                   name="logo"
                   type="file"
                   onChange={handleLogoChange}
-                  disabled={saving}
+                  disabled={saving || deleting}
                   accept="image/*"
                 />
-                {logoPreview && (
-                  <div className="image-preview">
-                    <img
-                      src={logoPreview}
-                      alt="Företagslogotyp förhandsvisning"
-                    />
-                  </div>
-                )}
               </div>
             </div>
 
@@ -609,17 +653,9 @@ export default function EditProfileOverlay({
                   name="displayImage"
                   type="file"
                   onChange={handleDisplayImageChange}
-                  disabled={saving}
+                  disabled={saving || deleting}
                   accept="image/*"
                 />
-                {displayImagePreview && (
-                  <div className="image-preview">
-                    <img
-                      src={displayImagePreview}
-                      alt="Omslagsbild förhandsvisning"
-                    />
-                  </div>
-                )}
               </div>
             </div>
 
@@ -627,14 +663,27 @@ export default function EditProfileOverlay({
             {success && <p className="success-message">{success}</p>}
 
             <div className="button-group">
-              <button type="submit" disabled={saving} className="primary-button">
+              <button
+                type="submit"
+                disabled={saving || deleting}
+                className="primary-button"
+              >
                 {saving ? "Sparar..." : "Tillämpa ändringar"}
               </button>
 
               <button
                 type="button"
+                onClick={() => setShowDeleteOverlay(true)}
+                disabled={saving || deleting}
+                className="deleteButton"
+              >
+                Ta bort företagsprofil
+              </button>
+
+              <button
+                type="button"
                 onClick={handleCancel}
-                disabled={saving}
+                disabled={saving || deleting}
                 className="secondary-button"
               >
                 Avbryt redigering
@@ -642,6 +691,15 @@ export default function EditProfileOverlay({
             </div>
           </form>
         )}
+
+        {/* Delete Profile Overlay */}
+        <DeleteProfileOverlay
+          isOpen={showDeleteOverlay}
+          onClose={() => setShowDeleteOverlay(false)}
+          onConfirm={handleDeleteProfile}
+          companyName={companyData.name}
+          isDeleting={deleting}
+        />
       </div>
     </div>
   );

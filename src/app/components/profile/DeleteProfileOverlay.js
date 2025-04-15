@@ -2,26 +2,26 @@
 import React, { useEffect } from "react";
 import "../form/popup.css";
 
-export default function DeleteConfirmationOverlay({ 
-  isOpen, 
-  onClose, 
-  onConfirm, 
-  positionTitle,
-  isDeleting
+export default function DeleteProfileOverlay({
+  isOpen,
+  onClose,
+  onConfirm,
+  companyName,
+  isDeleting,
 }) {
   // Add effect to prevent scrolling when overlay is open
   useEffect(() => {
     if (isOpen) {
       // Prevent scrolling on body
       document.body.style.overflow = "hidden";
-      
+
       // Clean up function to restore scrolling when component unmounts or overlay closes
       return () => {
         document.body.style.overflow = "auto";
       };
     }
   }, [isOpen]); // Re-run effect when isOpen changes
-  
+
   if (!isOpen) return null;
 
   return (
@@ -31,12 +31,9 @@ export default function DeleteConfirmationOverlay({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div
-        className="popup-content"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         <div className="popup-header">
-          <h2 className="popup-title">Ta bort position</h2>
+          <h2 className="popup-title">Ta bort företagsprofil</h2>
           <button className="close-btn" onClick={onClose} disabled={isDeleting}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +55,14 @@ export default function DeleteConfirmationOverlay({
 
         <div className="cancel-description">
           <p>
-          Är du säker på att du vill ta bort den här positionen? Det går inte att ångra detta.</p>
+            Är du säker på att du vill ta bort din företagsprofil? Alla dina
+            positioner kommer också att tas bort. Det går inte att ångra detta.
+          </p>
+          {companyName && (
+            <p className="company-name-confirmation">
+              Företagsprofil som tas bort: <strong>{companyName}</strong>
+            </p>
+          )}
         </div>
 
         <div className="button-group">
@@ -67,15 +71,15 @@ export default function DeleteConfirmationOverlay({
             disabled={isDeleting}
             className="deleteButton"
           >
-            {isDeleting ? "Tar bort..." : "Ja, ta bort positionen"}
+            {isDeleting ? "Tar bort..." : "Ja, ta bort företagsprofilen"}
           </button>
-          
+
           <button
             onClick={onClose}
             disabled={isDeleting}
             className="secondary-button"
           >
-            Nej, behåll positionen
+            Nej, behåll företagsprofilen
           </button>
         </div>
       </div>
