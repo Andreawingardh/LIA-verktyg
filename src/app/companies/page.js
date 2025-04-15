@@ -11,7 +11,7 @@ import "@/app/components/form/popup.css";
 import "@/app/components/buttons/button.css";
 import "@/app/components/form/popup.css";
 import CreateCompanyProfileBanner from "../components/cards/CreateCompanyProfileBanner";
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
 export default function Companies() {
   const router = useRouter();
@@ -107,13 +107,13 @@ export default function Companies() {
   }
 
   function handleSkillToggle(skill) {
-    setSkills(prevSkills => {
-      const isAlreadySelected = prevSkills.some(s => s.id === skill.id);
-      
+    setSkills((prevSkills) => {
+      const isAlreadySelected = prevSkills.some((s) => s.id === skill.id);
+
       const newSkills = isAlreadySelected
-        ? prevSkills.filter(s => s.id !== skill.id)
+        ? prevSkills.filter((s) => s.id !== skill.id)
         : [...prevSkills, skill];
-      
+
       return newSkills;
     });
   }
@@ -173,7 +173,7 @@ export default function Companies() {
     } finally {
       setLoading(false);
     }
-  }, 300)
+  }, 300);
 
   /* The functions handle scripts on the page */
 
@@ -410,9 +410,11 @@ export default function Companies() {
                           onClick={() => handleSkillToggle(skill)}
                         >
                           <img
-                            src={`/images/software-icons/${skill.skills_name.toLowerCase().replace(/\s+/g, '')}.svg`}
-                            aria-hidden
-                            alt={skill.skills_name}
+                            src={`/images/software-icons/${skill.skills_name
+                              .toLowerCase()
+                              .replace(/\s+/g, "")}.svg`}
+                            alt=""
+                            aria-hidden="true"
                           />
                           {skill.skills_name}
                           {isSkillSelected(skill.id) ? (
@@ -475,15 +477,19 @@ export default function Companies() {
 
           {/* LIST OF COMPANIES */}
           <section className="companies-list">
-
-            {error && (<div>{error}</div>)}
+            {error && <div>{error}</div>}
 
             {filteredCompanies.length > 0 && (
               <h1 className="matching-companies">
                 Företag med matchande positioner
               </h1>
             )}
-            {loading && (<img className="svg-loader" src="images/Rolling@1x-5.9s-50px-50px.svg"/>)}
+            {loading && (
+              <img
+                className="svg-loader"
+                src="images/Rolling@1x-5.9s-50px-50px.svg"
+              />
+            )}
             {filteredCompanies.map((company) => (
               <div key={company.id}>
                 <CardCompany
@@ -521,9 +527,7 @@ export default function Companies() {
                   statusProperty="positions-open"
                   showLogotype={company.logo_url != null ? true : false}
                   companyPositions={
-                    company.position_count
-                      ? "Lediga LIA-platser"
-                      : ""
+                    company.position_count ? "Lediga LIA-platser" : ""
                   }
                   showApply={company.position_count > 0 ? true : false}
                 />
