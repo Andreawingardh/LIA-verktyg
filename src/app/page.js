@@ -21,6 +21,7 @@ export default function Home() {
   const { user } = useSupabaseAuth();
   const [companyId, setCompanyId] = useState(null);
   const [showEditPopup, setShowEditPopup] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const fetchCompanyId = async () => {
@@ -38,6 +39,97 @@ export default function Home() {
 
     fetchCompanyId();
   }, [user]);
+
+  // Set up animation end listeners
+  useEffect(() => {
+    const floatingLogos = document.querySelectorAll(`.${styles.floatingLogo}`);
+
+    // Function to handle animation end
+    const handleAnimationEnd = (event) => {
+      const logo = event.target;
+
+      // If it was a return animation, reset to floating
+      if (logo.classList.contains(styles["scroll-up"])) {
+        logo.classList.remove(styles["scroll-up"]);
+      }
+    };
+
+    // Add animation end listeners to all logos
+    floatingLogos.forEach((logo) => {
+      logo.addEventListener("animationend", handleAnimationEnd);
+    });
+
+    // Cleanup
+    return () => {
+      floatingLogos.forEach((logo) => {
+        logo.removeEventListener("animationend", handleAnimationEnd);
+      });
+    };
+  }, [styles]);
+
+  // Scroll animation effect
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Get the hero container and floating logos
+          const heroContainer = document.querySelector(
+            `.${styles.heroContainer}`
+          );
+          const floatingLogos = document.querySelectorAll(
+            `.${styles.floatingLogo}`
+          );
+
+          if (heroContainer && floatingLogos.length > 0) {
+            const heroHeight = heroContainer.offsetHeight;
+
+            // Only apply animations when within or near the hero section
+            if (currentScrollY <= heroHeight * 1.2) {
+              // Determine scroll direction
+              const scrollingDown = currentScrollY > lastScrollY;
+
+              // Apply the appropriate animation to each logo with staggered timing
+              floatingLogos.forEach((logo, index) => {
+                const delay = index * 80; // Staggered timing
+
+                setTimeout(() => {
+                  if (scrollingDown) {
+                    // When scrolling down, always fly away
+                    logo.classList.remove(styles["scroll-up"]);
+                    logo.classList.add(styles["scroll-down"]);
+                  } else if (
+                    !scrollingDown &&
+                    logo.classList.contains(styles["scroll-down"])
+                  ) {
+                    // Only apply fly-back if previously flying away
+                    logo.classList.remove(styles["scroll-down"]);
+                    logo.classList.add(styles["scroll-up"]);
+                  }
+                }, delay);
+              });
+            }
+          }
+
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+
+        ticking = true;
+      }
+    };
+
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Clean up
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, styles]);
 
   const handleShowLogin = () => {
     setShowRegistrationPopup(false);
@@ -64,6 +156,313 @@ export default function Home() {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.heroContainer}>
+        <div className={styles.floatingLogoContainer}>
+          <div className={styles.floatingLogo}>
+            <svg
+              viewBox="0 0 200 100"
+              width="100%"
+              height="100%"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="100"
+                rx="10"
+                fill="#2D3748"
+              />
+              <text
+                x="100"
+                y="50"
+                fontFamily="Arial, sans-serif"
+                fontWeight="bold"
+                fontSize="24"
+                fill="white"
+                textAnchor="middle"
+                dominantBaseline="middle"
+              >
+                CodeCraft
+              </text>
+              <path
+                d="M40,30 L60,50 L40,70"
+                stroke="#4FD1C5"
+                strokeWidth="3"
+                fill="none"
+              />
+              <path
+                d="M160,30 L140,50 L160,70"
+                stroke="#4FD1C5"
+                strokeWidth="3"
+                fill="none"
+              />
+            </svg>
+          </div>
+          <div className={styles.floatingLogo}>
+            <svg
+              viewBox="0 0 200 100"
+              width="100%"
+              height="100%"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="100"
+                rx="0"
+                fill="#6B46C1"
+              />
+              <rect x="30" y="30" width="40" height="40" fill="#9F7AEA" />
+              <rect x="70" y="30" width="40" height="40" fill="#F6AD55" />
+              <rect x="110" y="30" width="40" height="40" fill="#38B2AC" />
+              <text
+                x="100"
+                y="85"
+                fontFamily="Arial, sans-serif"
+                fontWeight="bold"
+                fontSize="16"
+                fill="white"
+                textAnchor="middle"
+              >
+                PIXEL PERFECT
+              </text>
+            </svg>
+          </div>
+          <div className={styles.floatingLogo}>
+            <svg
+              viewBox="0 0 200 120"
+              width="100%"
+              height="100%"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="100" cy="50" r="50" fill="#F56565" />
+              <path
+                d="M70,50 L130,50 M100,30 L100,70"
+                stroke="white"
+                strokeWidth="8"
+              />
+              <text
+                x="100"
+                y="110"
+                fontFamily="Arial, sans-serif"
+                fontWeight="bold"
+                fontSize="24"
+                fill="#2D3748"
+                textAnchor="middle"
+              >
+                WebForge
+              </text>
+            </svg>
+          </div>
+
+          <div className={styles.floatingLogo}>
+            <svg
+              viewBox="0 0 200 100"
+              width="100%"
+              height="100%"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="100"
+                rx="50"
+                fill="#3182CE"
+              />
+              <circle cx="70" cy="40" r="10" fill="white" />
+              <circle cx="130" cy="40" r="10" fill="white" />
+              <circle cx="100" cy="70" r="10" fill="white" />
+              <line
+                x1="70"
+                y1="40"
+                x2="130"
+                y2="40"
+                stroke="white"
+                strokeWidth="2"
+              />
+              <line
+                x1="70"
+                y1="40"
+                x2="100"
+                y2="70"
+                stroke="white"
+                strokeWidth="2"
+              />
+              <line
+                x1="130"
+                y1="40"
+                x2="100"
+                y2="70"
+                stroke="white"
+                strokeWidth="2"
+              />
+              <text
+                x="100"
+                y="95"
+                fontFamily="Arial, sans-serif"
+                fontWeight="bold"
+                fontSize="18"
+                fill="white"
+                textAnchor="middle"
+              >
+                NEXUSWEB
+              </text>
+            </svg>
+          </div>
+
+          <div className={styles.floatingLogo}>
+            <svg
+              viewBox="0 0 200 100"
+              width="100%"
+              height="100%"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="0" y="0" width="200" height="100" fill="#1A202C" />
+              <rect x="45" y="20" width="15" height="15" fill="#48BB78" />
+              <rect
+                x="65"
+                y="20"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.5"
+              />
+              <rect x="85" y="20" width="15" height="15" fill="#48BB78" />
+              <rect
+                x="105"
+                y="20"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.3"
+              />
+              <rect x="125" y="20" width="15" height="15" fill="#48BB78" />
+
+              <rect
+                x="45"
+                y="40"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.2"
+              />
+              <rect x="65" y="40" width="15" height="15" fill="#48BB78" />
+              <rect
+                x="85"
+                y="40"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.4"
+              />
+              <rect x="105" y="40" width="15" height="15" fill="#48BB78" />
+              <rect
+                x="125"
+                y="40"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.7"
+              />
+
+              <rect x="45" y="60" width="15" height="15" fill="#48BB78" />
+              <rect
+                x="65"
+                y="60"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.6"
+              />
+              <rect x="85" y="60" width="15" height="15" fill="#48BB78" />
+              <rect
+                x="105"
+                y="60"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.5"
+              />
+              <rect
+                x="125"
+                y="60"
+                width="15"
+                height="15"
+                fill="#48BB78"
+                opacity="0.2"
+              />
+
+              <text
+                x="100"
+                y="95"
+                fontFamily="Arial, sans-serif"
+                fontWeight="bold"
+                fontSize="16"
+                fill="white"
+                textAnchor="middle"
+              >
+                DEVMATRIX
+              </text>
+            </svg>
+          </div>
+
+          <div className={styles.floatingLogo}>
+            <svg
+              viewBox="0 0 200 100"
+              width="100%"
+              height="100%"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="0" y="0" width="200" height="100" fill="#DD6B20" />
+              <rect x="60" y="25" width="25" height="25" fill="white" />
+              <rect
+                x="85"
+                y="25"
+                width="25"
+                height="25"
+                fill="white"
+                opacity="0.7"
+              />
+              <rect
+                x="110"
+                y="25"
+                width="25"
+                height="25"
+                fill="white"
+                opacity="0.5"
+              />
+              <rect
+                x="60"
+                y="50"
+                width="25"
+                height="25"
+                fill="white"
+                opacity="0.8"
+              />
+              <rect
+                x="85"
+                y="50"
+                width="25"
+                height="25"
+                fill="white"
+                opacity="0.6"
+              />
+              <text
+                x="100"
+                y="90"
+                fontFamily="Arial, sans-serif"
+                fontWeight="bold"
+                fontSize="18"
+                fill="white"
+                textAnchor="middle"
+              >
+                BYTE BUILDERS
+              </text>
+            </svg>
+          </div>
+        </div>
         <div className={styles.heroContent}>
           <div className={styles.logoContainer}>
             <img

@@ -238,7 +238,6 @@ h3 {
   align-self: stretch;
 
   /* Style */
-  overflow: hidden;
   color: var(--base-foreground, #0f1314);
   font-feature-settings: "liga" off, "clig" off;
   text-overflow: ellipsis;
