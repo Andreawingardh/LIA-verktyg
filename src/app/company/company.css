@@ -184,7 +184,6 @@ textarea.profileInputs {
   position: sticky;
   bottom: 0;
   background-color: var(--base-background, #fff);
-  padding-top: var(--spacing-4, 16px);
   padding-bottom: var(--spacing-4, 16px);
 }
 
