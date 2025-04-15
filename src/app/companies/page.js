@@ -182,8 +182,8 @@ export default function Companies() {
       <div className="cover-wrapper">
         <div className="image-wrapper">
           <img
-            src="/images/eventpage-hero-image.png"
-            alt="Illustration av fyra personer som samarbetar med programmering."
+            src="/images/companies-page-hero.png"
+            alt="Illustration av personer som samarbetar med programmering."
           />
         </div>
       </div>
