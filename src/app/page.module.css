@@ -474,14 +474,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: transparent; /* Remove background color */
-  width: 10rem; /* Increase width */
-  height: 5rem; /* Increase height */
+  background-color: transparent; 
+  width: 10rem; 
+  height: 5rem; 
   max-width: 12rem;
   max-height: 6rem;
   aspect-ratio: auto !important;
   border-radius: var(--border-radius-md, 0.375rem);
-  border: none; /* Remove border */
+  border: none;
   box-shadow: 0px 23px 6px 0px rgba(0, 0, 0, 0),
     0px 15px 6px 0px rgba(0, 0, 0, 0.01), 0px 8px 5px 0px rgba(0, 0, 0, 0.02),
     0px 4px 4px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
