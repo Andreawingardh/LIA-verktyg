@@ -474,7 +474,7 @@ export default function Companies() {
 
           {/* LIST OF COMPANIES */}
           <section className="companies-list">
-            {loading && (<div>Laddar...</div>)}
+
             {error && (<div>{error}</div>)}
 
             {filteredCompanies.length > 0 && (
@@ -482,7 +482,7 @@ export default function Companies() {
                 Företag med matchande positioner
               </h1>
             )}
-
+            {loading && (<img className="svg-loader" src="images/Rolling@1x-5.9s-50px-50px.svg"/>)}
             {filteredCompanies.map((company) => (
               <div key={company.id}>
                 <CardCompany
