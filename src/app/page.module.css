@@ -405,3 +405,200 @@
     align-self: flex-end;
   }
 }
+
+.floatingLogoContainer {
+  max-width: 80rem;
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  z-index: 1;
+  perspective: 1000px;
+}
+
+/* Define the floating animation */
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(8px) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* Define flying left animation */
+@keyframes flyLeft {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-300px, -200px, 300px) rotate(-45deg) scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* Define flying right animation */
+@keyframes flyRight {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(300px, -200px, 300px) rotate(45deg) scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* Define flying return animation */
+@keyframes flyReturn {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--tx, 0), var(--ty, 0), var(--tz, 0)) rotate(var(--rot, 0deg)) scale(var(--scale, 0.2));
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+.floatingLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: transparent; /* Remove background color */
+  width: 10rem; /* Increase width */
+  height: 5rem; /* Increase height */
+  max-width: 12rem;
+  max-height: 6rem;
+  aspect-ratio: auto !important;
+  border-radius: var(--border-radius-md, 0.375rem);
+  border: none; /* Remove border */
+  box-shadow: 0px 23px 6px 0px rgba(0, 0, 0, 0),
+    0px 15px 6px 0px rgba(0, 0, 0, 0.01), 0px 8px 5px 0px rgba(0, 0, 0, 0.02),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
+  position: absolute;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  
+  /* Initial floating animation */
+  animation: float 6s ease-in-out infinite;
+}
+
+.floatingLogo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: .75rem;
+}
+
+.floatingLogo svg g {
+  transform: translate(0, 0);
+}
+
+/* Left side logos flying out */
+.floatingLogo:nth-child(1).scroll-down,
+.floatingLogo:nth-child(2).scroll-down,
+.floatingLogo:nth-child(3).scroll-down {
+  animation: flyLeft 0.8s forwards !important;
+}
+
+/* Right side logos flying out */
+.floatingLogo:nth-child(4).scroll-down,
+.floatingLogo:nth-child(5).scroll-down,
+.floatingLogo:nth-child(6).scroll-down {
+  animation: flyRight 0.8s forwards !important;
+}
+
+/* All logos flying back in */
+.floatingLogo.scroll-up {
+  animation: flyReturn 0.8s forwards !important;
+}
+
+/* Left side logos */
+.floatingLogo:nth-child(1) {
+  left: 12%;
+  top: 5%;
+  --tx: -300px;
+  --ty: -200px;
+  --tz: 200px;
+  --rot: -45deg;
+  --scale: 0.2;
+  animation-duration: 6s;
+  animation-delay: 0s;
+}
+
+.floatingLogo:nth-child(2) {
+  left: 5%;
+  top: 35%;
+  --tx: -250px;
+  --ty: 50px;
+  --tz: 150px;
+  --rot: 30deg;
+  --scale: 0.3;
+  animation-duration: 7s;
+  animation-delay: 0.5s;
+}
+
+.floatingLogo:nth-child(3) {
+  left: 15%;
+  top: 70%;
+  --tx: -200px;
+  --ty: 200px;
+  --tz: 100px;
+  --rot: -60deg;
+  --scale: 0.25;
+  animation-duration: 5s;
+  animation-delay: 1s;
+}
+
+/* Right side logos */
+.floatingLogo:nth-child(4) {
+  right: 9%;
+  top: 12%;
+  --tx: 300px;
+  --ty: -200px;
+  --tz: 200px;
+  --rot: 45deg;
+  --scale: 0.2;
+  animation-duration: 6.5s;
+  animation-delay: 0.3s;
+}
+
+.floatingLogo:nth-child(5) {
+  right: 5%;
+  top: 35%;
+  --tx: 250px;
+  --ty: 50px;
+  --tz: 150px;
+  --rot: -30deg;
+  --scale: 0.3;
+  animation-duration: 5.5s;
+  animation-delay: 0.8s;
+}
+
+.floatingLogo:nth-child(6) {
+  right: 15%;
+  top: 70%;
+  --tx: 200px;
+  --ty: 200px;
+  --tz: 100px;
+  --rot: 60deg;
+  --scale: 0.25;
+  animation-duration: 7.5s;
+  animation-delay: 1.2s;
+}
+
+@media screen and (max-width: 960px) {
+  .floatingLogo {
+    display: none;
+  }
+}
