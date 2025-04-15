@@ -26,29 +26,33 @@ const Footer = () => {
       id: 1,
       name: "Andrea Wingårdh",
       role: "Webbutvecklare",
-      profileUrl: "#",
+      profileUrl: "https://github.com/Andreawingardh",
       avatar: "/images/Card/Andrea-avatar.png",
+      bio: "Github"
     },
     {
       id: 2,
       name: "Linnéa Malmström",
       role: "Digital Designer",
-      profileUrl: "#",
-      avatar: "/images/Card/Linnea-avatar.png",
+      profileUrl: "https://www.linkedin.com/in/linneamalmstroem/",
+      avatar: "/images/Card/Linnea-avatar.jpg",
+      bio: "LinkedIn"
     },
     {
       id: 3,
       name: "Mahtias Jebrand",
       role: "Webbutvecklare",
-      profileUrl: "#",
-      avatar: "/images/Card/Mahtias-avatar.png",
+      profileUrl: "https://github.com/Mahtte94",
+      avatar: "/images/Card/Mahtias-avatar.jpg",
+      bio: "Github"
     },
     {
       id: 4,
       name: "Markus Zeljak",
       role: "Digital Designer",
-      profileUrl: "#",
-      avatar: "/images/Card/Markus-avatar.png",
+      profileUrl: "https://markuszeljak.com/",
+      avatar: "/images/Card/Markus-avatar.jpg",
+      bio: "portfölj"
     },
   ];
 
@@ -106,7 +110,7 @@ const Footer = () => {
                         className={styles.memberLink}
                       >
                         <span>
-                          Se min portfölj
+                          Se min {student.bio}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
