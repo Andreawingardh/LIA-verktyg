@@ -65,7 +65,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
@@ -74,17 +74,17 @@
   color: black;
   opacity: 1;
   transition: opacity 0.2s ease-in-out;
-  gap: var(--spacing-8, 2rem);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; 
+  padding: 20px 0; 
 }
+
 
 .popup-content-add,
 .popup-content-edit {
-  display: flex;
   width: 93vw;
-  margin: 2vh 0;
-  min-width: var(--width-w-80, 320px);
   max-width: 480px;
+  margin: 0 auto; 
   padding: var(--spacing-6, 24px);
   flex-direction: column;
   justify-content: flex-start;
@@ -93,10 +93,40 @@
   border-radius: var(--border-radius-xl, 0.75rem);
   background: var(--base-background, #fff);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(0);
-  transition: transform 0.2s ease-in-out;
   position: relative;
   z-index: 1001;
+  max-height: none; 
+  margin-top: 2vh; 
+  margin-bottom: 2vh; 
+}
+
+
+@media (max-width: 480px) {
+  .popup-content-add,
+  .popup-content-edit {
+    width: 90vw;
+    padding: 16px;
+  }
+  
+  .button-group {
+    width: 100%;
+  }
+  
+  .primary-button,
+  .secondary-button,
+  .deleteButton {
+    width: 100%;
+    height: auto;
+    min-height: var(--height-h-11, 44px);
+    white-space: normal;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .popup-overlay-add,
+  .popup-overlay-edit {
+    height: -webkit-fill-available;
+  }
 }
 
 .popup-overlay.entering {
