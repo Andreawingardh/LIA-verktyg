@@ -411,6 +411,7 @@ export default function Companies() {
                         >
                           <img
                             src={`/images/software-icons/${skill.skills_name.toLowerCase().replace(/\s+/g, '')}.svg`}
+                            aria-hidden
                             alt={skill.skills_name}
                           />
                           {skill.skills_name}
@@ -521,7 +522,7 @@ export default function Companies() {
                   showLogotype={company.logo_url != null ? true : false}
                   companyPositions={
                     company.position_count
-                      ? company.position_count + " lediga positioner"
+                      ? "Lediga LIA-platser"
                       : ""
                   }
                   showApply={company.position_count > 0 ? true : false}

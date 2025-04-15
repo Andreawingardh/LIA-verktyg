@@ -337,6 +337,8 @@ h1 {
   }
 }
 
-.svg-loader {
-  width:50px;
+img:not([src]),
+img[src=""],
+img[src$="#broken"] {
+  visibility: hidden;
 }

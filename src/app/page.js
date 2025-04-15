@@ -126,38 +126,38 @@ export default function Home() {
           </div>
           <div className={styles.companyList}>
             <CardCompany
-              logoUrl="/images/grebban.svg"
+              logoUrl="images/fakelogos/Brightforge.svg"
               applyNowClassName="card-company-2"
               className="card-company-instance"
-              company="Grebban"
+              company="Brightforge"
               headerClassName="design-component-instance-node"
               location="Göteborg"
               statusProperty="internship-matching"
-              id="/"
+              id={64}
               showApply={true}
               showLogotype={true}
             />
             <CardCompany
-              logoUrl="/images/hiq.svg"
+              logoUrl="images/fakelogos/Codelure.svg"
               applyNowClassName="card-company-2"
               className="card-company-instance"
-              company="HiQ"
+              company="Codelure"
               headerClassName="design-component-instance-node"
               location="Göteborg"
               statusProperty="internship-matching"
-              id="/"
+              id={61}
               showApply={true}
               showLogotype={true}
             />
             <CardCompany
-              logoUrl="/images/simmalugnt.svg"
+              logoUrl="images/fakelogos/Quibly.svg"
               applyNowClassName="card-company-2"
               className="card-company-instance"
-              company="Simma Lugnt"
+              company="Quibly"
               headerClassName="design-component-instance-node"
               location="Göteborg"
               statusProperty="internship-matching"
-              id="/"
+              id={67}
               showApply={true}
               showLogotype={true}
             />
