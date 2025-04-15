@@ -347,7 +347,7 @@
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.register-btn:hover,
+
 .secondary-button:hover {
   border-radius: var(--border-radius-full, 9999px);
   border: 1px solid var(--base-secondary, #001a52);
@@ -356,8 +356,11 @@
   cursor: pointer;
 }
 
+
+
 .close-btn:hover path,
-.close-btn:hover {
+.close-btn:hover,
+.register-btn:hover {
   color: var(--base-foreground, #0f1314);
   fill: var(--base-foreground, #0f1314);
   background: var(--base-accent, #e6e6e6);
@@ -790,6 +793,7 @@ input[type="checkbox"].checkbox-error {
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  cursor: pointer;
 }
 
 .formGroup {
@@ -930,6 +934,7 @@ input[type="checkbox"].checkbox-error {
   font-weight: var(--font-weight-medium, 500);
   line-height: 150%; /* 24px */
   letter-spacing: 0.2px;
+  cursor: pointer;
 }
 
 .show-more-btn:hover {

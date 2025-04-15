@@ -9,6 +9,9 @@ import "../company.css";
 import { ProgressIndicator } from "../../components/form/ProgressIndicator";
 import CancelConfirmationPopup from "../../components/form/CancelConfirmationPopup";
 
+
+const PLACEHOLDER_DISPLAY_IMAGE = "/images/company-banner-placeholder.webp";
+
 export default function RegisterPage() {
   return (
     <FormProvider>
@@ -40,6 +43,7 @@ function BaseInfoForm() {
   const [showCancelPopup, setShowCancelPopup] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
   const [initialized, setInitialized] = useState(false);
+  const [useDefaultImage, setUseDefaultImage] = useState(false);
 
   // Add effect to prevent scrolling when popup is shown
   useEffect(() => {
@@ -100,6 +104,9 @@ function BaseInfoForm() {
         localStorage.setItem("logoUrl", data.publicUrl);
         setLogoUrl(data.publicUrl);
       } else if (type === "display") {
+        // When a real image is uploaded, make sure we're not using default
+        setUseDefaultImage(false);
+        localStorage.setItem("useDefaultDisplayImage", "false");
         localStorage.setItem("displayImageUrl", data.publicUrl);
         setDisplayImageUrl(data.publicUrl);
       }
@@ -126,6 +133,12 @@ function BaseInfoForm() {
 
       const registrationStep = localStorage.getItem("registrationStep");
       const registrationEmail = localStorage.getItem("registrationEmail");
+      const savedUseDefaultImage = localStorage.getItem("useDefaultDisplayImage");
+      
+      // Initialize useDefaultImage from localStorage if it exists
+      if (savedUseDefaultImage === "true") {
+        setUseDefaultImage(true);
+      }
 
       if (user || (registrationEmail && registrationStep === "baseInfo")) {
         setLoading(false);
@@ -145,12 +158,13 @@ function BaseInfoForm() {
       newErrors.companyName = "Företagsnamn är obligatoriskt";
       isValid = false;
     } else if (companyName.trim().length < 2) {
-      newErrors.companyName = "Företagsnamnet är för kort";
+      newErrors.companyName = "Företagsnamnet får inte vara kortare än 2 tecken";
+      isValid = false;
+    } else if (companyName.trim().length > 25) {
+      newErrors.companyName = "Företagsnamnet får inte vara längre än 25 tecken";
       isValid = false;
     }
 
-    // No validation for logo and display image as they are optional
-    // But we could have additional validations here
 
     setErrors(newErrors);
     return isValid;
@@ -179,8 +193,15 @@ function BaseInfoForm() {
         localStorage.setItem("hasLogo", "true");
       }
 
+      // Handle display image setting
       if (displayImage) {
         localStorage.setItem("hasDisplayImage", "true");
+        localStorage.setItem("useDefaultDisplayImage", "false");
+      } else if (!displayImageUrl) {
+        // If no display image was uploaded, use the placeholder
+        localStorage.setItem("useDefaultDisplayImage", "true");
+        localStorage.setItem("displayImageUrl", PLACEHOLDER_DISPLAY_IMAGE); // Store the placeholder path
+        localStorage.setItem("hasDisplayImage", "true"); // Still mark as having a display image
       }
 
       localStorage.setItem("registrationStep", "description");
@@ -232,6 +253,8 @@ function BaseInfoForm() {
       }
 
       setDisplayImage(file);
+      // Set useDefaultImage to false when uploading a custom image
+      setUseDefaultImage(false);
       const fileUrl = await fileUpload(file, "display");
     }
   };
@@ -311,6 +334,9 @@ function BaseInfoForm() {
           {errors.displayImage && <p className="error-message">{errors.displayImage}</p>}
           {displayImageUrl && (
             <p className="success-message">Omslagsbild uppladdad</p>
+          )}
+          {!displayImage && !displayImageUrl && (
+            <p className="info-message">En standardbild kommer att användas om ingen bild laddas upp</p>
           )}
         </article>
 
