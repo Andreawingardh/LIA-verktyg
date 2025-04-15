@@ -29,31 +29,40 @@ export default function Header({ metadata }) {
   const router = useRouter();
   const pathname = usePathname();
 
-
   useEffect(() => {
     const registrationStep = localStorage.getItem("registrationStep");
-    const registrationPages = ["/company/baseInfo", "/company/description", "/company/contact"];
-    
-   
+    const registrationPages = [
+      "/company/baseInfo",
+      "/company/description",
+      "/company/contact",
+    ];
+
     setIsInRegistrationFlow(
-      registrationPages.includes(pathname) && 
-      (registrationStep === "baseInfo" || registrationStep === "description" || registrationStep === "contact")
+      registrationPages.includes(pathname) &&
+        (registrationStep === "baseInfo" ||
+          registrationStep === "description" ||
+          registrationStep === "contact")
     );
   }, [pathname]);
 
-
   useEffect(() => {
-    if (showCancelPopup) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
+    if (showCancelPopup || showLoginPopup || showRegistrationPopup) {
+      document.body.classList.add("body-lock-scroll");
+    } else if (!isMenuOpen) {
+      document.body.classList.remove("body-lock-scroll");
     }
 
     return () => {
-      document.body.style.overflow = "auto";
+      if (
+        !showCancelPopup &&
+        !showLoginPopup &&
+        !showRegistrationPopup &&
+        !isMenuOpen
+      ) {
+        document.body.classList.remove("body-lock-scroll");
+      }
     };
-  }, [showCancelPopup]);
-
+  }, [showCancelPopup, showLoginPopup, showRegistrationPopup, isMenuOpen]);
 
   useEffect(() => {
     closeMenu();
@@ -100,51 +109,29 @@ export default function Header({ metadata }) {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
 
-      const menuElement = menuRef.current;
-      if (menuElement) {
-        const focusableElements = menuElement.querySelectorAll(
-          'a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
-        );
-
-        if (focusableElements.length > 0) {
-          focusableElements[0].focus();
-
-          const handleTabKey = (e) => {
-            if (e.key === "Tab") {
-              const firstElement = focusableElements[0];
-              const lastElement =
-                focusableElements[focusableElements.length - 1];
-
-              if (e.shiftKey && document.activeElement === firstElement) {
-                e.preventDefault();
-                lastElement.focus();
-              } else if (
-                !e.shiftKey &&
-                document.activeElement === lastElement
-              ) {
-                e.preventDefault();
-                firstElement.focus();
-              }
-            }
-
-            if (e.key === "Escape") {
-              closeMenu();
-              menuButtonRef.current?.focus();
-            }
-          };
-
-          menuElement.addEventListener("keydown", handleTabKey);
-          return () => menuElement.removeEventListener("keydown", handleTabKey);
-        }
-      }
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.touchAction = "none";
     } else {
-      document.body.style.overflow = "auto";
+      if (!showCancelPopup && !showLoginPopup && !showRegistrationPopup) {
+        document.body.style.overflow = "auto";
+        document.documentElement.style.overflow = "";
+        document.documentElement.style.touchAction = "";
+      }
     }
 
     return () => {
-      document.body.style.overflow = "auto";
+      if (
+        !showCancelPopup &&
+        !showLoginPopup &&
+        !showRegistrationPopup &&
+        !isMenuOpen
+      ) {
+        document.body.style.overflow = "auto";
+        document.documentElement.style.overflow = "";
+        document.documentElement.style.touchAction = "";
+      }
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, showCancelPopup, showLoginPopup, showRegistrationPopup]);
 
   const handleShowLogin = () => {
     if (isInRegistrationFlow) {
@@ -152,7 +139,7 @@ export default function Header({ metadata }) {
       setShowCancelPopup(true);
       return;
     }
-    
+
     setShowRegistrationPopup(false);
     setShowLoginPopup(true);
     if (isMobile) {
@@ -166,7 +153,7 @@ export default function Header({ metadata }) {
       setShowCancelPopup(true);
       return;
     }
-    
+
     setShowRegistrationPopup(true);
     setTimeout(() => {
       setShowLoginPopup(false);
@@ -182,7 +169,7 @@ export default function Header({ metadata }) {
       setShowCancelPopup(true);
       return;
     }
-    
+
     if (isMobile) {
       closeMenu();
     }
@@ -200,6 +187,7 @@ export default function Header({ metadata }) {
     if (isMenuOpen) {
       closeMenu();
     } else {
+      document.body.classList.add("body-lock-scroll");
       setIsMenuOpen(true);
       setIsClosing(false);
     }
@@ -211,7 +199,11 @@ export default function Header({ metadata }) {
       setTimeout(() => {
         setIsMenuOpen(false);
         setIsClosing(false);
-      }, 400); 
+
+        if (!showCancelPopup && !showLoginPopup && !showRegistrationPopup) {
+          document.body.classList.remove("body-lock-scroll");
+        }
+      }, 400);
     }
   };
 
@@ -221,7 +213,7 @@ export default function Header({ metadata }) {
       setShowCancelPopup(true);
       return;
     }
-    
+
     if (isMobile) {
       closeMenu();
     }
@@ -240,7 +232,7 @@ export default function Header({ metadata }) {
       setShowCancelPopup(true);
       return;
     }
-    
+
     closeMenu();
   };
 
@@ -256,9 +248,9 @@ export default function Header({ metadata }) {
     localStorage.removeItem("hasDisplayImage");
     localStorage.removeItem("logoUrl");
     localStorage.removeItem("displayImageUrl");
-    
+
     setShowCancelPopup(false);
-    
+
     if (pendingNavigation) {
       pendingNavigation();
       setPendingNavigation(null);
@@ -334,7 +326,9 @@ export default function Header({ metadata }) {
                   className={styles.linkWrapper}
                   href="/"
                   aria-label="Internify Home"
-                  onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/")}
+                  onClick={(e) =>
+                    isInRegistrationFlow && handleNavLinkClick(e, "/")
+                  }
                 >
                   <span className={styles.logoText} aria-hidden="true">
                     <InternifyLogo />
@@ -481,7 +475,7 @@ export default function Header({ metadata }) {
                         className={styles.createProfileButton}
                         onClick={handleProfileButtonClick}
                       >
-                        {user ? "Din företagsprofil" : "Skapa företagsprofil"}
+                        {user ? "Gå till företagsprofil" : "Skapa företagsprofil"}
                       </button>
 
                       {user ? (
@@ -516,7 +510,9 @@ export default function Header({ metadata }) {
                   className={styles.desktopLogo}
                   href="/"
                   aria-label="Internify Home"
-                  onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/")}
+                  onClick={(e) =>
+                    isInRegistrationFlow && handleNavLinkClick(e, "/")
+                  }
                 >
                   <span className={styles.desktopLogoText} aria-hidden="true">
                     <InternifyLogo />
@@ -527,19 +523,25 @@ export default function Header({ metadata }) {
                 <nav className={styles.desktopNav} aria-label="Main Navigation">
                   <ul className={styles.desktopNavList}>
                     <li className={styles.desktopNavItem}>
-                      <Link 
-                        href="/event" 
+                      <Link
+                        href="/event"
                         className={styles.desktopNavLink}
-                        onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/event")}
+                        onClick={(e) =>
+                          isInRegistrationFlow &&
+                          handleNavLinkClick(e, "/event")
+                        }
                       >
                         Mingelevent
                       </Link>
                     </li>
                     <li className={styles.desktopNavItem}>
-                      <Link 
-                        href="/companies" 
+                      <Link
+                        href="/companies"
                         className={styles.desktopNavLink}
-                        onClick={(e) => isInRegistrationFlow && handleNavLinkClick(e, "/companies")}
+                        onClick={(e) =>
+                          isInRegistrationFlow &&
+                          handleNavLinkClick(e, "/companies")
+                        }
                       >
                         Företagslistan
                       </Link>
