@@ -222,7 +222,6 @@ export default function Companies() {
               />
               <label htmlFor="input-search">
                 <Button
-                  id="input-search"
                   text="Sök"
                   className="primary-button"
                   hasIcon={true}
@@ -468,7 +467,7 @@ export default function Companies() {
                     {skillsExpanded ? "Visa färre" : "Visa flera"}
                   </button>
                 )}
-                <button onClick={cancelFilter} className="button">
+                <button onClick={cancelFilter} className="show-more-btn">
                   Nollställ filtrering
                 </button>
               </section>
