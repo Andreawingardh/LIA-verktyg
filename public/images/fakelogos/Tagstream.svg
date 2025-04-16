@@ -1,4 +1,5 @@
-<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="30" r="28" fill="#29B6F6" />
-      <text x="30" y="38" font-family="Segoe UI Emoji" font-size="24" text-anchor="middle" dominant-baseline="middle">💧</text>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 50">
+  <rect x="0" y="0" width="70" height="50" rx="8" fill="#03a9f4"/>
+  <path d="M25,10 L35,25 L15,25 Z" fill="#b3e5fc"/>
+  <text x="35" y="35" font-family="Arial" font-size="8" font-weight="bold" fill="white" text-anchor="middle">TAGSTREAM</text>
+</svg>

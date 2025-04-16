@@ -1,4 +1,6 @@
-<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="30" r="28" fill="#66BB6A" />
-      <text x="30" y="38" font-family="Segoe UI Emoji" font-size="24" text-anchor="middle" dominant-baseline="middle">💚</text>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 50">
+  <rect x="0" y="0" width="70" height="50" rx="8" fill="#4caf50"/>
+  <path d="M25,15 Q35,5 45,15 T65,15 Q55,40 25,45 Q-5,40 -15,15 Q5,5 15,15 T25,15" 
+        fill="none" stroke="#a5d6a7" stroke-width="2" transform="scale(0.6) translate(20, 10)"/>
+  <text x="35" y="35" font-family="Arial" font-size="9" font-weight="bold" fill="white" text-anchor="middle">LOOPSPACE</text>
+</svg>
