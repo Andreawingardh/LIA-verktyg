@@ -31,6 +31,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="sv" className={`${inter.variable} ${unna.variable}`}>
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={`${inter.variable} ${unna.variable}` } style={{ overflow: 'hidden' }}>
         <Header metadata={metadata} />
         <main>{children}</main>

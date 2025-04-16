@@ -1,4 +1,5 @@
-<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="30" r="28" fill="#FFB74D" />
-      <text x="30" y="38" font-family="Segoe UI Emoji" font-size="24" text-anchor="middle" dominant-baseline="middle">🟠</text>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 50">
+  <rect x="0" y="0" width="70" height="50" rx="8" fill="#ffa726"/>
+  <ellipse cx="25" cy="20" rx="12" ry="6" fill="#ffcc80"/>
+  <text x="35" y="35" font-family="Arial" font-size="9" font-weight="bold" fill="white" text-anchor="middle">PIXELNEST</text>
+</svg>

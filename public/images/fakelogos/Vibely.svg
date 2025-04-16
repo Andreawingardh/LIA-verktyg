@@ -1,4 +1,5 @@
-<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="30" r="28" fill="#FF6584" />
-      <text x="30" y="38" font-family="Segoe UI Emoji" font-size="24" text-anchor="middle" dominant-baseline="middle">💗</text>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 50">
+  <rect x="0" y="0" width="70" height="50" rx="8" fill="#ff6b81"/>
+  <path d="M20,15 Q27,8 34,15 T48,15 Q40,32 20,40 Q0,32 -8,15 Q-1,8 6,15 T20,15" fill="#ff0057"/>
+  <text x="35" y="35" font-family="Arial" font-size="10" font-weight="bold" fill="white" text-anchor="middle">VIBELY</text>
+</svg>
